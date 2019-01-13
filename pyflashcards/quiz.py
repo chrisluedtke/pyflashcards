@@ -5,14 +5,13 @@ from typing import List
 FlashCard = namedtuple('FlashCard', ['question', 'answer', 'tags'])
 
 def quiz(cards: List[FlashCard]):
-    tag = input('Enter a category: ').lower()
+    quiz_cards = []
+    while not quiz_cards:
+        tag = input('Enter the tag(s) to study: ').lower()
+        quiz_cards = [card for card in cards if tag in card.tags]
+
+    input(f'Found {len(quiz_cards)} flashcards. Enter any key to begin.')
     print()
-
-    quiz_cards = [card for card in cards if tag in card.tags]
-
-    if not quiz_cards:
-        print(f'No flashcards contain the tag "{tag}"')
-        return
 
     random.shuffle(quiz_cards)
     correct = 0
