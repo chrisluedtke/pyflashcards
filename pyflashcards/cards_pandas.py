@@ -5,11 +5,11 @@ from quiz import FlashCard
 cards_pandas = [
     FlashCard(
         ('What is a key difference between pandas Series and NumPy array?'),
-        ('A pandas Array can have an explicitly defined index of any type.'),
+        ('A pandas Series can have an explicitly defined index of any type.'),
         {'pandas', 'beginner', 'week 2'}
         ),
     FlashCard(
-        ('How to code a pandas Series of integers?'),
+        ('Manually code a pandas Series of integers.'),
         ('>>> data = pd.Series([1, 2, 3])\n'
          '>>> data\n'
          f'{pd.Series([1, 2, 3])}'),
@@ -48,6 +48,13 @@ cards_pandas = [
          'different?'),
         ('They are both immutable. However, an Index can contain duplicates. \n'
          'They both support union, intersection, etc. operations.'),
+        {'pandas', 'beginner', 'week 2'}
+        ),
+    FlashCard(
+        ('What is the benefit of using object methods instead of operators \n'
+         'when applying ufuncs to Series/DataFrames?\n'
+         'e.g. A + B versus A.add(B)'),
+        ('The object method takes fill_value and axis arguments.'),
         {'pandas', 'beginner', 'week 2'}
         ),
 ]

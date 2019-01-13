@@ -16,7 +16,8 @@ def quiz(cards: List[FlashCard]):
     random.shuffle(quiz_cards)
     correct = 0
     for i, card in enumerate(quiz_cards):
-        print(f"__PROMPT{'_' * 71}\n\n{card.question}\n\n")
+        i += 1
+        print(f"__PROMPT-{str(i).zfill(2)}{'_' * 61}\n\n{card.question}\n\n")
 
         user_input = ''
         options = ['y', 'n', 'quit']
@@ -32,7 +33,7 @@ def quiz(cards: List[FlashCard]):
         elif user_input == 'n':
             pass
 
-        print(f"__ANSWER{'_' * 71}\n\n{card.answer}\n\n\n")
+        print(f"__ANSWER-{str(i).zfill(2)}{'_' * 61}\n\n{card.answer}\n\n\n")
         input('')
 
     print(f'Quiz Complete!\nYou scored {correct} out of {len(quiz_cards)}.')
