@@ -1,5 +1,7 @@
 from collections import namedtuple
 
+from pyflashcards.cards import card_strs
+
 FlashCard = namedtuple('FlashCard', ['question', 'answer', 'tags'])
 
 
@@ -46,8 +48,7 @@ def str_to_cards(s):
     return cards
 
 
-def gather_cards():
-    from cards import card_strs
+def gather_cards(card_strs=card_strs):
     cards = []
     for card_str in card_strs:
         cards.extend(str_to_cards(card_str))

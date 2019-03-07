@@ -1,11 +1,11 @@
 import random
 
-from card_processing import gather_cards
+from pyflashcards.card_processing import gather_cards
 
 
 def quiz():
     cards = gather_cards()
-    
+
     quiz_cards = []
     while not quiz_cards:
         tag = input('Enter the tag(s) to study: ').lower()
