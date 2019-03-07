@@ -1,6 +1,6 @@
 # pyflashcards
 
-Simple way to log and study python tidbits
+A simple way to log and study python tidbits
 
 ```
 $python pyflashcards
