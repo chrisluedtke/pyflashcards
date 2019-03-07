@@ -3,7 +3,8 @@
 A simple way to log and study python tidbits
 
 ```
-$python pyflashcards
+$pip install git+https://github.com/chrisluedtke/pyflashcards.git
+$import pyflashcards
 Enter the tag(s) to study: pandas
 Found 6 flashcards. Enter any key to begin.
 
