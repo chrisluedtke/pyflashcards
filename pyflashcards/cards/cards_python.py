@@ -1,3 +1,4 @@
+cards_python = """\
 QUESTION
 How could this code be improved?
 
@@ -51,3 +52,4 @@ Lists don't contain objects - they contain references to objects.
 
 TAGS
 python, item 2, effective python
+"""

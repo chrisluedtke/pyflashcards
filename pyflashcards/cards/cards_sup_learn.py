@@ -1,3 +1,4 @@
+cards_sup_learn = """\
 QUESTION
 What is a confusion matrix?
 
@@ -9,7 +10,7 @@ TAGS
 supervised learning, classification, validation, unit 2
 -------------------------
 QUESTION
-What are true positives, false positives, true negatives, and 
+What are true positives, false positives, true negatives, and
 false negatives?
 
 ANSWER
@@ -57,3 +58,4 @@ ANSWER
 
 TAGS
 supervised learning, classification, validation, unit 2
+"""

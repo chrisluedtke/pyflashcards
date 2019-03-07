@@ -1,3 +1,4 @@
+cards_pandas = """\
 QUESTION
 What is a key difference between pandas Series and NumPy array?
 
@@ -89,3 +90,4 @@ The object method takes fill_value and axis arguments.
 
 TAGS
 week 2, beginner, pandas
+"""
