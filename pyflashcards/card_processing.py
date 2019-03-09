@@ -54,3 +54,11 @@ def gather_cards(card_strs=card_strs):
         cards.extend(str_to_cards(card_str))
 
     return cards
+
+# def tags(card_strs=card_strs):
+#     tags = set()
+#     for line in card_strs.split('\n'):
+#         if line.lower().startswith('tags'):
+#             tags.append(
+#                 tag = [t.strip() for t in tags]
+#                 )

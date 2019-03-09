@@ -17,19 +17,16 @@ setup(
         'pyflashcards'
     ],
     classifiers=[
-        'Version :: 0.2',
-        'In Development :: Yes',
-        'Programming Language :: Python 2.7',
-        'Programming Language :: Python 3',
-        'Programming Language :: Python 3.3',
-        'Programming Language :: Python 3.4',
-        'Programming Language :: Python 3.5',
-        'Programming Language :: Python 3.6',
-        'Programming Language :: Python 3.7',
-        'Operating System :: OS Independent',
-        'License :: MIT',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     entry_points=[
-
+        'pyflashcards = pyflashcards.cli:main',
     ]
 )

@@ -14,7 +14,6 @@ def quiz():
     input(f'Found {len(quiz_cards)} flashcards. Enter any key to begin.')
     print()
 
-    random.shuffle(quiz_cards)
     correct = 0
     for i, card in enumerate(quiz_cards):
         i += 1
@@ -38,4 +37,12 @@ def quiz():
         input('')
 
     print(f'Quiz Complete!\nYou scored {correct} out of {len(quiz_cards)}.')
-    return
+
+
+def start(cards, args):
+
+    random.shuffle(cards)
+
+    tags = args.tags
+
+    quiz()
