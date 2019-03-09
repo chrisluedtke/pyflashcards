@@ -1,2 +1,5 @@
 language: python
 os: ubuntu
+
+python:
+  - "3.6"
