@@ -4,7 +4,7 @@ import random
 from flask import Flask, redirect, render_template, request, url_for
 import markdown
 
-from .card_processing import get_cards_from_md, str_to_cards
+from .card_processing import get_cards_from_md
 
 CARDS_DIR = Path(__file__).parent / 'cards'
 
