@@ -2,31 +2,31 @@
 
 A simple way to log and study python tidbits
 
-### Set up:
-Clone this repository:
+### Set up
+1. Clone this repository:
 ```
 git clone https://github.com/chrisluedtke/pyflashcards
 ```
+1. Create flashcard markdown files in the `cards` directory. See samples for formatting.
 
-Within project repository, create a virtual environment:
+1. Within project repository, create a virtual environment:
 ```
 python -m venv venv
 ```
-Activate the environment (Windows method):
+1. Activate the environment (Windows method):
 ```
 venv\Scripts\activate
 ```
-Install requirements:
+1. Install requirements:
 ```
 pip install -r requirements.txt
 ```
-Set environment variable
+1. Set environment variable
 ```
 set FLASK_APP=pyflashcards/app.py
 ```
-Run web app:
+1. Run web app:
 ```
 flask run
 ```
-
-Navigate to the locally served page, and get to studying!
+1. Navigate to the locally served page, and get to studying!
