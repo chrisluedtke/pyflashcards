@@ -32,4 +32,5 @@ python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 set FLASK_APP=hello.py
+flask run
 ```
