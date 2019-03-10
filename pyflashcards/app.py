@@ -4,7 +4,7 @@ import random
 from flask import Flask, redirect, render_template, request, url_for
 import markdown
 
-from .card_processing import str_to_cards
+from .card_processing import get_cards_from_md, str_to_cards
 
 CARDS_DIR = Path(__file__).parent / 'cards'
 
@@ -14,11 +14,7 @@ app = Flask(__name__)
 @app.route('/', methods=('GET', 'POST'))
 def home():
     global cards
-    for file in CARDS_DIR.iterdir():
-        if str(file).endswith('.md'):
-            with open(str(file)) as f:
-                file_str = f.read()
-                cards = str_to_cards(file_str)
+    cards = get_cards_from_md(CARDS_DIR)
 
     if request.method == 'POST':
         requested_tags = request.form.getlist('tag')
