@@ -5,7 +5,7 @@ from pyflashcards.cards import card_strs
 FlashCard = namedtuple('FlashCard', ['question', 'answer', 'tags'])
 
 
-def str_to_cards(s):
+def str_to_cards(s: str):
     cards = []
     q, a, t = [False, False, False]
     q_t, a_t, t_t = ['', '', '']
@@ -13,7 +13,7 @@ def str_to_cards(s):
     for line in s.split('\n'):
         if line.startswith('---'):
             continue
-        if line.lower().startswith('question'):
+        if line.lower().endswith('question'):
             if q:
                 cards.append(
                     FlashCard(question=q_t.strip(), answer=a_t.strip(),
@@ -24,10 +24,10 @@ def str_to_cards(s):
             else:
                 q = True
             continue
-        if line.lower().startswith('answer'):
+        if line.lower().endswith('answer'):
             a = True
             continue
-        if line.lower().startswith('tags'):
+        if line.lower().endswith('tags'):
             t = True
             continue
         if q and not a:
