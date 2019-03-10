@@ -21,7 +21,7 @@ venv\Scripts\activate
 ```
 pip install -r requirements.txt
 ```
-6. Set environment variable
+6. Set environment variable (Windows method):
 ```
 set FLASK_APP=pyflashcards/app.py
 ```
