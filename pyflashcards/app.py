@@ -10,6 +10,7 @@ CARDS_DIR = Path(__file__).parent / 'cards'
 
 app = Flask(__name__)
 
+
 @app.route('/', methods=('GET', 'POST'))
 def home():
     global cards

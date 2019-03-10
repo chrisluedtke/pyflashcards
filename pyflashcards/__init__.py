@@ -1,3 +1,3 @@
-from .quiz import quiz
+# from .quiz import quiz
 
 # quiz()
