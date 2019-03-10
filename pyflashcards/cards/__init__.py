@@ -1,9 +1,12 @@
-from .cards_pandas import cards_pandas
-from .cards_python import cards_python
-from .card_strsup_learn import cards_sup_learn
+import os
+import fnmatch
 
-card_strs = [cards_pandas,
-             cards_python,
-             cards_sup_learn]
+# cards_md = os.path.join('../flashcards.md')
 
-__all__ = ['card_strs']
+for root,dirs,files in os.walk('.'):
+    for item in fnmatch.filter(files, '*.md'):
+        file_path = os.path.join(root,item)
+
+cards_md = file_path
+
+__all__ = ['cards_md']

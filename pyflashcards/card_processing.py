@@ -1,11 +1,9 @@
 from collections import namedtuple
-
-from pyflashcards.cards import card_strs
+from pyflashcards.cards import cards_md
 
 FlashCard = namedtuple('FlashCard', ['question', 'answer', 'tags'])
 
-
-def str_to_cards(s):
+def md_to_cards(s):
     cards = []
     q, a, t = [False, False, False]
     q_t, a_t, t_t = ['', '', '']
@@ -13,7 +11,7 @@ def str_to_cards(s):
     for line in s.split('\n'):
         if line.startswith('---'):
             continue
-        if line.lower().startswith('question'):
+        if line.lower().startswith('# QUESTION'):
             if q:
                 cards.append(
                     FlashCard(question=q_t.strip(), answer=a_t.strip(),
@@ -24,10 +22,10 @@ def str_to_cards(s):
             else:
                 q = True
             continue
-        if line.lower().startswith('answer'):
+        if line.lower().startswith('# ANSWER'):
             a = True
             continue
-        if line.lower().startswith('tags'):
+        if line.lower().startswith('# TAGS'):
             t = True
             continue
         if q and not a:
@@ -48,17 +46,16 @@ def str_to_cards(s):
     return cards
 
 
-def gather_cards(card_strs=card_strs):
+def gather_cards(flashcards=cards_md):
+
     cards = []
-    for card_str in card_strs:
-        cards.extend(str_to_cards(card_str))
+
+    with open(flashcards) as c:
+
+        flashcards = c.readlines()
+
+        for flashcard in flashcards:
+
+            cards.extend(md_to_cards(flashcard))
 
     return cards
-
-# def tags(card_strs=card_strs):
-#     tags = set()
-#     for line in card_strs.split('\n'):
-#         if line.lower().startswith('tags'):
-#             tags.append(
-#                 tag = [t.strip() for t in tags]
-#                 )
