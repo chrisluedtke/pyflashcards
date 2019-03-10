@@ -1,11 +1,10 @@
 from collections import namedtuple
 
-from pyflashcards.cards import card_strs
 
 FlashCard = namedtuple('FlashCard', ['question', 'answer', 'tags'])
 
 
-def str_to_cards(s):
+def str_to_cards(s: str):
     cards = []
     q, a, t = [False, False, False]
     q_t, a_t, t_t = ['', '', '']
@@ -13,7 +12,7 @@ def str_to_cards(s):
     for line in s.split('\n'):
         if line.startswith('---'):
             continue
-        if line.lower().startswith('question'):
+        if line.lower().endswith('question'):
             if q:
                 cards.append(
                     FlashCard(question=q_t.strip(), answer=a_t.strip(),
@@ -24,10 +23,10 @@ def str_to_cards(s):
             else:
                 q = True
             continue
-        if line.lower().startswith('answer'):
+        if line.lower().endswith('answer'):
             a = True
             continue
-        if line.lower().startswith('tags'):
+        if line.lower().endswith('tags'):
             t = True
             continue
         if q and not a:
@@ -48,9 +47,9 @@ def str_to_cards(s):
     return cards
 
 
-def gather_cards(card_strs=card_strs):
-    cards = []
-    for card_str in card_strs:
-        cards.extend(str_to_cards(card_str))
-
+def get_cards_from_md(card_dir):
+    for file in card_dir.iterdir():
+        if str(file).endswith('.md'):
+            with open(str(file)) as f:
+                cards = str_to_cards(f.read())
     return cards

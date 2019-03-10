@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>pyflashcards</h1>
+    <p>Select flashcard categories to study:</p>
+
+    <script language="JavaScript">
+    function toggle(source) {
+        checkboxes = document.getElementsByName('tag');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+    </script>
+
+    <form method="post">
+        <input type="checkbox" onClick="toggle(this)">Select All<br>
+        {% for tag in tags %}
+        <input type="checkbox" name="tag" value="{{ tag }}">{{ tag }}<br>
+        {% endfor %}
+    <input type="submit">
+{% endblock %}

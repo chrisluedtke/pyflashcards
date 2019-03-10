@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Question</h1>
+    {{ question_html|safe }}
+
+    <h3>Show Answer</h3>
+    {{ answer_html|safe }}
+
+    <form method="post">
+    <input type="submit">
+    </form>
+{% endblock %}
