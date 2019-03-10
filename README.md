@@ -2,35 +2,31 @@
 
 A simple way to log and study python tidbits
 
+### Set up:
+Clone this repository:
 ```
-$pip install git+https://github.com/chrisluedtke/pyflashcards.git
-$python
->>> import pyflashcards
-Enter the tag(s) to study: pandas
-Found 6 flashcards. Enter any key to begin.
-
-__PROMPT_______________________________________________________________________
-
-Return the values of a pandas Series. What object type is it?
-
-
-Know it? y/n/quit: y
-
-__ANSWER_______________________________________________________________________
-
->>> data = pd.Series([1, 2, 3])
->>> data.values
-[1 2 3]
->>> type(data.values)
-<class 'numpy.ndarray'>
-
+git clone https://github.com/chrisluedtke/pyflashcards
 ```
 
-Within project repository:
+Within project repository, create a virtual environment:
 ```
 python -m venv venv
+```
+Activate the environment (Windows method):
+```
 venv\Scripts\activate
+```
+Install requirements:
+```
 pip install -r requirements.txt
-set FLASK_APP=hello.py
+```
+Set environment variable
+```
+set FLASK_APP=pyflashcards/app.py
+```
+Run web app:
+```
 flask run
 ```
+
+Navigate to the locally served page, and get to studying!
