@@ -1,55 +1,59 @@
-cards_python = """\
-QUESTION
+##### Question
 How could this code be improved?
-
+```python
 >>> ls = [1,2,3]
 >>> for i in range(ls):
 >>>     print(i, ls[i])
-
-ANSWER
+```
+##### Answer
+```python
 >>> for i, item in enumerate(ls):
 >>>     print(i, item)
-
-TAGS
+```
+##### Tags
 python, effective python
 
+---
 
-QUESTION
+##### Question
 How could this code be improved?
-
+```python
 >>> ls = [1,2,3]
 >>> if len(ls) != 0:
 >>>     do_something()
+```
 
-ANSWER
+##### Answer
 Empty strings and lists implicitly evaluate to False.
-
+```python
 >>> if ls:
 >>>     do_something()
-
-TAGS
+```
+##### Tags
 python, item 2, effective python
 
+---
 
-QUESTION
+##### Question
 What's wrong here?
-
+```python
 >>> ls = [[0] * 3] * 3
 >>> print(ls)
 [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 >>> ls[0][1] = 2
 >>> print(ls)
 >>> [[0, 2, 0], [0, 2, 0], [0, 2, 0]]
-
-ANSWER
+```
+##### Answer
 Lists don't contain objects - they contain references to objects.
-
+```python
 >>> ls_row = [0] * 3
 >>> ls = [ls_row.copy() for _ in range(3)]
 >>> ls[0][1] = 2
 >>> print(ls)
 [[0, 2, 0], [0, 0, 0], [0, 0, 0]]
-
-TAGS
+```
+##### Tags
 python, item 2, effective python
-"""
+
+---

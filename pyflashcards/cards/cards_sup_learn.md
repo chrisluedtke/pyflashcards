@@ -1,31 +1,34 @@
-cards_sup_learn = """\
-QUESTION
+##### Question
 What is a confusion matrix?
 
-ANSWER
+##### Answer
 A contingency table (AKA cross tabulation), where rows and columns
 represent the predicted class and the actual class.
 
-TAGS
+##### Tags
 supervised learning, classification, validation, unit 2
--------------------------
-QUESTION
+
+---
+
+##### Question
 What are true positives, false positives, true negatives, and
 false negatives?
 
-ANSWER
- true positives: predicted positive and actually positive
-false positives: predicted positive and actually negative
- true negatives: predicted negative and actually negative
-false negatives: predicted negative and actually positive
+##### Answer
+- _true positives_ -- predicted positive and actually positive
+- _false positives_ -- predicted positive and actually negative
+- _true negatives_ -- predicted negative and actually negative
+- _false negatives_ -- predicted negative and actually positive
 
-TAGS
+##### Tags
 supervised learning, classification, validation, unit 2
--------------------------
-QUESTION
-What is RECALL in classification models?
 
-ANSWER
+---
+
+##### Question
+What is **Recall** in classification models?
+
+##### Answer
 N true positives / N actual positives
  ~OR~
 N true positives / (N true positives + N false negatives)
@@ -33,13 +36,15 @@ N true positives / (N true positives + N false negatives)
 The percent of actual positives that we correctly
 labeled as positive.
 
-TAGS
+##### Tags
 supervised learning, classification, validation, unit 2
--------------------------
-QUESTION
-What is PRECISION in classification models?
 
-ANSWER
+---
+
+##### Question
+What is **Precision** in classification models?
+
+##### Answer
 N true positives / (N true positives + N false positives)
  ~OR~
 N true positives / N predicted positives
@@ -47,15 +52,19 @@ N true positives / N predicted positives
 The percent of our positive predictions that were actually
 positive.
 
-TAGS
+##### Tags
 supervised learning, classification, validation, unit 2
--------------------------
-QUESTION
+
+---
+
+##### Question
 What do we import to run logistic regression in sklearn?
 
-ANSWER
+##### Answer
+```python
 >>> from sklearn.linear_model import LogisticRegression
-
-TAGS
+```
+##### Tags
 supervised learning, classification, validation, unit 2
-"""
+
+---
