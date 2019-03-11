@@ -1,12 +1,33 @@
 {% extends "layout.html" %}
 {% block content %}
+    <script language="JavaScript">
+        function myFunction() {
+          var x = document.getElementById("myDIV");
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+        }
+    </script>
+
+    <form method="post">
+    <div class="btn-toolbar" role="toolbar">
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default" onclick="myFunction()">Show Answer</button>
+      </div>
+      <div class="btn-group mr-2" role="group">
+        <button type="submit" class="btn btn-success">Know it</button>
+        <button type="submit" class="btn btn-warning">Don't know it</button>
+      </div>
+    </div>
+    </form>
+
     <h1>Question</h1>
     {{ question_html|safe }}
 
-    <h3>Show Answer</h3>
-    {{ answer_html|safe }}
-
-    <form method="post">
-    <input type="submit">
-    </form>
+    <div id="myDIV" style="display:none;">
+      <h1>Answer</h1>
+      {{ answer_html|safe }}
+    </div>
 {% endblock %}
