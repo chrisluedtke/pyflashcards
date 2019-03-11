@@ -30,3 +30,7 @@ set FLASK_APP=pyflashcards/app.py
 flask run
 ```
 8. Navigate to the locally served page, and get to studying!
+
+### Deploy to Heroku
+1. Fork this repository to your GitHub account.
+2. On Heroku, connect your GitHub account, and create an app that syncs with your forked repository.
