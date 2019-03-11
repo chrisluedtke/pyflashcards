@@ -13,9 +13,11 @@
     </script>
 
     <form method="post">
-        <input type="checkbox" onClick="toggle(this)">Select All<br>
-        {% for tag in tags %}
-        <input type="checkbox" name="tag" value="{{ tag }}">{{ tag }}<br>
-        {% endfor %}
+        <ul style="list-style: none;">
+            <li><label><input type="checkbox" onClick="toggle(this)"> Toggle All</label></li>
+            {% for tag in tags %}
+            <li><label><input type="checkbox" name="tag" value="{{ tag }}"> {{ tag }}</label></li>
+            {% endfor %}
+        </ul>
     <input type="submit">
 {% endblock %}
