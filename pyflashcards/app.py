@@ -27,7 +27,7 @@ def home():
     tags = []
     for card in cards:
         tags.extend(card.tags)
-    tags = sorted(list(set(tags)))
+    tags = sorted(list(set(tags) - set([''])))
 
     return render_template('home.html', tags=tags)
 
