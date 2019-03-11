@@ -114,3 +114,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 README.html
+*/cards/*.html

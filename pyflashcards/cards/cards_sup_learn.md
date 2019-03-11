@@ -29,10 +29,10 @@ supervised learning, classification, validation, unit 2
 What is **Recall** in classification models?
 
 ##### Answer
-N true positives / N actual positives
- ~OR~
-N true positives / (N true positives + N false negatives)
- ~OR~
+`N true positives / N actual positives`
+*OR*
+`N true positives / (N true positives + N false negatives)``
+*OR*
 The percent of actual positives that we correctly
 labeled as positive.
 
@@ -45,10 +45,14 @@ supervised learning, classification, validation, unit 2
 What is **Precision** in classification models?
 
 ##### Answer
-N true positives / (N true positives + N false positives)
- ~OR~
-N true positives / N predicted positives
- ~OR~
+`N true positives / (N true positives + N false positives)`
+
+*OR*
+
+`N true positives / N predicted positives`
+
+*OR*
+
 The percent of our positive predictions that were actually
 positive.
 
