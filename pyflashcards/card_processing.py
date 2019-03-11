@@ -1,10 +1,11 @@
 from collections import namedtuple
+from typing import List
 
 
 FlashCard = namedtuple('FlashCard', ['question', 'answer', 'tags'])
 
 
-def str_to_cards(s: str):
+def str_to_cards(s: str) -> List[FlashCard]:
     cards = []
     q, a, t = [False, False, False]
     q_t, a_t, t_t = ['', '', '']
@@ -47,9 +48,10 @@ def str_to_cards(s: str):
     return cards
 
 
-def get_cards_from_md(card_dir):
+def get_cards_from_md(card_dir: str) -> List[FlashCard]:
+    cards = []
     for file in card_dir.iterdir():
         if str(file).endswith('.md'):
             with open(str(file)) as f:
-                cards = str_to_cards(f.read())
+                cards.extend(str_to_cards(f.read()))
     return cards
