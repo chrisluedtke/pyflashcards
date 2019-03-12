@@ -2,34 +2,47 @@ import os
 from pathlib import Path
 import random
 
-from flask import Flask, redirect, render_template, request, url_for
+from flask import redirect, render_template, request, url_for
 import markdown
 
-from .card_processing import get_cards_from_md
+from pyflashcards import app
+from pyflashcards.card_processing import get_cards_from_md
 
 CARDS_DIR = Path(__file__).parent / 'cards'
 
-app = Flask(__name__)
-
+# TODO, refactor decks to class or everything to database
 
 @app.route('/', methods=('GET', 'POST'))
 def home():
-    global cards
-    cards = get_cards_from_md(CARDS_DIR)
+    global deck_dict
+    deck_dict = get_cards_from_md(CARDS_DIR)
 
     if request.method == 'POST':
         requested_tags = request.form.getlist('tag')
-        cards = [card for card in cards
-                 if set(requested_tags) & set(card.tags)]
+
+        global cards
+        cards = []
+        for deckname, deck in deck_dict.items():
+            filt_deck = [card for card in deck
+                         if set(requested_tags) & set(card.tags)]
+            cards.extend(filt_deck)
+
         random.shuffle(cards)
+
         return redirect(url_for('flashcard'))
 
-    tags = []
-    for card in cards:
-        tags.extend(card.tags)
-    tags = sorted(list(set(tags) - set([''])))
+    global deck_tags
+    try:
+        deck_tags
+    except NameError:
+        deck_tags = {}
+        for deckname, deck in deck_dict.items():
+            tags = []
+            for card in deck:
+                tags.extend(card.tags)
+            deck_tags[deckname] = sorted(list(set(tags)))
 
-    return render_template('home.html', tags=tags)
+    return render_template('home.html', deck_tags=deck_tags)
 
 
 @app.route('/flashcard', methods=('GET', 'POST'))
