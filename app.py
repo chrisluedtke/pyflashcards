@@ -1,1 +1,1 @@
-from pyflashcards import app
+from pyflashcards import app # noqa
