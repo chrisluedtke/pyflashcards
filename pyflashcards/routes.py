@@ -5,12 +5,11 @@ import random
 from flask import redirect, render_template, request, url_for
 import markdown
 
-from pyflashcards import app
+from pyflashcards import app # noqa
 from pyflashcards.card_processing import get_cards_from_md
 
 CARDS_DIR = Path(__file__).parent / 'cards'
 
-# TODO, refactor decks to class or everything to database
 
 @app.route('/', methods=('GET', 'POST'))
 def home():

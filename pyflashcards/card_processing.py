@@ -55,5 +55,5 @@ def get_cards_from_md(card_dir: str):
             filename = filepath.name.strip('.md')
             with open(str(filepath)) as f:
                 cards[filename] = str_to_cards(f.read())
-                
+
     return cards
