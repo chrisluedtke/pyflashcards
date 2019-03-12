@@ -4,11 +4,13 @@ How do you find the **determinant** of a Matrix?
 ##### Answer
 The determinant is a property that all square matrices possess, denoted with pipes (i.e. |A|).
 
-The determinant can be found with the equation:
+Given matrix A:
 ```
  A  = [[a, b]
-      [c, d]]
-
+       [c, d]]
+```
+The determinant is:
+```
 |A| = ad - bc
 ```
 
