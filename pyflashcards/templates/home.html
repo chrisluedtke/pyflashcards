@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>pyflashcards</h1>
     <p>Select flashcard categories to study:</p>
 
     <script language="JavaScript">
@@ -15,9 +14,15 @@
     <form method="post">
         <ul style="list-style: none;">
             <li><label><input type="checkbox" onClick="toggle(this)"> Toggle All</label></li>
-            {% for tag in tags %}
-            <li><label><input type="checkbox" name="tag" value="{{ tag }}"> {{ tag }}</label></li>
+            {% for deck_name, tags in deck_tags.items() %}
+            <li><label><input type="checkbox" name="deck_name" value="{{ deck_name }}"> {{ deck_name }}</label></li>
+                <ul style="list-style: none;">
+                    {% for tag in tags %}
+                    <li><label><input type="checkbox" name="tag" value="{{ tag }}"> {{ tag }}</label></li>
+                    {% endfor %}
+                </ul>
             {% endfor %}
         </ul>
-    <input type="submit">
+        <button type="submit" class="btn btn-success">Start Quiz</button>
+    </form>
 {% endblock %}
