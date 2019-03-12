@@ -1,1 +1,1 @@
-web: gunicorn pyflashcards.app:app
+web: gunicorn app
