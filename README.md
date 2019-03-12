@@ -3,7 +3,7 @@
 A simple way to log and study python tidbits
 
 ### Set up
-1. Clone this repository:
+1. Clone this repository (fork it first if you want to deploy to Heroku):
 ```
 git clone https://github.com/chrisluedtke/pyflashcards
 ```
@@ -13,7 +13,7 @@ git clone https://github.com/chrisluedtke/pyflashcards
 ```
 python -m venv venv
 ```
-4. Activate the environment (Windows method):
+4. Activate the environment:
 ```
 venv\Scripts\activate
 ```
@@ -21,15 +21,11 @@ venv\Scripts\activate
 ```
 pip install -r requirements.txt
 ```
-6. Set environment variable (Windows method):
-```
-set FLASK_APP=pyflashcards/app.py
-```
-7. Run web app:
+6. Run web app:
 ```
 flask run
 ```
-8. Navigate to the locally served page, and get to studying!
+7. Navigate to the locally served page, typically `http://localhost:5000/`
 
 ### Deploy to Heroku
 1. Fork this repository to your GitHub account.
