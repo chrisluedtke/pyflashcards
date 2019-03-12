@@ -48,10 +48,12 @@ def str_to_cards(s: str) -> List[FlashCard]:
     return cards
 
 
-def get_cards_from_md(card_dir: str) -> List[FlashCard]:
-    cards = []
-    for file in card_dir.iterdir():
-        if str(file).endswith('.md'):
-            with open(str(file)) as f:
-                cards.extend(str_to_cards(f.read()))
+def get_cards_from_md(card_dir: str):
+    cards = {}
+    for filepath in card_dir.iterdir():
+        if str(filepath).endswith('.md'):
+            filename = filepath.name.strip('.md')
+            with open(str(filepath)) as f:
+                cards[filename] = str_to_cards(f.read())
+                
     return cards
