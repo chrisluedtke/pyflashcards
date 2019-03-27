@@ -2,7 +2,7 @@
 
 A simple way to log and study python tidbits
 
-### Set up
+### Set up - Local Python
 1. Clone this repository (fork it first if you want to deploy to Heroku):
 ```
 git clone https://github.com/chrisluedtke/pyflashcards
@@ -26,6 +26,17 @@ pip install -r requirements.txt
 flask run
 ```
 7. Navigate to the locally served page, typically `http://localhost:5000/`
+
+### Set up - Local Docker
+1. Clone this repository
+2. Within project repository, build the image
+```
+docker build -t pyflashcards:latest .
+```
+3. Run the container
+```
+docker run -p 8000:8000 pyflashcards:latest
+```
 
 ### Deploy to Heroku
 1. Fork this repository to your GitHub account.

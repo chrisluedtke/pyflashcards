@@ -1,12 +1,46 @@
 from collections import namedtuple
+from pathlib import Path
 from typing import List
 
+# from sqlite3 import IntegrityError
+from sqlalchemy.exc import IntegrityError
 
-FlashCard = namedtuple('FlashCard', ['question', 'answer', 'tags'])
+from pyflashcards import db
+from pyflashcards.models import FlashCard, Tag, Deck
 
 
-def str_to_cards(s: str) -> List[FlashCard]:
-    cards = []
+CARDS_DIR = Path(__file__).parent / 'cards'
+
+def add_to_db(question, answer, tags, deck):
+    result = db.session.query(FlashCard).filter(FlashCard.question==question).all()
+    if not result:
+        fc = FlashCard(
+            question=question,
+            answer=answer,
+        )
+        db.session.add(fc)
+        db.session.commit()
+    else:
+        fc = result[0]
+
+    for tag in tags:
+        result = db.session.query(Tag).filter(Tag.name==tag).all()
+        if not result:
+            t = Tag(name=tag)
+            db.session.add(t)
+            db.session.commit()
+        else:
+            t = result[0]
+        
+        fc.tags.append(t)
+
+    deck.flashcards.append(fc)
+    db.session.commit()
+
+    return None
+
+
+def deck_str_to_db(s: str, deck: Deck) -> None:
     q, a, t = [False, False, False]
     q_t, a_t, t_t = ['', '', '']
 
@@ -15,9 +49,11 @@ def str_to_cards(s: str) -> List[FlashCard]:
             continue
         if line.lower().endswith('question'):
             if q:
-                cards.append(
-                    FlashCard(question=q_t.strip(), answer=a_t.strip(),
-                              tags=[x.strip() for x in t_t.split(',')])
+                add_to_db(
+                    question=q_t.strip(),
+                    answer=a_t.strip(),
+                    tags=[x.strip() for x in t_t.split(',')],
+                    deck=deck,
                 )
                 a, t = [False, False]
                 q_t, a_t, t_t = ['', '', '']
@@ -40,20 +76,32 @@ def str_to_cards(s: str) -> List[FlashCard]:
             t_t += '\n' + line
             continue
 
-    cards.append(
-        FlashCard(question=q_t.strip(), answer=a_t.strip(),
-                  tags=[x.strip() for x in t_t.split(',')])
+    add_to_db(
+        question=q_t.strip(),
+        answer=a_t.strip(),
+        tags=[x.strip() for x in t_t.split(',')],
+        deck=deck,
     )
 
-    return cards
+    return None
 
 
-def get_cards_from_md(card_dir: str):
-    cards = {}
-    for filepath in card_dir.iterdir():
+def load_md_files_to_db(cards_dir: str = CARDS_DIR):
+    for filepath in cards_dir.iterdir():
         if str(filepath).endswith('.md'):
             filename = filepath.name.strip('.md')
             with open(str(filepath)) as f:
-                cards[filename] = str_to_cards(f.read())
+                result = Deck.query.filter(Deck.name==filename).all()
+                if not result:
+                    deck = Deck(name=filename)
+                    db.session.add(deck)
+                    db.session.commit()
+                elif len(result) > 1:
+                    raise Exception('More than one deck matched the file name')
+                else:
+                    deck = result[0]
 
-    return cards
+                text = f.read()
+                deck_str_to_db(s=text, deck=deck)
+
+    return None

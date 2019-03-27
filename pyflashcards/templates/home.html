@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+    <!-- try this method: https://codepen.io/ibanez182/pen/WxKABq -->
     <p>Select flashcard categories to study:</p>
 
     <script language="JavaScript">
@@ -10,6 +11,10 @@
         }
     }
     </script>
+
+    <form method="post">
+        <button type="submit" name="populate" class="btn btn-success">Populate Database</button>
+    </form>
 
     <form method="post">
         <ul style="list-style: none;">
@@ -23,6 +28,6 @@
                 </ul>
             {% endfor %}
         </ul>
-        <button type="submit" class="btn btn-success">Start Quiz</button>
+        <button type="submit" class="btn btn-success" name="start_quiz">Start Quiz</button>
     </form>
 {% endblock %}

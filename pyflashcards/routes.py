@@ -1,44 +1,43 @@
+from collections import defaultdict
 from pathlib import Path
 import random
 
 from flask import redirect, render_template, request, url_for
 import markdown
 
-from pyflashcards import app # noqa
-from pyflashcards.card_processing import get_cards_from_md
-
-CARDS_DIR = Path(__file__).parent / 'cards'
+from pyflashcards import app, db  # noqa
+from pyflashcards.models import FlashCard, Deck, Tag
+from pyflashcards.card_processing import load_md_files_to_db
 
 
 @app.route('/', methods=('GET', 'POST'))
 def home():
-    global deck_dict
-    deck_dict = get_cards_from_md(CARDS_DIR)
-
-    if request.method == 'POST':
+    if request.method == 'POST' and 'start_quiz' in request.form:
         requested_tags = request.form.getlist('tag')
 
+        # TODO refactor this
         global cards
-        cards = []
-        for deckname, deck in deck_dict.items():
-            filt_deck = [card for card in deck
-                         if set(requested_tags) & set(card.tags)]
-            cards.extend(filt_deck)
-
+        cards = FlashCard.query.all()
+        filtered = []
+        for card in cards:
+            for tag in card.tags:
+                if tag.name in requested_tags:
+                    filtered.append(card)
+                    continue
+        cards = filtered
         random.shuffle(cards)
 
         return redirect(url_for('flashcard'))
 
-    global deck_tags
-    try:
-        deck_tags
-    except NameError:
-        deck_tags = {}
-        for deckname, deck in deck_dict.items():
-            tags = []
-            for card in deck:
-                tags.extend(card.tags)
-            deck_tags[deckname] = sorted(list(set(tags)))
+    if request.method == 'POST' and 'populate' in request.form:
+        load_md_files_to_db()
+        return redirect(url_for('home'))
+
+    deck_tags = {}
+    decks = Deck.query.all()
+    for deck in decks:
+        tags = Tag.query.filter(Tag.flashcards.any(FlashCard.deck_id == deck.id)).all()
+        deck_tags[deck.name] = sorted([tag.name for tag in tags])
 
     return render_template('home.html', deck_tags=deck_tags)
 

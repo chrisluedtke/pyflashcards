@@ -113,5 +113,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# this repo
 README.html
 */cards/*.html
+migrations*
+*/app.db
