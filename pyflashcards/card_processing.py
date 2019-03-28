@@ -1,9 +1,4 @@
-from collections import namedtuple
 from pathlib import Path
-from typing import List
-
-# from sqlite3 import IntegrityError
-from sqlalchemy.exc import IntegrityError
 
 from pyflashcards import db
 from pyflashcards.models import FlashCard, Tag, Deck
@@ -11,8 +6,10 @@ from pyflashcards.models import FlashCard, Tag, Deck
 
 CARDS_DIR = Path(__file__).parent / 'cards'
 
+
 def add_to_db(question, answer, tags, deck):
-    result = db.session.query(FlashCard).filter(FlashCard.question==question).all()
+    result = (db.session.query(FlashCard)
+                .filter(FlashCard.question == question).all())
     if not result:
         fc = FlashCard(
             question=question,
@@ -24,14 +21,14 @@ def add_to_db(question, answer, tags, deck):
         fc = result[0]
 
     for tag in tags:
-        result = db.session.query(Tag).filter(Tag.name==tag).all()
+        result = db.session.query(Tag).filter(Tag.name == tag).all()
         if not result:
             t = Tag(name=tag)
             db.session.add(t)
             db.session.commit()
         else:
             t = result[0]
-        
+
         fc.tags.append(t)
 
     deck.flashcards.append(fc)
@@ -91,7 +88,7 @@ def load_md_files_to_db(cards_dir: str = CARDS_DIR):
         if str(filepath).endswith('.md'):
             filename = filepath.name.strip('.md')
             with open(str(filepath)) as f:
-                result = Deck.query.filter(Deck.name==filename).all()
+                result = Deck.query.filter(Deck.name == filename).all()
                 if not result:
                     deck = Deck(name=filename)
                     db.session.add(deck)

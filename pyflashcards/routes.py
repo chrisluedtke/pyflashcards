@@ -1,5 +1,3 @@
-from collections import defaultdict
-from pathlib import Path
 import random
 
 from flask import redirect, render_template, request, url_for
@@ -36,7 +34,9 @@ def home():
     deck_tags = {}
     decks = Deck.query.all()
     for deck in decks:
-        tags = Tag.query.filter(Tag.flashcards.any(FlashCard.deck_id == deck.id)).all()
+        tags = Tag.query.filter(
+            Tag.flashcards.any(FlashCard.deck_id == deck.id)
+        ).all()
         deck_tags[deck.name] = sorted([tag.name for tag in tags])
 
     return render_template('home.html', deck_tags=deck_tags)
