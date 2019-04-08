@@ -2,14 +2,27 @@
     <head>
         <title>pyflashcards</title>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/picnic">
     </head>
     <body>
-        <h1>pyflashcards</h1>
-        <hr>
-        <div id="content" style="width:400px">{% block content %}{% endblock %}</div>
+        <nav class="transparent">
+            <a href="/" class="brand">
+                <span>pyFlashcards</span>
+            </a>
+
+              <!-- responsive-->
+            <input id="bmenub" type="checkbox" class="show">
+            <label for="bmenub" class="burger pseudo button">&#8801;</label>
+            
+            <div class="menu">
+                <a href="https://github.com/chrisluedtke/pyflashcards" class="pseudo button">GitHub</a>
+                <a href="#" class="pseudo button">Populate Database</a>
+                <a href="#" class="pseudo button">Log In</a>
+            </div>
+        </nav>
+        <div style="width: 400px; margin: auto; margin-top: 100px;">
+            {% block content %}
+            {% endblock %}
+        </div>
     </body>
 </html>

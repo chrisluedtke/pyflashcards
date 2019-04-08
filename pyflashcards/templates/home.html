@@ -1,8 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
     <!-- try this method: https://codepen.io/ibanez182/pen/WxKABq -->
-    <p>Select flashcard categories to study:</p>
-
     <script language="JavaScript">
     function toggle(source) {
         checkboxes = document.getElementsByName('tag');
@@ -12,22 +10,40 @@
     }
     </script>
 
-    <form method="post">
-        <button type="submit" name="populate" class="btn btn-success">Populate Database</button>
-    </form>
+    <div class="card">
+        <form method="post">
+        <header>
+            <h3>Select categories to study</h4>
+        </header>
+        <section style="height: 300px; overflow: auto">
+            <!-- <label>
+                <input type="checkbox">
+                <span class="toggle button">Toggle All</span>
+            </label>
+            <br> -->
 
-    <form method="post">
-        <ul style="list-style: none;">
-            <li><label><input type="checkbox" onClick="toggle(this)"> Toggle All</label></li>
             {% for deck_name, tags in deck_tags.items() %}
-            <li><label><input type="checkbox" name="deck_name" value="{{ deck_name }}"> {{ deck_name }}</label></li>
-                <ul style="list-style: none;">
-                    {% for tag in tags %}
-                    <li><label><input type="checkbox" name="tag" value="{{ tag }}"> {{ tag }}</label></li>
-                    {% endfor %}
-                </ul>
+                <!-- <label>
+                    <input type="checkbox" name="deck_name" value="{{ deck_name }}">
+                    <span class="checkable">{{ deck_name }}</span>
+                </label>
+                <br> -->
+                <p>{{ deck_name }}</p>
+                <div style="margin-left: 25px">
+                {% for tag in tags %}
+                    <label>
+                        <input type="checkbox" name="tag" value="{{ tag }}">
+                        <span class="checkable">{{ tag }}</span>
+                    </label>
+                    <br>
+                {% endfor %}
+                </div>
             {% endfor %}
-        </ul>
-        <button type="submit" class="btn btn-success" name="start_quiz">Start Quiz</button>
+        </section>
+    </div>
+            
+    <button type="submit" class="success" style="width:100%" name="start_quiz">Start Quiz</button>
+            
     </form>
+    
 {% endblock %}

@@ -11,7 +11,7 @@ How could this code be improved?
 >>>     print(i, item)
 ```
 ##### Tags
-python, effective python
+effective python
 
 ---
 
@@ -30,7 +30,7 @@ Empty strings and lists implicitly evaluate to False.
 >>>     do_something()
 ```
 ##### Tags
-python, item 2, effective python
+item 2, effective python
 
 ---
 
@@ -54,6 +54,6 @@ Lists don't contain objects - they contain references to objects.
 [[0, 2, 0], [0, 0, 0], [0, 0, 0]]
 ```
 ##### Tags
-python, item 2, effective python
+item 2, effective python
 
 ---

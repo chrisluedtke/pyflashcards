@@ -1,8 +1,7 @@
 from pathlib import Path
 
 from pyflashcards import db
-from pyflashcards.models import FlashCard, Tag, Deck
-
+from pyflashcards.models import Deck, FlashCard, Tag
 
 CARDS_DIR = Path(__file__).parent / 'cards'
 

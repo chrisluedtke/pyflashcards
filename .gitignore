@@ -119,3 +119,4 @@ README.html
 */cards/*.html
 migrations*
 */app.db
+.vscode/*
