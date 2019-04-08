@@ -2,9 +2,9 @@
 What are **vertical** and **horizontal scaling**?
 
 ##### Answer
-Vertical - more powerful central server
+Vertical - more powerful single machine
 
-Horizontal - more users
+Horizontal - distributed systems
 
 ---
 
