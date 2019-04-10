@@ -13,19 +13,17 @@ def home():
     if request.method == 'POST' and 'start_quiz' in request.form:
         requested_tags = request.form.getlist('tag')
 
-        # TODO refactor this
-        global cards
-        cards = FlashCard.query.all()
-        filtered = []
-        for card in cards:
+        # TODO refactor this to database
+        global to_study_ids
+        to_study_ids = []
+        for card in FlashCard.query.all():
             for tag in card.tags:
                 if tag.name in requested_tags:
-                    filtered.append(card)
+                    to_study_ids.append(card.id)
                     continue
-        cards = filtered
-        random.shuffle(cards)
+        random.shuffle(to_study_ids)
 
-        return redirect(url_for('flashcard'))
+        return redirect(url_for('flashcard', id=to_study_ids[0]))
 
     if request.method == 'POST' and 'populate' in request.form:
         load_md_files_to_db()
@@ -42,17 +40,28 @@ def home():
     return render_template('home.html', deck_tags=deck_tags)
 
 
-@app.route('/flashcard', methods=('GET', 'POST'))
-def flashcard():
-    global cards
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
     if request.method == 'POST':
-        cards.pop(0)
-        return redirect(url_for('flashcard'))
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid Credentials. Please try again.'
+        else:
+            return redirect(url_for('home'))
+    return render_template('login.html', error=error)
 
-    if not cards:
-        return redirect(url_for('complete'))
 
-    card = cards[0]
+@app.route('/flashcard/<int:id>', methods=('GET', 'POST'))
+def flashcard(id):
+    global to_study_ids
+    if request.method == 'POST':
+        to_study_ids.pop(0)
+        if not to_study_ids:
+            return redirect(url_for('complete'))
+        else:
+            return redirect(url_for('flashcard', id=to_study_ids[0]))
+
+    card = FlashCard.query.filter(FlashCard.id==id)[0]
     question_html = markdown.markdown(
         card.question,
         extensions=['markdown.extensions.fenced_code']

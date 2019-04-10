@@ -1,31 +1,30 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="tabs two">
-      <input id='tab-1' type='radio' name='tabgroupB' checked />
-      <label class="pseudo button toggle" for="tab-1">Question</label>
-      <input id='tab-2' type='radio' name='tabgroupB'>
-      <label class="pseudo button toggle" for="tab-2">Answer</label>
-      <div class="row" style="height: 100px;">
-        <div class="card">
-          <section style="height: 200px; overflow: auto">
-            {{ question_html|safe }}
-          </section>
-        </div>
-    
-        <div class="card">
-          <section style="height: 200px; overflow: auto">
-            {{ answer_html|safe }}
-          </section>
-        </div>
-    
+<!-- Questio/Answer tabs -->
+  <div class="tabs two">
+    <input id='tab-1' type='radio' name='tabgroupB' checked />
+    <label class="pseudo button toggle" for="tab-1">Question</label>
+    <input id='tab-2' type='radio' name='tabgroupB'>
+    <label class="pseudo button toggle" for="tab-2">Answer</label>
+    <div class="row" style="height: 100px;">
+      <div class="card">
+        <section style="height: 200px; overflow: auto">
+          {{ question_html|safe }}
+        </section>
+      </div>
+      <div class="card">
+        <section style="height: 200px; overflow: auto">
+          {{ answer_html|safe }}
+        </section>
       </div>
     </div>
+  </div>
 
-    <form method="post">
-      <div>
-          <button type="submit" class="success" style="width: 49%">Know it</button>
-          <button type="submit" class="warning" style="width: 49%; float: right">Don't know it</button>
-      </div>
-    </form>
-
+  <!-- Buttons -->
+  <form method="post">
+    <div>
+        <button type="submit" class="success" style="width: 49%">Know it</button>
+        <button type="submit" class="warning" style="width: 49%; float: right">Don't know it</button>
+    </div>
+  </form>
 {% endblock %}

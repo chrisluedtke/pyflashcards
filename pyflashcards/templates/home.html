@@ -1,49 +1,48 @@
 {% extends "layout.html" %}
 {% block content %}
     <!-- try this method: https://codepen.io/ibanez182/pen/WxKABq -->
-    <script language="JavaScript">
+    <!-- <script language="JavaScript">
     function toggle(source) {
         checkboxes = document.getElementsByName('tag');
         for(var i=0, n=checkboxes.length;i<n;i++) {
             checkboxes[i].checked = source.checked;
         }
     }
-    </script>
+    </script> -->
 
-    <div class="card">
-        <form method="post">
-        <header>
-            <h3>Select categories to study</h4>
-        </header>
-        <section style="height: 300px; overflow: auto">
-            <!-- <label>
-                <input type="checkbox">
-                <span class="toggle button">Toggle All</span>
-            </label>
-            <br> -->
-
-            {% for deck_name, tags in deck_tags.items() %}
+    <form method="post">
+        <div class="card">
+            <header>
+                <h3>Select categories to study</h4>
+            </header>
+            <section style="height: 300px; overflow: auto">
                 <!-- <label>
-                    <input type="checkbox" name="deck_name" value="{{ deck_name }}">
-                    <span class="checkable">{{ deck_name }}</span>
+                    <input type="checkbox">
+                    <span class="toggle button">Toggle All</span>
                 </label>
                 <br> -->
-                <p>{{ deck_name }}</p>
-                <div style="margin-left: 25px">
-                {% for tag in tags %}
-                    <label>
-                        <input type="checkbox" name="tag" value="{{ tag }}">
-                        <span class="checkable">{{ tag }}</span>
+
+                {% for deck_name, tags in deck_tags.items() %}
+                    <!-- <label>
+                        <input type="checkbox" name="deck_name" value="{{ deck_name }}">
+                        <span class="checkable">{{ deck_name }}</span>
                     </label>
-                    <br>
+                    <br> -->
+                    <p>{{ deck_name }}</p>
+                    <div style="margin-left: 25px">
+                    {% for tag in tags %}
+                        <label>
+                            <input type="checkbox" name="tag" value="{{ tag }}">
+                            <span class="checkable">{{ tag }}</span>
+                        </label>
+                        <br>
+                    {% endfor %}
+                    </div>
                 {% endfor %}
-                </div>
-            {% endfor %}
-        </section>
-    </div>
-            
-    <button type="submit" class="success" style="width:100%" name="start_quiz">Start Quiz</button>
+            </section>
+        </div>
+                
+        <button type="submit" class="success" style="width:100%" name="start_quiz">Start Quiz</button>
             
     </form>
-    
 {% endblock %}
