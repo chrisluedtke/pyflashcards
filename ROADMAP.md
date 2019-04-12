@@ -1,7 +1,5 @@
 Features to Implement
-* create login route and template
-* create users table
-* create user_card
+* create user_card table and track card interactions
     * user_id
     * card_id
     * curr_box_number = db.Column(db.Integer, default=0)

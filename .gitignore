@@ -120,3 +120,4 @@ README.html
 migrations*
 */app.db
 .vscode/*
+snippets.txt

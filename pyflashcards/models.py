@@ -11,6 +11,16 @@ FlashCard_Tag_assoc = DB.Table(
 )
 
 
+class User(DB.Model):
+    __tablename__ = 'User'
+    user_id = DB.Column(DB.Integer, primary_key=True)
+    username = DB.Column(DB.String(100), unique=True)
+    password = DB.Column(DB.String(100), unique=True)
+
+    def __repr__(self):
+        return f'<User {self.username}>'
+
+
 class Deck(DB.Model):
     __tablename__ = 'Deck'
     id = DB.Column(DB.Integer, primary_key=True)

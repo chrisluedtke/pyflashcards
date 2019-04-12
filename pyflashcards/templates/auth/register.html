@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+    <form action="" method="post">
+        <div class="card">
+            <header>
+                <h3>Register</h3>
+            </header>
+            <section>
+                <span>Username</span>
+                <input name="username" value="{{ request.form.username }}">
+            </section>
+            <section>
+                <span>Password</span>
+                <input name="password" value="{{ request.form.password }}" type="password">
+            </section>
+            <footer>
+                <button type="submit" style="width:100%">Submit</button>
+            </footer>
+        </div>
+    </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <p style="text-align: center;">
+            <strong>Error:</strong> {{ message }}
+    </p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+{% endblock %}

@@ -1,8 +1,18 @@
+<!doctype html>
 <html>
     <head>
         <title>pyflashcards</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://unpkg.com/picnic">
+        <script>
+            /* Close modals with esc */
+            document.onkeydown = function(e){
+                if (e.keyCode == 27) {
+                    var mods = document.querySelectorAll('.modal > [type=checkbox]');
+                    [].forEach.call(mods, function(mod){ mod.checked = false; });
+                }
+            }
+        </script>
     </head>
     <body>
         <nav class="transparent">
@@ -10,13 +20,17 @@
                 <span>pyFlashcards</span>
             </a>
 
-            <input id="bmenub" type="checkbox" class="show"/>
+            <input id="bmenub" type="checkbox" class="show">
             <label for="bmenub" class="burger pseudo button">&#8801;</label>
-            
+
             <div class="menu">
                 <a href="https://github.com/chrisluedtke/pyflashcards" class="pseudo button">GitHub</a>
-                <a href="/reset" class="pseudo button">Manage Database</a>
-                <a href="/login" class="pseudo button">Log In</a>
+                {% if g.user %}
+                    <a href="#" class="pseudo button" class="pseudo button">Dashboard</a>
+                    <a href="{{ url_for('auth.logout') }}" class="error button">Log Out</a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="button">Log In</a>
+                {% endif %}
             </div>
         </nav>
         <div style="width: 400px; margin: auto; margin-top: 100px;">

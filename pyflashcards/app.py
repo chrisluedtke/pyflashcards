@@ -1,21 +1,24 @@
 import random
 
-from flask import Flask, redirect, render_template, request, url_for
 import markdown
+from flask import Flask, redirect, render_template, request, url_for
 
-from .config import Config
-from .models import DB, FlashCard, Deck, Tag
+from . import auth
 from .card_processing import load_md_files_to_db
+from .config import Config
+from .models import DB, Deck, FlashCard, Tag, User
 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    app.register_blueprint(auth.bp)
     DB.init_app(app)
 
     @app.shell_context_processor
     def make_shell_context():
-        return {'DB': DB, 'FlashCard': FlashCard, 'Tag': Tag, 'Deck': Deck}
+        return {'DB': DB, 'FlashCard': FlashCard, 'Tag': Tag, 'Deck': Deck,
+                'User': User}
 
     @app.route('/reset')
     def reset():
@@ -50,17 +53,6 @@ def create_app():
 
         return render_template('index.html', deck_tags=deck_tags)
 
-    @app.route('/login', methods=['GET', 'POST'])
-    def login():
-        error = None
-        if request.method == 'POST':
-            if (request.form['username'] != 'admin' or
-                    request.form['password'] != 'admin'):
-                error = 'Invalid Credentials. Please try again.'
-            else:
-                return redirect(url_for('root'))
-        return render_template('login.html', error=error)
-
     @app.route('/flashcard/<int:id>', methods=('GET', 'POST'))
     def flashcard(id):
         global to_study_ids
@@ -71,7 +63,7 @@ def create_app():
             else:
                 return redirect(url_for('flashcard', id=to_study_ids[0]))
 
-        card = FlashCard.query.filter(FlashCard.id == id)[0]
+        card = FlashCard.query.filter(FlashCard.id == id).one()
         question_html = markdown.markdown(
             card.question,
             extensions=['markdown.extensions.fenced_code']

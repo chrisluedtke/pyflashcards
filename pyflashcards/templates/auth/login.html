@@ -7,20 +7,31 @@
             </header>
             <section>
                 <span>Username</span>
-                <input name="username" value="{{ request.form.username }}"/>
+                <input name="username" value="{{ request.form.username }}">
             </section>
             <section>
                 <span>Password</span>
-                <input name="password" value="{{ request.form.password }}"/>
+                <input name="password" value="{{ request.form.password }}" type="password">
             </section>
             <footer>
                 <button type="submit" style="width:100%">Submit</button>
             </footer>
         </div>
     </form>
-    {% if error %}
     <p style="text-align: center;">
-        <strong>Error:</strong> {{ error }}
+        Don't have an account? 
+        <a href="/auth/register">
+            Register here
+        </a>
     </p>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <p style="text-align: center;">
+            <strong>Error:</strong> {{ message }}
+    </p>
+    {% endfor %}
     {% endif %}
+    {% endwith %}
 {% endblock %}
