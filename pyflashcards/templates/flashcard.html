@@ -1,10 +1,9 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 {% block content %}
-<!-- Questio/Answer tabs -->
   <div class="tabs two">
     <input id='tab-1' type='radio' name='tabgroupB' checked />
     <label class="pseudo button toggle" for="tab-1">Question</label>
-    <input id='tab-2' type='radio' name='tabgroupB'>
+    <input id='tab-2' type='radio' name='tabgroupB'/>
     <label class="pseudo button toggle" for="tab-2">Answer</label>
     <div class="row" style="height: 100px;">
       <div class="card">
@@ -20,7 +19,6 @@
     </div>
   </div>
 
-  <!-- Buttons -->
   <form method="post">
     <div>
         <button type="submit" class="success" style="width: 49%">Know it</button>

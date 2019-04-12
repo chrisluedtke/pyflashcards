@@ -1,1 +1,1 @@
-web: gunicorn app:app
+web: gunicorn pyflashcards:APP -t 120

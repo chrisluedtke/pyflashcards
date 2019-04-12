@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+    <form method="post">
+        <div class="card">
+            <header>
+                <h3>Select categories to study</h4>
+            </header>
+            <section style="height: 300px; overflow: auto">
+                {% for deck_name, tags in deck_tags.items() %}
+                <p>{{ deck_name }}</p>
+                <div style="margin-left: 25px">
+                    {% for tag in tags %}
+                    <label>
+                        <input type="checkbox" name="tag" value="{{ tag }}"/>
+                        <span class="checkable">{{ tag }}</span>
+                    </label>
+                    <br>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </section>
+        </div>
+        <button type="submit" class="success" style="width:100%" name="start_quiz">
+            Start Quiz
+        </button>
+    </form>
+{% endblock %}

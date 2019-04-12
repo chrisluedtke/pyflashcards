@@ -10,19 +10,17 @@
                 <span>pyFlashcards</span>
             </a>
 
-              <!-- responsive-->
-            <input id="bmenub" type="checkbox" class="show">
+            <input id="bmenub" type="checkbox" class="show"/>
             <label for="bmenub" class="burger pseudo button">&#8801;</label>
             
             <div class="menu">
                 <a href="https://github.com/chrisluedtke/pyflashcards" class="pseudo button">GitHub</a>
-                <a href="#" class="pseudo button">Populate Database</a>
+                <a href="/reset" class="pseudo button">Manage Database</a>
                 <a href="/login" class="pseudo button">Log In</a>
             </div>
         </nav>
         <div style="width: 400px; margin: auto; margin-top: 100px;">
-            {% block content %}
-            {% endblock %}
+        {% block content %}{% endblock %}
         </div>
     </body>
 </html>

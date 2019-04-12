@@ -1,9 +1,9 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 {% block content %}
     <form action="" method="post">
         <div class="card">
             <header>
-                <h3>Please Log In</h3>
+                <h3>Log In</h3>
             </header>
             <section>
                 <span>Username</span>
@@ -19,8 +19,8 @@
         </div>
     </form>
     {% if error %}
-        <p class="error" style="text-align: center;" style="width:100%">
-            <strong>Error</strong> {{ error }}
-        </p>
+    <p style="text-align: center;">
+        <strong>Error:</strong> {{ error }}
+    </p>
     {% endif %}
 {% endblock %}
