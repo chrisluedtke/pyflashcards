@@ -25,7 +25,7 @@ def register():
         elif User.query.filter(User.username == username).all():
             error = 'User already exists.'
         if not error:
-            DB.session.add(User(username=username, 
+            DB.session.add(User(username=username,
                                 password=generate_password_hash(password)))
             DB.session.commit()
             return redirect(url_for('auth.login'))

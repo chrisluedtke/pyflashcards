@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+  {{ n_remaining }}
   <div class="tabs two">
     <input id='tab-1' type='radio' name='tabgroupB' checked />
     <label class="pseudo button toggle" for="tab-1">Question</label>
@@ -21,8 +22,8 @@
 
   <form method="post">
     <div>
-        <button type="submit" class="success" style="width: 49%">Know it</button>
-        <button type="submit" class="warning" style="width: 49%; float: right">Don't know it</button>
+        <input type="submit" class="success" name="pass" value="Know it" style="width: 49%">
+        <input type="submit" class="warning" name="fail" value="Don't know it" style="width: 49%; float: right">
     </div>
   </form>
 {% endblock %}
