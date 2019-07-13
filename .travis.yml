@@ -3,7 +3,7 @@ python:
   - 3.6
 
 install:
-  - pipenv install --dev
+  - pip install -r requirements_dev.txt
 
 script:
   - flake8 pyflashcards
