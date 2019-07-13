@@ -24,7 +24,6 @@ def create_app():
                 'User': User, 'User_Card': User_Card}
 
     @app.route('/reset')
-    @login_required
     def reset():
         DB.drop_all()
         DB.create_all()
