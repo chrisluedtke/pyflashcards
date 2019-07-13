@@ -54,7 +54,7 @@ def create_app():
             cards_to_study = FlashCard.query.filter(
                 FlashCard.tags.any(Tag.name.in_(requested_tags))
             ).all()
-            random.shuffle(cards_to_study)            
+            random.shuffle(cards_to_study)
 
             for queue_idx, card in enumerate(cards_to_study):
                 # check if card already in user_cards (add if not)
@@ -87,7 +87,7 @@ def create_app():
             deck_tags[deck.name] = sorted([tag.name for tag in tags])
 
         return render_template('index.html', deck_tags=deck_tags)
-    
+
     @app.route('/flashcard/<int:id>', methods=('GET', 'POST'))
     @login_required
     def flashcard(id):
