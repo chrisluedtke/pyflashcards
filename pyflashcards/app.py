@@ -6,6 +6,7 @@ from flask import Flask, redirect, render_template, request, session, url_for
 from sqlalchemy import func
 
 from . import auth
+from .auth import login_required
 from .card_processing import load_md_files_to_db
 from .config import Config
 from .models import DB, Deck, FlashCard, Tag, User, User_Card
@@ -23,14 +24,16 @@ def create_app():
                 'User': User, 'User_Card': User_Card}
 
     @app.route('/reset')
+    @login_required
     def reset():
         DB.drop_all()
         DB.create_all()
         load_md_files_to_db()
-        return redirect(url_for('root'))
+        return redirect(url_for('index'))
 
     @app.route('/', methods=('GET', 'POST'))
-    def root():
+    @login_required
+    def index():
         if request.method == 'POST' and 'start_quiz' in request.form:
             user_id = session['user_id']
 
@@ -84,8 +87,9 @@ def create_app():
             deck_tags[deck.name] = sorted([tag.name for tag in tags])
 
         return render_template('index.html', deck_tags=deck_tags)
-
+    
     @app.route('/flashcard/<int:id>', methods=('GET', 'POST'))
+    @login_required
     def flashcard(id):
         user_id = session['user_id']
         card = FlashCard.query.filter(FlashCard.id == id).one()
@@ -141,9 +145,10 @@ def create_app():
                                n_remaining=n_remaining)
 
     @app.route('/complete', methods=('GET', 'POST'))
+    @login_required
     def complete():
         if request.method == 'POST':
-            return redirect(url_for('root'))
+            return redirect(url_for('index'))
         return render_template('complete.html')
 
     return app
