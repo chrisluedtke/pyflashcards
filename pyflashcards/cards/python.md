@@ -1,14 +1,14 @@
 ##### Question
 How could this code be improved?
 ```python
->>> ls = [1,2,3]
->>> for i in range(ls):
->>>     print(i, ls[i])
+ls = [1,2,3]
+for i in range(ls):
+    print(i, ls[i])
 ```
 ##### Answer
 ```python
->>> for i, item in enumerate(ls):
->>>     print(i, item)
+for i, item in enumerate(ls):
+    print(i, item)
 ```
 ##### Tags
 effective python
@@ -18,16 +18,16 @@ effective python
 ##### Question
 How could this code be improved?
 ```python
->>> ls = [1,2,3]
->>> if len(ls) != 0:
->>>     do_something()
+ls = [1,2,3]
+if len(ls) != 0:
+    do_something()
 ```
 
 ##### Answer
 Empty strings and lists implicitly evaluate to False.
 ```python
->>> if ls:
->>>     do_something()
+if ls:
+    do_something()
 ```
 ##### Tags
 item 2, effective python
