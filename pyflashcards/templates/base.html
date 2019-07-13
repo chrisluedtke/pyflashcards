@@ -24,12 +24,12 @@
             <label for="bmenub" class="burger pseudo button">&#8801;</label>
 
             <div class="menu">
-                <a href="https://github.com/chrisluedtke/pyflashcards" class="pseudo button">GitHub</a>
                 {% if g.user %}
                     <a href="#" class="pseudo button" class="pseudo button">Dashboard</a>
                     <a href="{{ url_for('auth.logout') }}" class="error button">Log Out</a>
                 {% else %}
                     <a href="{{ url_for('auth.login') }}" class="button">Log In</a>
+                    <a href="{{ url_for('auth.register') }}" class="pseudo button">Register</a>
                 {% endif %}
             </div>
         </nav>

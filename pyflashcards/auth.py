@@ -28,7 +28,13 @@ def register():
             DB.session.add(User(username=username,
                                 password=generate_password_hash(password)))
             DB.session.commit()
-            return redirect(url_for('auth.login'))
+
+            user = User.query.filter(User.username == username).one()
+
+            session.clear()
+            session['user_id'] = user.user_id
+
+            return redirect(url_for('index'))
 
         flash(error)
 
