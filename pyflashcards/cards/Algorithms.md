@@ -7,9 +7,6 @@ It describes the *numerber of operations* required of an algorithm in relation t
 
 For example, an `O(n ^ 2)` algorithm carries out n_elements ^ 2 operations to complete the task in the worst case scenario.
 
-## t
-algorithms
-
 ---
 ## q
 
@@ -26,18 +23,12 @@ What are common types of **runtime complexity**, or **Big O**, in order of perfo
 
 ![Wikipedia](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Comparison_computational_complexity.svg/1024px-Comparison_computational_complexity.svg.png)
 
-## t
-algorithms
-
 ---
 ## q
 How does a **constant time** solution perform in terms of runtime complexity?
 
 ## a
 This is the best performance possible. The number of operations is constant regardless of the number of elements or inputs.
-
-## t
-algorithms
 
 ---
 ## q
@@ -67,9 +58,6 @@ def binary_search(sorted_array, target, idx_min=0, idx_max=None):
     return binary_search(sorted_array, target, idx_min, idx_max)
 ```
 
-## t
-algorithms
-
 ---
 ## q
 What are some examples of log-linear runtime complexity, `O(n * log(n))`?
@@ -90,9 +78,6 @@ What are some examples of exponential runtime complexity, `O(c ^ n)`?
 * the minesweeper consistency problem
 * prime factorization of large integers
 * the longest common subsequence of strings
-
-## t
-algorithms
 
 ---
 ## q
@@ -134,6 +119,3 @@ def print_all_pairs(array):
         for second_item in array:
             print(first_item, second_item)
 ```
-
-## t
-algorithms

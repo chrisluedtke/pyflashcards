@@ -5,7 +5,6 @@ When were neural networks first introduced?
 In 1943, by neurophysiologist Warren McCulloch and mathematician Walter Pitts
 
 ## t
-neural networks
 
 ---
 ## q
@@ -15,7 +14,6 @@ When the **artificial neuron** was first developed, what was its structure?
 The **aritificial neuron** had one/many binary input neurons, an activation threshold, and a single binary output. These could be structured to compute complex logic.
 
 ## t
-neural networks
 
 ---
 
@@ -28,4 +26,3 @@ A **perceptron** is a simple ANN. It is composed of a single layer of **threshol
 * The **sign** function: -1 if sum < 0; 0 if sum = 0; 1 if sum > 0
 
 ## t
-neural networks
