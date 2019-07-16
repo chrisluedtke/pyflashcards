@@ -68,8 +68,8 @@ def create_app():
 
                     if not user_cards:
                         user_card = User_Card(user_id=user_id,
-                                            flashcard_id=card.id,
-                                            queue_idx=queue_idx)
+                                              flashcard_id=card.id,
+                                              queue_idx=queue_idx)
                         DB.session.add(user_card)
                     else:
                         user_card = user_cards[0]
@@ -78,7 +78,7 @@ def create_app():
                     DB.session.commit()
 
                 return redirect(url_for('flashcard', id=cards_to_study[0].id))
-            
+
             flash(error)
 
         deck_tags = {}
