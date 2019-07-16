@@ -15,7 +15,7 @@ The determinant is:
 ```
 
 ##### Tags
-linear algebra, unit 2, lin_alg
+linear algebra, unit 2
 
 ----
 
@@ -28,7 +28,7 @@ Orthogonality is the property that means 'changing A does not change B'. An exam
 In programming, orthogonality means that when we execute an instruction, nothing but that instruction happens.
 
 ##### Tags
-linear algebra, programming, unit 2, lin_alg
+linear algebra, programming, unit 2
 
 ----
 
@@ -43,7 +43,7 @@ In linear algebra, we define the concept of linear combinations in terms of vect
 These 'somethings' could be everyday variables like x, y, z etc. or something more complicated like polynomials. A linear combination is a particular way of combining things (variables, vectors, etc.) using scalar multiplication and addition.
 
 ##### Tags
-linear algebra, unit 2, lin_alg
+linear algebra, unit 2
 
 ----
 
@@ -56,7 +56,7 @@ Collineartiy is a condition in which some of the independent variables are highl
 Collinearity tends to inflate the variance of at lesat one estimated regression coefficient.
 
 ##### Tags
-linear algebra, unit 2, lin_alg
+linear algebra, unit 2
 
 ----
 
@@ -67,7 +67,7 @@ What is **Variance**?
 The average of the squared differences from the Mean.
 
 ##### Tags
-linear algebra, general, unit 2, lin_alg
+linear algebra, general, unit 2
 
 ----
 
@@ -78,7 +78,7 @@ What is standard deviation?
 A measure of how spread out numbers are.
 
 ##### Tags
-linear algebra, general, unit 2, lin_alg
+linear algebra, general, unit 2
 
 ----
 
@@ -91,7 +91,7 @@ The number of rows and columns a matrix has.
 Dataframes can be represented as matrix of size = dataframe.shape, and this is important to note if we are adding new features, concantenating more data, or merging two datasets together.
 
 ##### Tags
-linear algebra, general, unit 2, lin_alg
+linear algebra, general, unit 2
 
 ----
 
@@ -102,7 +102,7 @@ What is **Matrix Equality**?
 Matrices that have the same dimensions, and their corresponding elements are equal.
 
 ##### Tags
-linear algebra, general, unit 2, lin_alg
+linear algebra, general, unit 2
 
 ----
 
@@ -113,7 +113,7 @@ What is **Matrix Multiplication**?
 Multiplying any two matrices where the number of columns of the first matrix is equal to the number of rows of the second matrix.
 
 ##### Tags
-linear algebra, general, unit 2, lin_alg
+linear algebra, general, unit 2
 
 ----
 
@@ -127,7 +127,7 @@ Matrices: Tables, Spreadsheets, DataFrames
 Linear Modeling: Linear Regression, Logistic Regression, Gradient Descent, etc.
 
 ##### Tags
-linear algebra, general, unit 2, lin_alg
+linear algebra, general, unit 2
 
 ----
 
@@ -138,7 +138,7 @@ What is a **Dot Product**?
 Dot products represent the scalar quantity equal to the sum of pair-wise products of components in vectorA and vectorB
 
 ##### Tags
-linear algebra, unit 2, lin_alg
+linear algebra, unit 2
 
 ----
 
@@ -149,7 +149,7 @@ What is **Singular Value Decomposition**?
 Factorization of a real or complex matrix. It is the generalization of the eigendecomposition of a given matrix using its constituent elements. These constituent parts help make certain subsequent matrix calculations simpler.
 
 ##### Tags
-linear algebra, unit 2, lin_alg
+linear algebra, unit 2
 
 ----
 
@@ -160,7 +160,7 @@ What is **covariance**?
 Covariance is a measure of the directional relationship between the returns on two risky assets. A positive covariance means that asset returns move together while a negative covariance means returns more inversely.
 
 ##### Tags
-linear algebra, general, unit 2, lin_alg
+linear algebra, general, unit 2
 
 ----
 
@@ -171,6 +171,6 @@ What is **Principal Component Analysis**?
 Principal Component Analysis(or PCA for short), is a statistical procedure that uses an orthogonal transformation to convert a set of observations of possibly correlated variables into a set of linearly uncorrelated variables called principal components.
 
 ##### Tags
-linear algebra, unit 2, lin_alg, general
+linear algebra, unit 2, general
 
 ----
