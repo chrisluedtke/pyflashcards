@@ -7,7 +7,11 @@
             </header>
             <section style="height: 300px; overflow: auto">
                 {% for deck_name, tags in deck_tags.items() %}
-                <p>{{ deck_name }}</p>
+                <!-- <p>{{ deck_name }}</p> -->
+                <label>
+                    <input type="checkbox" name="deck" value="{{ deck_name }}"/>
+                    <span class="checkable">{{ deck_name }}</span>
+                </label>
                 <div style="margin-left: 25px">
                     {% for tag in tags %}
                     <label>
@@ -24,4 +28,13 @@
             Start Quiz
         </button>
     </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <p style="text-align: center;">
+            <strong>Error:</strong> {{ message }}
+    </p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 {% endblock %}

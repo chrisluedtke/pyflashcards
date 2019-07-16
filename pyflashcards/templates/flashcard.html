@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-  {{ n_remaining }}
   <div class="tabs two">
     <input id='tab-1' type='radio' name='tabgroupB' checked />
     <label class="pseudo button toggle" for="tab-1">Question</label>
     <input id='tab-2' type='radio' name='tabgroupB'/>
     <label class="pseudo button toggle" for="tab-2">Answer</label>
+    <input id='tab-3'/>
+    <label class="pseudo button disabled" style="margin-left: 100px; cursor: auto; background: #fff;">{{ n_current }} / {{ n_total }}</label>
     <div class="row" style="height: 100px;">
       <div class="card">
         <section style="height: 200px; overflow: auto">

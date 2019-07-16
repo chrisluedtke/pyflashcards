@@ -2,7 +2,8 @@ import random
 from datetime import datetime
 
 import markdown
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import (Flask, flash, redirect, render_template, request, session,
+                   url_for)
 from sqlalchemy import func
 
 from . import auth
@@ -34,48 +35,50 @@ def create_app():
     @login_required
     def index():
         if request.method == 'POST' and 'start_quiz' in request.form:
-            user_id = session['user_id']
+            error = None
 
-            # clear any previously queued cards
-            cards_to_clear = User_Card.query.filter(
-                User_Card.user_id == user_id,
-                User_Card.queue_idx.isnot(None),
-            ).all()
+            if 'tag' not in request.form and 'deck' not in request.form:
+                error = 'Must select tags or decks.'
+            else:
+                # queue deck of new cards
+                requested_tags = request.form.getlist('tag')
+                requested_decks = request.form.getlist('deck')
 
-            for card in cards_to_clear:
-                card.queue_idx = None
-
-            DB.session.commit()
-
-            # queue deck of new cards
-            requested_tags = request.form.getlist('tag')
-
-            cards_to_study = FlashCard.query.filter(
-                FlashCard.tags.any(Tag.name.in_(requested_tags))
-            ).all()
-            random.shuffle(cards_to_study)
-
-            for queue_idx, card in enumerate(cards_to_study):
-                # check if card already in user_cards (add if not)
-                # assign order to cards in user_cards
-                queue_idx += 1  # to avoid 0
-                user_cards = User_Card.query.filter(
-                    User_Card.flashcard_id == card.id,
-                    User_Card.user_id == user_id
+                cards_to_study = FlashCard.query.join(Deck).filter(
+                    FlashCard.tags.any(Tag.name.in_(requested_tags)) |
+                    Deck.name.in_(requested_decks)
                 ).all()
+                random.shuffle(cards_to_study)
 
-                if not user_cards:
-                    user_card = User_Card(user_id=user_id,
-                                          flashcard_id=card.id,
-                                          queue_idx=queue_idx)
-                    DB.session.add(user_card)
-                else:
-                    user_card = user_cards[0]
-                    user_card.queue_idx = queue_idx
+            if not cards_to_study:
+                error = 'No cards found with selected tags.'
+            elif not error:
+                user_id = session['user_id']
+                clear_queued_cards(user_id)
 
-                DB.session.commit()
+                for queue_idx, card in enumerate(cards_to_study):
+                    # check if card already in user_cards (add if not)
+                    # assign order to cards in user_cards
+                    queue_idx += 1  # to avoid 0
+                    user_cards = User_Card.query.filter(
+                        User_Card.flashcard_id == card.id,
+                        User_Card.user_id == user_id
+                    ).all()
 
-            return redirect(url_for('flashcard', id=cards_to_study[0].id))
+                    if not user_cards:
+                        user_card = User_Card(user_id=user_id,
+                                            flashcard_id=card.id,
+                                            queue_idx=queue_idx)
+                        DB.session.add(user_card)
+                    else:
+                        user_card = user_cards[0]
+                        user_card.queue_idx = queue_idx
+
+                    DB.session.commit()
+
+                return redirect(url_for('flashcard', id=cards_to_study[0].id))
+            
+            flash(error)
 
         deck_tags = {}
         decks = Deck.query.all()
@@ -100,8 +103,6 @@ def create_app():
         queue_idx_max = DB.session.query(func.max(User_Card.queue_idx)).filter(
             User_Card.user_id == user_id
         ).scalar()
-
-        n_remaining = queue_idx_max - user_card.queue_idx
 
         if request.method == 'POST':
             next_idx = user_card.queue_idx + 1
@@ -141,7 +142,8 @@ def create_app():
         return render_template('flashcard.html',
                                question_html=question_html,
                                answer_html=answer_html,
-                               n_remaining=n_remaining)
+                               n_total=queue_idx_max,
+                               n_current=user_card.queue_idx)
 
     @app.route('/complete', methods=('GET', 'POST'))
     @login_required
@@ -151,3 +153,17 @@ def create_app():
         return render_template('complete.html')
 
     return app
+
+
+def clear_queued_cards(user_id):
+    cards_to_clear = User_Card.query.filter(
+        User_Card.user_id == user_id,
+        User_Card.queue_idx.isnot(None),
+    ).all()
+
+    for card in cards_to_clear:
+        card.queue_idx = None
+
+    DB.session.commit()
+
+    return True
