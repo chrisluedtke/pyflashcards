@@ -91,19 +91,18 @@ What is the runtime complexity of the **bubble sort** algorithm?
 
 ```python
 def bubble_sort(arr):
-    swap_made = False
-    for idx in range(len(arr) - 1):
-        curr_val = arr[idx]
-        next_val = arr[idx+1]
-        if next_val < curr_val:
-            arr[idx] = next_val
-            arr[idx+1] = curr_val
-            swap_made = True
+    swap_made = True
+    while swap_made:
+        swap_made = False
+        for idx in range(len(arr) - 1):
+            curr_val = arr[idx]
+            next_val = arr[idx+1]
+            if next_val < curr_val:
+                arr[idx]   = next_val
+                arr[idx+1] = curr_val
+                swap_made = True
 
-    if swap_made:
-        return bubble_sort(arr)
-    else:
-        return arr
+    return arr
 ```
 
 ## a
