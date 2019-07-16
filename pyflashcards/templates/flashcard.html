@@ -1,30 +1,43 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="tabs two">
-    <input id='tab-1' type='radio' name='tabgroupB' checked />
-    <label class="pseudo button toggle" for="tab-1">Question</label>
-    <input id='tab-2' type='radio' name='tabgroupB'/>
-    <label class="pseudo button toggle" for="tab-2">Answer</label>
-    <input id='tab-3'/>
-    <label class="pseudo button disabled" style="margin-left: 100px; cursor: auto; background: #fff;">{{ n_current }} / {{ n_total }}</label>
-    <div class="row" style="height: 100px;">
-      <div class="card">
-        <section style="height: 200px; overflow: auto">
-          {{ question_html|safe }}
-        </section>
+<div class="card" style="margin-bottom: 10px">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" id="question-tab" href="#question" data-toggle="tab" role="tab" aria-controls="question" aria-selected="true">
+            Question
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="answer-tab" href="#answer" data-toggle="tab" role="tab" aria-controls="answer" aria-selected="false">
+          Answer
+        </a>
+      </li>
+      <li class="nav-item" style="margin-left: 160px;">
+        <a class="nav-link disabled" tabindex="-1" aria-disabled="true">
+          {{ n_current }} / {{ n_total }}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane show active" id="question" role="tabpanel" aria-labelledby="question-tab">
+      <div class="card-body" style="height: 200px; overflow: auto">
+        {{ question_html|safe }}
       </div>
-      <div class="card">
-        <section style="height: 200px; overflow: auto">
-          {{ answer_html|safe }}
-        </section>
+    </div>
+    <div class="tab-pane" id="answer" role="tabpanel" aria-labelledby="answer-tab">
+      <div class="card-body" style="height: 200px; overflow: auto">
+        {{ answer_html|safe }}
       </div>
     </div>
   </div>
+</div>
 
-  <form method="post">
-    <div>
-        <input type="submit" class="success" name="pass" value="Know it" style="width: 49%">
-        <input type="submit" class="warning" name="fail" value="Don't know it" style="width: 49%; float: right">
-    </div>
-  </form>
+<form method="post">
+  <div>
+      <input type="submit" class="btn btn-success" name="pass" value="Know it" style="width: 49.5%">
+      <input type="submit" class="btn btn-warning" name="fail" value="Don't know it" style="width: 49.5%; float: right">
+  </div>
+</form>
 {% endblock %}

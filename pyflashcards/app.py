@@ -50,9 +50,10 @@ def create_app():
                 ).all()
                 random.shuffle(cards_to_study)
 
-            if not cards_to_study:
-                error = 'No cards found with selected tags.'
-            elif not error:
+                if not cards_to_study:
+                    error = 'No cards found with selected tags.'
+
+            if not error:
                 user_id = session['user_id']
                 clear_queued_cards(user_id)
 

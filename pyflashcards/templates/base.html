@@ -1,9 +1,15 @@
 <!doctype html>
 <html>
     <head>
-        <title>pyflashcards</title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="https://unpkg.com/picnic">
+        {% block head %}
+        <title>pyFlashcards</title>
+        <!-- bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
         <script>
             /* Close modals with esc */
             document.onkeydown = function(e){
@@ -13,28 +19,16 @@
                 }
             }
         </script>
+        {% endblock head %}
     </head>
+    {% include 'nav.html' %}
     <body>
-        <nav class="transparent">
-            <a href="/" class="brand">
-                <span>pyFlashcards</span>
-            </a>
-
-            <input id="bmenub" type="checkbox" class="show">
-            <label for="bmenub" class="burger pseudo button">&#8801;</label>
-
-            <div class="menu">
-                {% if g.user %}
-                    <a href="#" class="pseudo button" class="pseudo button">Dashboard</a>
-                    <a href="{{ url_for('auth.logout') }}" class="error button">Log Out</a>
-                {% else %}
-                    <a href="{{ url_for('auth.login') }}" class="button">Log In</a>
-                    <a href="{{ url_for('auth.register') }}" class="pseudo button">Register</a>
-                {% endif %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                {% block content %}{% endblock %}
+                </div>
             </div>
-        </nav>
-        <div style="width: 400px; margin: auto; margin-top: 100px;">
-        {% block content %}{% endblock %}
         </div>
     </body>
 </html>
