@@ -24,11 +24,18 @@ A simple way to log and study python tidbits.
     ```
     pip install -r requirements_dev.txt
     ```
-6. Run web app:
+6. Create a `.env` with contents:
+    ```
+    FLASK_APP=pyflashcards:APP
+    FLASK_ENV="development"
+    DATABASE_URL="sqlite:///db.sqlite3"
+    SECRET_KEY="you-will-never-guess"
+    ```
+7. Run web app:
     ```
     flask run
     ```
-7. Navigate to the locally served page, typically `http://localhost:5000/`
+8. Navigate to the locally served page, typically `http://localhost:5000/`
 
 ### Set up - Local Docker
 1. Clone this repository
@@ -44,3 +51,19 @@ A simple way to log and study python tidbits.
 ### Deploy to Heroku
 1. Fork this repository to your GitHub account.
 2. On Heroku, connect your GitHub account, and create an app that syncs with your forked repository.
+3. Ensure you have the following environment variales on heroku:
+    ```
+    FLASK_APP=pyflashcards:APP
+    FLASK_ENV=production
+    DATABASE_URL=
+    SECRET_KEY=
+    ```
+4. Initialize the database from your local command line
+    ```
+    heroku run flask shell -a pyflashcards
+    from pyflashcards.card_processing import load_md_files_to_db
+    DB.drop_all()
+    DB.create_all()
+    load_md_files_to_db()
+    quit()
+    ```
