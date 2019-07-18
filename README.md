@@ -31,11 +31,20 @@ A simple way to log and study python tidbits.
     DATABASE_URL="sqlite:///db.sqlite3"
     SECRET_KEY="you-will-never-guess"
     ```
-7. Run web app:
+7. Initialize/reset the database:
+    ```
+    flask shell
+    from pyflashcards.card_processing import load_md_files_to_db
+    DB.drop_all()
+    DB.create_all()
+    load_md_files_to_db()
+    quit()
+    ```
+8. Run the web app:
     ```
     flask run
     ```
-8. Navigate to the locally served page, typically `http://localhost:5000/`
+9. Navigate to the locally served page, typically `http://localhost:5000/`
 
 ### Set up - Local Docker
 1. Clone this repository
