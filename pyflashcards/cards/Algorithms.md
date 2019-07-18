@@ -94,12 +94,9 @@ def bubble_sort(arr):
     swap_made = True
     while swap_made:
         swap_made = False
-        for idx in range(len(arr) - 1):
-            curr_val = arr[idx]
-            next_val = arr[idx+1]
-            if next_val < curr_val:
-                arr[idx]   = next_val
-                arr[idx+1] = curr_val
+        for i in range(len(arr) - 1):
+            if arr[i+1] < arr[i]:
+                arr[i], arr[i+1] = arr[i+1], arr[i]  # swap
                 swap_made = True
 
     return arr
