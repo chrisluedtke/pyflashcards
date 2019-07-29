@@ -103,7 +103,7 @@ def bubble_sort(arr):
 ```
 
 ## a
-Quadtratic, `O(n ^ c)`, since we require more loops with a more inputs.
+Quadtratic, `O(n ^ c)`, since we require more loops with more inputs.
 
 Other examples:
 * all permutations of the characters in a string
@@ -115,3 +115,12 @@ def print_all_pairs(array):
         for second_item in array:
             print(first_item, second_item)
 ```
+
+## q
+What is are **stack frame** and **call stack**?
+
+## a
+The **call stack** is the collection of **stack frames**. A **stack frame** is the representation of state at each iteration of a recursive algorithm. It contains the local variables in that instance of the recursion.
+
+## q
+What are **Polya's Problem solving steps**?
