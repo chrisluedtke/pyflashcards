@@ -59,6 +59,8 @@ class User_Card(DB.Model):
     user_id = DB.Column(DB.Integer, DB.ForeignKey('User.user_id'))
     flashcard_id = DB.Column(DB.Integer, DB.ForeignKey('FlashCard.id'))
 
+    bin_id = DB.Column(DB.Integer, default=0)
+
     curr_box_number = DB.Column(DB.Integer, default=0)
 
     queue_idx = DB.Column(DB.Integer, default=None)

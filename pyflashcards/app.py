@@ -34,11 +34,13 @@ def create_app():
     @app.route('/', methods=('GET', 'POST'))
     @login_required
     def index():
+        user_id = session['user_id']
+
         if request.method == 'POST' and 'start_quiz' in request.form:
             error = None
 
             if 'tag' not in request.form and 'deck' not in request.form:
-                error = 'Must select tags or decks.'
+                error = 'Must select categories.'
             else:
                 # queue deck of new cards
                 requested_tags = request.form.getlist('tag')
@@ -51,29 +53,20 @@ def create_app():
                 random.shuffle(cards_to_study)
 
                 if not cards_to_study:
-                    error = 'No cards found with selected tags.'
+                    error = 'No cards found with selected categories.'
 
             if not error:
-                user_id = session['user_id']
                 clear_queued_cards(user_id)
 
                 for queue_idx, card in enumerate(cards_to_study):
-                    # check if card already in user_cards (add if not)
                     # assign order to cards in user_cards
                     queue_idx += 1  # to avoid 0
-                    user_cards = User_Card.query.filter(
+                    user_card = User_Card.query.filter(
                         User_Card.flashcard_id == card.id,
                         User_Card.user_id == user_id
-                    ).all()
+                    ).one()
 
-                    if not user_cards:
-                        user_card = User_Card(user_id=user_id,
-                                              flashcard_id=card.id,
-                                              queue_idx=queue_idx)
-                        DB.session.add(user_card)
-                    else:
-                        user_card = user_cards[0]
-                        user_card.queue_idx = queue_idx
+                    user_card.queue_idx = queue_idx
 
                     DB.session.commit()
 
@@ -81,15 +74,28 @@ def create_app():
 
             flash(error)
 
-        deck_tags = {}
-        decks = Deck.query.all()
-        for deck in decks:
-            tags = Tag.query.filter(
-                Tag.flashcards.any(FlashCard.deck_id == deck.id)
-            ).all()
-            deck_tags[deck.name] = sorted([tag.name for tag in tags])
+        # assign all cards to user
+        # TODO: this can probably be queried better
+        user_card_ids = (DB.session.query(User_Card.flashcard_id)
+                                   .filter(User_Card.user_id == user_id).all())
+        unassigned_cards = FlashCard.query.filter(
+            ~FlashCard.id.in_([i for i, in user_card_ids])
+        ).all()
 
-        return render_template('index.html', deck_tags=deck_tags)
+        for card in unassigned_cards:
+            user_card = User_Card(user_id=user_id,
+                                  flashcard_id=card.id)
+            DB.session.add(user_card)
+            DB.session.commit()
+
+        deck_counts = (FlashCard.query
+                                .join(Deck)
+                                .with_entities(Deck.name,
+                                               func.count(FlashCard.id))
+                                .group_by(Deck.name)
+                                .all())
+
+        return render_template('index.html', deck_counts=deck_counts)
 
     @app.route('/flashcard/<int:id>', methods=('GET', 'POST'))
     @login_required
@@ -114,8 +120,12 @@ def create_app():
 
             if 'pass' in request.values:
                 user_card.total_successful = user_card.total_successful + 1
+                if user_card.bin_id < 2:
+                    user_card.bin_id = user_card.bin_id + 1
                 user_card.last_attempt_successful = True
-            else:
+            elif 'fail' in request.values:
+                if user_card.bin_id > 0:
+                    user_card.bin_id = user_card.bin_id - 1
                 user_card.last_attempt_successful = False
 
             DB.session.commit()
