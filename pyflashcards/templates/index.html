@@ -1,23 +1,39 @@
 {% extends "base.html" %}
+
 {% block content %}
 <form method="post">
     <div class="card" style="margin-bottom: 10px">
         <h6 class="card-header">
             Select Categories to Study
         </h6>
-        <div class="card-body" style="height: 310px; overflow: auto">
-            {% for deck_name, tags in deck_tags.items() %}
-            <div class="custom-control custom-checkbox" style="margin-bottom: 5px;">
-                <input type="checkbox" class="custom-control-input" name="deck" id="{{ deck_name }}" value="{{ deck_name }}">
-                <label class="custom-control-label" for="{{ deck_name }}" style="width: 100%;">{{ deck_name }}</label>
-            </div>
-            {% for tag in tags %}
-            <div class="custom-control custom-checkbox" style="margin-left: 25px; margin-bottom: 5px;">
-                <input type="checkbox" class="custom-control-input" name="tag" id="{{ tag }}"  value="{{ tag }}">
-                <label class="custom-control-label" for="{{ tag }}" style="width: 100%;">{{ tag }}</label>
-            </div>
-            {% endfor %}
-            {% endfor %}
+        <div class="card-body" style="height: 310px; overflow: auto; padding: 0rem">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" style="border: none;"></th>
+                        <th scope="col" style="border: none;">#</th>
+                        <th scope="col" style="border: none;">1</th>
+                        <th scope="col" style="border: none;">2</th>
+                        <th scope="col" style="border: none;">3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for deck_name, n_cards in deck_counts %}
+                    <tr>
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="deck" id="{{ deck_name }}" value="{{ deck_name }}">
+                                <label class="custom-control-label" for="{{ deck_name }}" style="width: 100%;">{{ deck_name }}</label>
+                            </div>
+                        </td>
+                        <td>{{ n_cards }}</td>
+                        <td>10%</td>
+                        <td>20%</td>
+                        <td>70%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
     <button type="submit" class="btn btn-success" style="width:100%" name="start_quiz">
