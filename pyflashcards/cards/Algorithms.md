@@ -21,7 +21,7 @@ What are common types of **runtime complexity**, or **Big O**, in order of perfo
 1. `O(n ^ c)` quadtratic time
 1. `O(c ^ n)` exponential time
 
-![Wikipedia](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Comparison_computational_complexity.svg/1024px-Comparison_computational_complexity.svg.png)
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Comparison_computational_complexity.svg/1024px-Comparison_computational_complexity.svg.png" width="100%">
 
 ---
 ## q
