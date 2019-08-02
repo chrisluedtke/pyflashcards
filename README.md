@@ -67,7 +67,7 @@ A simple way to log and study python tidbits.
     DATABASE_URL=
     SECRET_KEY=
     ```
-4. Initialize the database from your local command line
+4. Initialize and/or reset the database from your local command line
     ```
     heroku run flask shell -a pyflashcards
     from pyflashcards.card_processing import load_md_files_to_db
