@@ -120,7 +120,10 @@ def create_app():
             extensions=['markdown.extensions.fenced_code', 'codehilite']
         )
 
-        deck_name = DB.session.query(Deck.name).join(FlashCard).filter(FlashCard.id == id).one()[0]
+        deck_name = (DB.session.query(Deck.name)
+                               .join(FlashCard)
+                               .filter(FlashCard.id == id)
+                               .one())[0]
 
         return render_template('flashcard.html',
                                question_html=question_html,
