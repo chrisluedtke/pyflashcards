@@ -1,6 +1,9 @@
+import random
 from pathlib import Path
 
-from .models import DB, Deck, FlashCard, Tag
+from sqlalchemy import func
+
+from .models import DB, Deck, FlashCard, Tag, User_Card
 
 CARDS_DIR = Path(__file__).parent / 'cards'
 
@@ -96,3 +99,109 @@ def create_flashcard(question: str, answer: str, tags: str, deck: Deck):
     DB.session.commit()
 
     return None
+
+
+def clear_queued_cards(user_id):
+    cards_to_clear = User_Card.query.filter(
+        User_Card.user_id == user_id,
+        User_Card.queue_idx.isnot(None),
+    ).all()
+
+    for card in cards_to_clear:
+        card.queue_idx = None
+
+    DB.session.commit()
+
+    return True
+
+
+def get_cards_to_study(user_id, requested_decks, requested_bins,
+                       requested_tags):
+    requested_bins = [int(i) for i in requested_bins]
+
+    if 'All' in requested_decks:
+        deck_names = DB.session.query(Deck.name).all()
+        requested_decks = [i for i, in deck_names]
+
+    cards_to_study = (User_Card.query
+                               .filter(User_Card.user_id == user_id,
+                                       User_Card.bin_id.in_(requested_bins))
+                               .join(FlashCard,
+                                     User_Card.flashcard_id == FlashCard.id)
+                               .join(Deck,
+                                     FlashCard.deck_id == Deck.id)
+                               .filter(
+                                   FlashCard.tags.any(
+                                       Tag.name.in_(requested_tags)) |
+                                   Deck.name.in_(requested_decks))
+                               .all())
+
+    return cards_to_study
+
+
+def assign_cards_to_user(user_id):
+    """Create a User_Card record for all existing cards"""
+    # TODO: this can probably be queried better
+    user_card_ids = (DB.session.query(User_Card.flashcard_id)
+                               .filter(User_Card.user_id == user_id).all())
+    unassigned_cards = FlashCard.query.filter(
+        ~FlashCard.id.in_([i for i, in user_card_ids])
+    ).all()
+
+    for card in unassigned_cards:
+        user_card = User_Card(user_id=user_id, flashcard_id=card.id)
+        DB.session.add(user_card)
+        DB.session.commit()
+
+    return True
+
+
+def get_bin_card_counts(user_id, percentage=False):
+    """Count the number of cards in each bin in each deck"""
+    deck_counts = (DB.session
+                     .query(Deck.name, User_Card.bin_id,
+                            func.count(User_Card.bin_id))
+                     .join(FlashCard,
+                           User_Card.flashcard_id == FlashCard.id)
+                     .join(Deck,
+                           FlashCard.deck_id == Deck.id)
+                     .filter(User_Card.user_id == user_id)
+                     .group_by(Deck.name, User_Card.bin_id).all())
+
+    d = {'All': {'sum': 0, 0: 0, 1: 0, 2: 0}}
+    for deck_name, bin_id, count in deck_counts:
+        if deck_name not in d:
+            d[deck_name] = {}
+            d[deck_name]['sum'] = 0
+        d[deck_name][bin_id] = count
+        d[deck_name]['sum'] += count
+
+        d['All']['sum'] += count
+        d['All'][bin_id] += count
+
+    for deck_name, _ in d.items():
+        for bin_id in ['sum', 0, 1, 2]:
+            if bin_id not in d[deck_name]:
+                d[deck_name][bin_id] = 0
+            if percentage:
+                percent = (d[deck_name][bin_id] / d[deck_name]['sum']) * 100
+                d[deck_name][bin_id] = f"{round(percent)}%"
+
+    return d
+
+
+def order_cards_to_study(cards_to_study, user_id):
+    # assign order to cards in user_cards
+    random.shuffle(cards_to_study)
+
+    for queue_idx, card in enumerate(cards_to_study):
+        user_card = User_Card.query.filter(
+            User_Card.flashcard_id == card.id,
+            User_Card.user_id == user_id
+        ).one()
+
+        user_card.queue_idx = queue_idx + 1  # to avoid 0
+
+        DB.session.commit()
+
+    return True

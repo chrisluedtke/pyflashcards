@@ -9,9 +9,6 @@
             <ul class="navbar-nav ml-auto">
             {% if g.user %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
                 </li>
             {% else %}
@@ -22,6 +19,9 @@
                     <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
                 </li>
             {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="https://www.buymeacoffee.com/rfgIoHNtw">💌 Support</a>
+                </li>
             </ul>
         </div>
     </div>

@@ -1,24 +1,32 @@
 {% extends "base.html" %}
-
+{% block head %}
+{% endblock head %}
 {% block content %}
+<div>
+    <h4>Create a Study Session</h4>
+    <p>
+        This app employs the <a href="https://en.wikipedia.org/wiki/Leitner_system">Leitner System</a> of learning. 
+        As you study, the cards you know get sorted into higher bins. Practice cards in the lowest bin to learn quickly and efficiently!
+    </p>
+</div>
 <form method="post">
     <div class="card" style="margin-bottom: 10px">
         <h6 class="card-header">
-            Select Categories to Study
+            Select Categories
         </h6>
-        <div class="card-body" style="height: 310px; overflow: auto; padding: 0rem">
+        <div class="card-body" style="height: 260px; overflow: auto; padding: 0rem">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col" style="border: none;"></th>
-                        <th scope="col" style="border: none;">#</th>
-                        <th scope="col" style="border: none;">1</th>
-                        <th scope="col" style="border: none;">2</th>
-                        <th scope="col" style="border: none;">3</th>
+                        <th class="text-center" style="border: none;"></th>
+                        <th class="text-center" style="border: none;">#</th>
+                        <th class="text-center" style="border: none;">1</th>
+                        <th class="text-center" style="border: none;">2</th>
+                        <th class="text-center" style="border: none;">3</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for deck_name, n_cards in deck_counts %}
+                    {% for deck_name, bin_counts in deck_counts.items() %}
                     <tr>
                         <td>
                             <div class="custom-control custom-checkbox">
@@ -26,17 +34,36 @@
                                 <label class="custom-control-label" for="{{ deck_name }}" style="width: 100%;">{{ deck_name }}</label>
                             </div>
                         </td>
-                        <td>{{ n_cards }}</td>
-                        <td>10%</td>
-                        <td>20%</td>
-                        <td>70%</td>
+                        <td class="text-right">{{ bin_counts.sum }}</td>
+                        <td class="text-right">{{ bin_counts.0 }}</td>
+                        <td class="text-right">{{ bin_counts.1 }}</td>
+                        <td class="text-right">{{ bin_counts.2 }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-    <button type="submit" class="btn btn-success" style="width:100%" name="start_quiz">
+    <div class="card" style="margin-bottom: 10px">
+        <h6 class="card-header">
+            Select Bins
+        </h6>
+        <div class="card-body text-center" style="overflow: auto;">
+            <div class="custom-control custom-checkbox custom-control-inline" style="width: 7rem;">
+                <input type="checkbox" class="custom-control-input" name="bin" id="bin_1" value="0">
+                <label class="custom-control-label" for="bin_1">Bin 1</label>
+            </div>
+            <div class="custom-control custom-checkbox custom-control-inline" style="width: 7rem;">
+                <input type="checkbox" class="custom-control-input" name="bin" id="bin_2" value="1">
+                <label class="custom-control-label" for="bin_2">Bin 2</label>
+            </div>
+            <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" name="bin" id="bin_3" value="2">
+                <label class="custom-control-label" for="bin_3">Bin 3</label>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success" style="width: 100%; margin-bottom: 10px;" name="start_quiz">
         Start Quiz
     </button>
 </form>

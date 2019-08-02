@@ -61,8 +61,6 @@ class User_Card(DB.Model):
 
     bin_id = DB.Column(DB.Integer, default=0)
 
-    curr_box_number = DB.Column(DB.Integer, default=0)
-
     queue_idx = DB.Column(DB.Integer, default=None)
     total_attempts = DB.Column(DB.Integer, default=0)
     last_attempt_date = DB.Column(DB.DateTime, default=None)

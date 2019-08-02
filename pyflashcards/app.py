@@ -1,5 +1,5 @@
-import random
 from datetime import datetime
+from os import getenv
 
 import markdown
 from flask import (Flask, flash, redirect, render_template, request, session,
@@ -8,7 +8,9 @@ from sqlalchemy import func
 
 from . import auth
 from .auth import login_required
-from .card_processing import load_md_files_to_db
+from .card_processing import (assign_cards_to_user, clear_queued_cards,
+                              get_bin_card_counts, get_cards_to_study,
+                              load_md_files_to_db, order_cards_to_study)
 from .config import Config
 from .models import DB, Deck, FlashCard, Tag, User, User_Card
 
@@ -24,12 +26,13 @@ def create_app():
         return {'DB': DB, 'FlashCard': FlashCard, 'Tag': Tag, 'Deck': Deck,
                 'User': User, 'User_Card': User_Card}
 
-    @app.route('/reset')
-    def reset():
-        DB.drop_all()
-        DB.create_all()
-        load_md_files_to_db()
-        return redirect(url_for('index'))
+    if getenv('FLASK_ENV') == "development":
+        @app.route('/reset')
+        def reset():
+            DB.drop_all()
+            DB.create_all()
+            load_md_files_to_db()
+            return redirect(url_for('index'))
 
     @app.route('/', methods=('GET', 'POST'))
     @login_required
@@ -39,63 +42,30 @@ def create_app():
         if request.method == 'POST' and 'start_quiz' in request.form:
             error = None
 
-            if 'tag' not in request.form and 'deck' not in request.form:
-                error = 'Must select categories.'
+            if 'bin' not in request.form or 'deck' not in request.form:
+                error = 'Must select at least one category and bin.'
             else:
-                # queue deck of new cards
-                requested_tags = request.form.getlist('tag')
-                requested_decks = request.form.getlist('deck')
-
-                cards_to_study = FlashCard.query.join(Deck).filter(
-                    FlashCard.tags.any(Tag.name.in_(requested_tags)) |
-                    Deck.name.in_(requested_decks)
-                ).all()
-                random.shuffle(cards_to_study)
-
+                cards_to_study = get_cards_to_study(
+                    user_id,
+                    requested_decks=request.form.getlist('deck'),
+                    requested_bins=request.form.getlist('bin'),
+                    requested_tags=request.form.getlist('tag')
+                )
                 if not cards_to_study:
-                    error = 'No cards found with selected categories.'
+                    error = 'No cards with selected categories and bins.'
 
             if not error:
                 clear_queued_cards(user_id)
-
-                for queue_idx, card in enumerate(cards_to_study):
-                    # assign order to cards in user_cards
-                    queue_idx += 1  # to avoid 0
-                    user_card = User_Card.query.filter(
-                        User_Card.flashcard_id == card.id,
-                        User_Card.user_id == user_id
-                    ).one()
-
-                    user_card.queue_idx = queue_idx
-
-                    DB.session.commit()
+                order_cards_to_study(cards_to_study, user_id)
 
                 return redirect(url_for('flashcard', id=cards_to_study[0].id))
+            else:
+                flash(error)
 
-            flash(error)
+        assign_cards_to_user(user_id)
+        bin_card_counts = get_bin_card_counts(user_id)
 
-        # assign all cards to user
-        # TODO: this can probably be queried better
-        user_card_ids = (DB.session.query(User_Card.flashcard_id)
-                                   .filter(User_Card.user_id == user_id).all())
-        unassigned_cards = FlashCard.query.filter(
-            ~FlashCard.id.in_([i for i, in user_card_ids])
-        ).all()
-
-        for card in unassigned_cards:
-            user_card = User_Card(user_id=user_id,
-                                  flashcard_id=card.id)
-            DB.session.add(user_card)
-            DB.session.commit()
-
-        deck_counts = (FlashCard.query
-                                .join(Deck)
-                                .with_entities(Deck.name,
-                                               func.count(FlashCard.id))
-                                .group_by(Deck.name)
-                                .all())
-
-        return render_template('index.html', deck_counts=deck_counts)
+        return render_template('index.html', deck_counts=bin_card_counts)
 
     @app.route('/flashcard/<int:id>', methods=('GET', 'POST'))
     @login_required
@@ -164,17 +134,3 @@ def create_app():
         return render_template('complete.html')
 
     return app
-
-
-def clear_queued_cards(user_id):
-    cards_to_clear = User_Card.query.filter(
-        User_Card.user_id == user_id,
-        User_Card.queue_idx.isnot(None),
-    ).all()
-
-    for card in cards_to_clear:
-        card.queue_idx = None
-
-    DB.session.commit()
-
-    return True
