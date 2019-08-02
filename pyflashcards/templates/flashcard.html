@@ -22,15 +22,18 @@
   </div>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane show active" id="question" role="tabpanel" aria-labelledby="question-tab">
-      <div class="card-body" style="height: 300px; overflow: auto">
+      <div class="card-body" style="height: 300px; overflow: auto; padding: 1rem 0.75rem 1rem 1rem;">
         {{ question_html|safe }}
       </div>
     </div>
     <div class="tab-pane" id="answer" role="tabpanel" aria-labelledby="answer-tab">
-      <div class="card-body" style="height: 300px; overflow: auto">
+      <div class="card-body" style="height: 300px; overflow: auto; padding: 1rem 0.75rem 1rem 1rem;">
         {{ answer_html|safe }}
       </div>
     </div>
+  </div>
+  <div class="card-footer" style="padding: .25rem 1rem;">
+    <small class="text-muted"><strong>Category: </strong>{{ deck_name }}</small>
   </div>
 </div>
 

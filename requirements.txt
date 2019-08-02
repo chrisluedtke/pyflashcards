@@ -4,4 +4,5 @@ flask-wtf
 markdown
 gunicorn
 psycopg2
+Pygments
 python-dotenv

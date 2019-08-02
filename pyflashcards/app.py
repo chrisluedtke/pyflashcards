@@ -74,7 +74,7 @@ def create_app():
         card = FlashCard.query.filter(FlashCard.id == id).one()
         user_card = User_Card.query.filter(
             User_Card.flashcard_id == id,
-            User_Card.user_id == user_id,
+            User_Card.user_id == user_id
         ).one()
 
         queue_idx_max = DB.session.query(func.max(User_Card.queue_idx)).filter(
@@ -113,18 +113,21 @@ def create_app():
 
         question_html = markdown.markdown(
             card.question,
-            extensions=['markdown.extensions.fenced_code']
+            extensions=['markdown.extensions.fenced_code', 'codehilite']
         )
         answer_html = markdown.markdown(
             card.answer,
-            extensions=['markdown.extensions.fenced_code']
+            extensions=['markdown.extensions.fenced_code', 'codehilite']
         )
+
+        deck_name = DB.session.query(Deck.name).join(FlashCard).filter(FlashCard.id == id).one()[0]
 
         return render_template('flashcard.html',
                                question_html=question_html,
                                answer_html=answer_html,
                                n_total=queue_idx_max,
-                               n_current=user_card.queue_idx)
+                               n_current=user_card.queue_idx,
+                               deck_name=deck_name)
 
     @app.route('/complete', methods=('GET', 'POST'))
     @login_required
