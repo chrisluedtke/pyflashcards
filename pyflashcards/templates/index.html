@@ -10,56 +10,62 @@
     </p>
 </div>
 <form method="post">
-    <div class="card" style="margin-bottom: 10px">
-        <h6 class="card-header">
-            Select Categories
-        </h6>
-        <div class="card-body" style="height: 260px; overflow: auto; padding: 0rem">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th class="text-center" style="border: none;"></th>
-                        <th class="text-center" style="border: none;">#</th>
-                        <th class="text-center" style="border: none;">1</th>
-                        <th class="text-center" style="border: none;">2</th>
-                        <th class="text-center" style="border: none;">3</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for deck_name, bin_counts in deck_counts.items() %}
-                    <tr>
-                        <td>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" name="deck" id="{{ deck_name }}" value="{{ deck_name }}">
-                                <label class="custom-control-label" for="{{ deck_name }}" style="width: 100%;">{{ deck_name }}</label>
-                            </div>
-                        </td>
-                        <td class="text-right">{{ bin_counts.sum }}</td>
-                        <td class="text-right">{{ bin_counts.0 }}</td>
-                        <td class="text-right">{{ bin_counts.1 }}</td>
-                        <td class="text-right">{{ bin_counts.2 }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <div class="accordion" style="margin-bottom: 10px">
+        <div class="card">
+            <h6 class="card-header dropdown-toggle" style="cursor: pointer;" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Select Categories
+            </h6>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+                <div class="card-body" style="height: 260px; overflow: auto; padding: 0rem">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="border: none;"></th>
+                                <th class="text-center" style="border: none;">#</th>
+                                <th class="text-center" style="border: none;">1</th>
+                                <th class="text-center" style="border: none;">2</th>
+                                <th class="text-center" style="border: none;">3</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for deck_name, bin_counts in deck_counts.items() %}
+                            <tr>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="deck" id="{{ deck_name }}" value="{{ deck_name }}">
+                                        <label class="custom-control-label" for="{{ deck_name }}" style="width: 100%;">{{ deck_name }}</label>
+                                    </div>
+                                </td>
+                                <td class="text-right">{{ bin_counts.sum }}</td>
+                                <td class="text-right">{{ bin_counts.0 }}</td>
+                                <td class="text-right">{{ bin_counts.1 }}</td>
+                                <td class="text-right">{{ bin_counts.2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="card" style="margin-bottom: 10px">
-        <h6 class="card-header">
-            Select Bins
-        </h6>
-        <div class="card-body text-center" style="overflow: auto;">
-            <div class="custom-control custom-checkbox custom-control-inline" style="width: 7rem;">
-                <input type="checkbox" class="custom-control-input" name="bin" id="bin_1" value="0">
-                <label class="custom-control-label" for="bin_1">Bin 1</label>
-            </div>
-            <div class="custom-control custom-checkbox custom-control-inline" style="width: 7rem;">
-                <input type="checkbox" class="custom-control-input" name="bin" id="bin_2" value="1">
-                <label class="custom-control-label" for="bin_2">Bin 2</label>
-            </div>
-            <div class="custom-control custom-checkbox custom-control-inline">
-                <input type="checkbox" class="custom-control-input" name="bin" id="bin_3" value="2">
-                <label class="custom-control-label" for="bin_3">Bin 3</label>
+        <div class="card">
+            <h6 class="card-header dropdown-toggle" style="cursor: pointer;" id="headingTwo"  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                Select Bins
+            </h6>
+            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo">
+                <div class="card-body text-center" style="overflow: auto;">
+                    <div class="custom-control custom-checkbox custom-control-inline" style="width: 7rem;">
+                        <input type="checkbox" class="custom-control-input" name="bin" id="bin_1" value="0">
+                        <label class="custom-control-label" for="bin_1">Bin 1</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline" style="width: 7rem;">
+                        <input type="checkbox" class="custom-control-input" name="bin" id="bin_2" value="1">
+                        <label class="custom-control-label" for="bin_2">Bin 2</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" class="custom-control-input" name="bin" id="bin_3" value="2">
+                        <label class="custom-control-label" for="bin_3">Bin 3</label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
