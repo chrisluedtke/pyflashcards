@@ -58,7 +58,9 @@ def create_app():
                 clear_queued_cards(user_id)
                 order_cards_to_study(cards_to_study, user_id)
 
-                return redirect(url_for('flashcard', id=cards_to_study[0].id))
+                return redirect(
+                    url_for('flashcard', id=cards_to_study[0].flashcard_id)
+                )
             else:
                 flash(error)
 
@@ -71,7 +73,7 @@ def create_app():
     @login_required
     def flashcard(id):
         user_id = session['user_id']
-        card = FlashCard.query.filter(FlashCard.id == id).one()
+        card = FlashCard.query.get(id)
         user_card = User_Card.query.filter(
             User_Card.flashcard_id == id,
             User_Card.user_id == user_id
@@ -83,7 +85,7 @@ def create_app():
 
         if request.method == 'POST':
             next_idx = user_card.queue_idx + 1
-            user_card.queue_idx = None
+            user_card.queue_idx = None  # TODO: keep queue_idx until quiz done
 
             user_card.last_attempt_date = datetime.utcnow()
             user_card.total_attempts = user_card.total_attempts + 1
@@ -100,14 +102,13 @@ def create_app():
 
             DB.session.commit()
 
-            next_card = User_Card.query.filter(
-                User_Card.user_id == user_id,
-                User_Card.queue_idx == next_idx
-            ).all()
-
-            if not next_card:
+            if queue_idx_max < next_idx:
                 return redirect(url_for('complete'))
             else:
+                next_card = User_Card.query.filter(
+                    User_Card.user_id == user_id,
+                    User_Card.queue_idx == next_idx
+                ).all()
                 return redirect(url_for('flashcard',
                                         id=next_card[0].flashcard_id))
 

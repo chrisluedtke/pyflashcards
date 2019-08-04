@@ -132,8 +132,8 @@ def get_cards_to_study(user_id, requested_decks, requested_bins,
                                      FlashCard.deck_id == Deck.id)
                                .filter(
                                    FlashCard.tags.any(
-                                       Tag.name.in_(requested_tags)) |
-                                   Deck.name.in_(requested_decks))
+                                       Tag.name.in_(requested_tags)
+                                   ) | Deck.name.in_(requested_decks))
                                .all())
 
     return cards_to_study
@@ -195,13 +195,8 @@ def order_cards_to_study(cards_to_study, user_id):
     random.shuffle(cards_to_study)
 
     for queue_idx, card in enumerate(cards_to_study):
-        user_card = User_Card.query.filter(
-            User_Card.flashcard_id == card.id,
-            User_Card.user_id == user_id
-        ).one()
-
+        user_card = User_Card.query.get(card.id)
         user_card.queue_idx = queue_idx + 1  # to avoid 0
-
         DB.session.commit()
 
     return True
