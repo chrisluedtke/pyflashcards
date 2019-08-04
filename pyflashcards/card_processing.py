@@ -194,9 +194,9 @@ def order_cards_to_study(cards_to_study, user_id):
     # assign order to cards in user_cards
     random.shuffle(cards_to_study)
 
-    for queue_idx, card in enumerate(cards_to_study):
+    for q_idx, card in enumerate(cards_to_study):
         user_card = User_Card.query.get(card.id)
-        user_card.queue_idx = queue_idx + 1  # to avoid 0
+        user_card.queue_idx = q_idx
         DB.session.commit()
 
     return True

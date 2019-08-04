@@ -2,8 +2,8 @@ from datetime import datetime
 from os import getenv
 
 import markdown
-from flask import (Flask, flash, redirect, render_template, request, session,
-                   url_for)
+from flask import (Flask, abort, flash, redirect, render_template, request,
+                   session, url_for)
 from sqlalchemy import func
 
 from . import auth
@@ -58,9 +58,7 @@ def create_app():
                 clear_queued_cards(user_id)
                 order_cards_to_study(cards_to_study, user_id)
 
-                return redirect(
-                    url_for('flashcard', id=cards_to_study[0].flashcard_id)
-                )
+                return redirect(url_for('flashcard', q_idx=0))
             else:
                 flash(error)
 
@@ -69,22 +67,25 @@ def create_app():
 
         return render_template('index.html', deck_counts=bin_card_counts)
 
-    @app.route('/flashcard/<int:id>', methods=('GET', 'POST'))
+    @app.route('/flashcard/<int:q_idx>', methods=('GET', 'POST'))
     @login_required
-    def flashcard(id):
+    def flashcard(q_idx):
         user_id = session['user_id']
-        card = FlashCard.query.get(id)
         user_card = User_Card.query.filter(
-            User_Card.flashcard_id == id,
-            User_Card.user_id == user_id
-        ).one()
+            User_Card.user_id == user_id,
+            User_Card.queue_idx == q_idx
+        ).all()
 
-        queue_idx_max = DB.session.query(func.max(User_Card.queue_idx)).filter(
-            User_Card.user_id == user_id
-        ).scalar()
+        if not user_card:
+            abort(404)
+        else:
+            user_card = user_card[0]
+
+        queue_idx_max = (DB.session.query(func.max(User_Card.queue_idx))
+                                   .filter(User_Card.user_id == user_id)
+                                   .scalar())
 
         if request.method == 'POST':
-            next_idx = user_card.queue_idx + 1
             user_card.queue_idx = None  # TODO: keep queue_idx until quiz done
 
             user_card.last_attempt_date = datetime.utcnow()
@@ -102,16 +103,13 @@ def create_app():
 
             DB.session.commit()
 
-            if queue_idx_max < next_idx:
+            if q_idx == queue_idx_max:
                 return redirect(url_for('complete'))
             else:
-                next_card = User_Card.query.filter(
-                    User_Card.user_id == user_id,
-                    User_Card.queue_idx == next_idx
-                ).all()
-                return redirect(url_for('flashcard',
-                                        id=next_card[0].flashcard_id))
+                next_idx = q_idx + 1
+                return redirect(url_for('flashcard', q_idx=next_idx))
 
+        card = FlashCard.query.get(user_card.flashcard_id)
         question_html = markdown.markdown(
             card.question,
             extensions=['markdown.extensions.fenced_code', 'codehilite']
@@ -121,16 +119,13 @@ def create_app():
             extensions=['markdown.extensions.fenced_code', 'codehilite']
         )
 
-        deck_name = (DB.session.query(Deck.name)
-                               .join(FlashCard)
-                               .filter(FlashCard.id == id)
-                               .one())[0]
+        deck_name = Deck.query.get(card.deck_id).name
 
         return render_template('flashcard.html',
                                question_html=question_html,
                                answer_html=answer_html,
-                               n_total=queue_idx_max,
-                               n_current=user_card.queue_idx,
+                               n_total=queue_idx_max + 1,
+                               n_current=user_card.queue_idx + 1,
                                deck_name=deck_name)
 
     @app.route('/complete', methods=('GET', 'POST'))
@@ -139,5 +134,13 @@ def create_app():
         if request.method == 'POST':
             return redirect(url_for('index'))
         return render_template('complete.html')
+
+    @app.errorhandler(404)
+    def not_found(e):
+        return render_template('404.html')
+
+    @app.errorhandler(500)
+    def internal_server_error(e):
+        return render_template('500.html')
 
     return app
