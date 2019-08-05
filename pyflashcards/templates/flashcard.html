@@ -3,19 +3,20 @@
 <div class="card" style="margin-bottom: 10px">
   <div class="card-header">
     <ul class="nav nav-tabs card-header-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" id="question-tab" href="#question" data-toggle="tab" role="tab" aria-controls="question" aria-selected="true">
+
+      <li class="nav-item text-center" style="width: 11rem">
+        <a class="nav-link active" id="question-tab" href="#question" data-toggle="tab" role="tab" aria-controls="question" aria-selected="true" style="color:#495057;">
           Question
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" id="answer-tab" href="#answer" data-toggle="tab" role="tab" aria-controls="answer" aria-selected="false">
+      <li class="nav-item text-center" style="width: 11rem">
+        <a class="nav-link" id="answer-tab" href="#answer" data-toggle="tab" role="tab" aria-controls="answer" aria-selected="false" style="color:#495057;">
           Answer
         </a>
       </li>
       <li class="nav-item ml-auto">
-        <a class="nav-link disabled" tabindex="-1" aria-disabled="true">
-          {{ n_current }} / {{ n_total }}
+        <a class="nav-link disabled">
+          {{ n_current }} of {{ n_total }}
         </a>
       </li>
     </ul>
@@ -39,8 +40,8 @@
 
 <form method="post">
   <div>
-      <input type="submit" class="btn btn-success" name="pass" value="Know it" style="width: 49.5%">
-      <input type="submit" class="btn btn-warning" name="fail" value="Don't know it" style="width: 49.5%; float: right">
+      <input type="submit" class="btn btn-success" name="pass" value="Know It 💡" style="width: 49.5%">
+      <input type="submit" class="btn btn-secondary" name="fail" value="Not Yet 🤔" style="width: 49.5%; float: right">
   </div>
 </form>
 {% endblock %}
