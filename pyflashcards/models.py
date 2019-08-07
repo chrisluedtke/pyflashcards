@@ -25,6 +25,7 @@ class Deck(DB.Model):
     id = DB.Column(DB.Integer, primary_key=True)
 
     name = DB.Column(DB.String(100), unique=True)
+    order = DB.Column(DB.Integer, default=999)
     flashcards = DB.relationship('FlashCard', backref='deck')
 
     def __repr__(self):

@@ -1,4 +1,5 @@
 import random
+import re
 from pathlib import Path
 
 from sqlalchemy import func
@@ -17,7 +18,14 @@ def load_md_files_to_db(cards_dir=CARDS_DIR):
 
 
 def process_md_file(filepath) -> None:
-    deck = create_deck(deck_name=filepath.name.strip('.md'))
+    filename = filepath.name.strip('.md')
+    match = re.match(r'^\d+', filename)
+    if match:
+        filename = filename.strip(match.group() + ' _')
+        deck_ord = int(match.group())
+    else:
+        deck_ord = None
+    deck = create_deck(deck_name=filename, deck_ord=deck_ord)
 
     # create flashcards from file contents
     with open(str(filepath)) as f:
@@ -58,10 +66,10 @@ def process_md_file(filepath) -> None:
     return None
 
 
-def create_deck(deck_name: str):
+def create_deck(deck_name: str, deck_ord: int):
     result = Deck.query.filter(Deck.name == deck_name).all()
     if not result:
-        deck = Deck(name=deck_name)
+        deck = Deck(name=deck_name, order=deck_ord)
         DB.session.add(deck)
         DB.session.commit()
     else:
@@ -166,7 +174,9 @@ def get_bin_card_counts(user_id, percentage=False):
                      .join(Deck,
                            FlashCard.deck_id == Deck.id)
                      .filter(User_Card.user_id == user_id)
-                     .group_by(Deck.name, User_Card.bin_id).all())
+                     .group_by(Deck.name, User_Card.bin_id)
+                     .order_by(Deck.order)
+                     .all())
 
     d = {'All': {'sum': 0, 0: 0, 1: 0, 2: 0}}
     for deck_name, bin_id, count in deck_counts:
