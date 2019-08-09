@@ -9,7 +9,7 @@ from .models import DB, Deck, FlashCard, Tag, User_Card
 CARDS_DIR = Path(__file__).parent / 'cards'
 
 
-def load_md_files_to_db(cards_dir=CARDS_DIR):
+def create_or_update_decks(cards_dir=CARDS_DIR):
     for filepath in cards_dir.iterdir():
         if str(filepath).endswith('.md'):
             process_md_file(filepath=filepath)
@@ -25,13 +25,14 @@ def process_md_file(filepath) -> None:
         deck_ord = int(match.group())
     else:
         deck_ord = None
-    deck = create_deck(deck_name=filename, deck_ord=deck_ord)
+    deck = get_or_create_deck(deck_name=filename, deck_ord=deck_ord)
 
     # create flashcards from file contents
     with open(str(filepath)) as f:
         lines = f.read().split('\n')
         lines.append('---')
 
+    card_order = 1
     q, a, t = [False, False, False]
     q_str, a_str, t_str = ['', '', '']
 
@@ -41,11 +42,13 @@ def process_md_file(filepath) -> None:
 
         if any([q_line, br_line]) and all([q_str, a_str]):
             create_flashcard(
+                order=card_order,
                 question=q_str.strip(),
                 answer=a_str.strip(),
                 tags=t_str,
                 deck=deck,
             )
+            card_order += 1
             q, a, t = [False, False, False]
             q_str, a_str, t_str = ['', '', '']
         elif br_line:
@@ -66,44 +69,49 @@ def process_md_file(filepath) -> None:
     return None
 
 
-def create_deck(deck_name: str, deck_ord: int):
-    result = Deck.query.filter(Deck.name == deck_name).all()
-    if not result:
-        deck = Deck(name=deck_name, order=deck_ord)
-        DB.session.add(deck)
-        DB.session.commit()
+def get_or_create_deck(deck_name: str, deck_ord: int):
+    instance = Deck.query.filter(Deck.name == deck_name).first()
+
+    if instance:
+        if instance.order != deck_ord:
+            instance.order = deck_ord
+            DB.session.commit()
     else:
-        deck = result[0]
-
-    return deck
-
-
-def create_flashcard(question: str, answer: str, tags: str, deck: Deck):
-    result = FlashCard.query.filter(
-        FlashCard.question == question
-    ).all()
-    if not result:
-        fc = FlashCard(question=question, answer=answer)
-        DB.session.add(fc)
+        instance = Deck(name=deck_name, order=deck_ord)
+        DB.session.add(instance)
         DB.session.commit()
+
+    return instance
+
+
+def create_flashcard(order: int, question: str, answer: str, tags: str,
+                     deck: Deck):
+    card = FlashCard.query.filter((FlashCard.question == question) |
+                                  (FlashCard.answer == answer)).first()
+
+    if card:
+        card.question = question
+        card.answer = answer
+        card.order = order
     else:
-        fc = result[0]
+        card = FlashCard(question=question, answer=answer, order=order)
+        DB.session.add(card)
+
+    DB.session.commit()
 
     if tags:
         tags = [x.strip() for x in tags.split(',')]
 
-        for tag in tags:
-            result = Tag.query.filter(Tag.name == tag).all()
-            if not result:
-                t = Tag(name=tag)
-                DB.session.add(t)
+        for tag_name in tags:
+            tag = Tag.query.filter(Tag.name == tag_name).first()
+            if not tag:
+                tag = Tag(name=tag_name)
+                DB.session.add(tag)
                 DB.session.commit()
-            else:
-                t = result[0]
 
-            fc.tags.append(t)
+            card.tags.append(tag)  # won't duplicate tags
 
-    deck.flashcards.append(fc)
+    deck.flashcards.append(card)  # won't duplicate cards
     DB.session.commit()
 
     return None

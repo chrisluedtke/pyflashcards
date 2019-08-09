@@ -35,6 +35,7 @@ class Deck(DB.Model):
 class FlashCard(DB.Model):
     __tablename__ = 'FlashCard'
     id = DB.Column(DB.Integer, primary_key=True)
+    order = DB.Column(DB.Integer, default=9999)
     question = DB.Column(DB.Text, unique=True)
     answer = DB.Column(DB.Text)
     deck_id = DB.Column(DB.Integer, DB.ForeignKey('Deck.id'))

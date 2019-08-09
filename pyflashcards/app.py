@@ -10,7 +10,7 @@ from . import auth
 from .auth import login_required
 from .card_processing import (assign_cards_to_user, clear_queued_cards,
                               get_bin_card_counts, get_cards_to_study,
-                              load_md_files_to_db, order_cards_to_study)
+                              create_or_update_decks, order_cards_to_study)
 from .config import Config
 from .models import DB, Deck, FlashCard, Tag, User, User_Card
 
@@ -24,14 +24,15 @@ def create_app():
     @app.shell_context_processor
     def make_shell_context():
         return {'DB': DB, 'FlashCard': FlashCard, 'Tag': Tag, 'Deck': Deck,
-                'User': User, 'User_Card': User_Card, 'func': func}
+                'User': User, 'User_Card': User_Card, 'func': func,
+                'create_or_update_decks': create_or_update_decks}
 
     if getenv('FLASK_ENV') == "development":
         @app.route('/reset')
         def reset():
             DB.drop_all()
             DB.create_all()
-            load_md_files_to_db()
+            create_or_update_decks()
             return redirect(url_for('index'))
 
     @app.route('/', methods=('GET', 'POST'))

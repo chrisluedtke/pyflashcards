@@ -34,10 +34,10 @@ A simple way to log and study python tidbits.
 7. Initialize/reset the database:
     ```
     flask shell
-    from pyflashcards.card_processing import load_md_files_to_db
+    
     DB.drop_all()
     DB.create_all()
-    load_md_files_to_db()
+    create_or_update_decks()
     quit()
     ```
 8. Run the web app:
@@ -45,6 +45,14 @@ A simple way to log and study python tidbits.
     flask run
     ```
 9. Navigate to the locally served page, typically `http://localhost:5000/`
+
+To update cards in the app after editing the markdown decks, simply run:
+```
+flask shell
+
+create_or_update_decks()
+```
+**Note:** If a card's question **and** answer have been updated, this will create a new card. If just the question or just the answer have changed, the original card will be updated.
 
 ### Set up - Local Docker
 1. Clone this repository
@@ -70,9 +78,9 @@ A simple way to log and study python tidbits.
 4. Initialize and/or reset the database from your local command line
     ```
     heroku run flask shell -a pyflashcards
-    from pyflashcards.card_processing import load_md_files_to_db
+    
     DB.drop_all()
     DB.create_all()
-    load_md_files_to_db()
+    create_or_update_decks()
     quit()
     ```
