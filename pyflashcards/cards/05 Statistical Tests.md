@@ -1,8 +1,15 @@
 ## q
-How do we compute **variance** from **standard deviation**?
+What is the difference between **parametric statistics** and **nonparametric statistics**? What are some examples?
 
 ## a
-```
+**Parametric statistics**
+* 
+
+## q
+How do we compute the **variance** of a sample from **standard deviation**?
+
+## a
+```python
 variance = standard_deviation ** 2
 ```
 
