@@ -166,38 +166,37 @@ def assign_cards_to_user(user_id):
 
 def get_bin_card_counts(user_id, percentage=False):
     """Count the number of cards in each bin in each deck"""
-    deck_counts = (DB.session
-                     .query(Deck.name, User_Card.bin_id,
+    count_query = (DB.session
+                     .query(Deck.order, Deck.name, User_Card.bin_id,
                             func.count(User_Card.bin_id))
                      .join(FlashCard,
                            User_Card.flashcard_id == FlashCard.id)
                      .join(Deck,
                            FlashCard.deck_id == Deck.id)
                      .filter(User_Card.user_id == user_id)
-                     .group_by(Deck.name, User_Card.bin_id)
+                     .group_by(Deck.order, Deck.name, User_Card.bin_id)
                      .order_by(Deck.order)
                      .all())
 
-    d = {'All': {'sum': 0, 0: 0, 1: 0, 2: 0}}
-    for deck_name, bin_id, count in deck_counts:
-        if deck_name not in d:
-            d[deck_name] = {}
-            d[deck_name]['sum'] = 0
-        d[deck_name][bin_id] = count
-        d[deck_name]['sum'] += count
+    bins = ['sum', 0, 1, 2]
+    count_dict = {'All': {b: 0 for b in bins}}
+    for _, dk_name, bin_id, bin_count in count_query:
+        if dk_name not in count_dict:
+            count_dict[dk_name] = {b: 0 for b in bins}
 
-        d['All']['sum'] += count
-        d['All'][bin_id] += count
+        count_dict[dk_name][bin_id] = bin_count
+        count_dict[dk_name]['sum'] += bin_count
 
-    for deck_name, _ in d.items():
-        for bin_id in ['sum', 0, 1, 2]:
-            if bin_id not in d[deck_name]:
-                d[deck_name][bin_id] = 0
-            if percentage:
-                percent = (d[deck_name][bin_id] / d[deck_name]['sum']) * 100
-                d[deck_name][bin_id] = f"{round(percent)}%"
+        count_dict['All']['sum'] += bin_count
+        count_dict['All'][bin_id] += bin_count
 
-    return d
+    if percentage:
+        for dk_name, dk_dict in count_dict.items():
+            for bin_id, bin_counts in dk_dict.items():
+                percent = bin_counts / dk_dict['sum'] * 100
+                count_dict[dk_name][bin_id] = f"{round(percent)}%"
+
+    return count_dict
 
 
 def order_cards_to_study(cards_to_study, user_id):

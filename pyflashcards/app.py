@@ -24,7 +24,7 @@ def create_app():
     @app.shell_context_processor
     def make_shell_context():
         return {'DB': DB, 'FlashCard': FlashCard, 'Tag': Tag, 'Deck': Deck,
-                'User': User, 'User_Card': User_Card}
+                'User': User, 'User_Card': User_Card, 'func': func}
 
     if getenv('FLASK_ENV') == "development":
         @app.route('/reset')
