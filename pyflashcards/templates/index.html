@@ -1,6 +1,22 @@
 {% extends "base.html" %}
+
 {% block head %}
+<!-- Toggles checkbox of row on click -->
+<script type="text/javascript">
+$(document).ready(function() {
+    $('tr').click(function(event){
+        if($(':checkbox', this).prop('checked') == false){
+            $(':checkbox', this).prop('checked', true);
+            // $(this).addClass("table-success");
+        } else {
+            $(':checkbox', this).prop('checked', false);
+            // $(this).removeClass("table-success");
+        }
+    });
+});
+</script>
 {% endblock head %}
+
 {% block content %}
 <div>
     <h4>Create a Study Session</h4>
@@ -33,7 +49,7 @@
                                 <td>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" name="deck" id="{{ deck_name }}" value="{{ deck_name }}">
-                                        <label class="custom-control-label" for="{{ deck_name }}" style="width: 100%;">{{ deck_name }}</label>
+                                        <label class="custom-control-label" for="{{ deck_name }}">{{ deck_name }}</label>
                                     </div>
                                 </td>
                                 <td class="text-right"><strong>{{ bin_counts.sum }}</strong></td>
