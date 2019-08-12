@@ -30,31 +30,27 @@ def process_md_file(filepath) -> None:
     # create flashcards from file contents
     with open(str(filepath)) as f:
         lines = f.read().split('\n')
-        lines.append('---')
+        lines.append('# question')  # to ensure the last question is saved
 
     card_order = 1
     q, a, t = [False, False, False]
     q_str, a_str, t_str = ['', '', '']
 
     for line in lines:
-        q_line = line.lower().strip('# ') in ('question', 'q')
-        br_line = line.startswith('---')
-
-        if any([q_line, br_line]) and all([q_str, a_str]):
-            create_flashcard(
-                order=card_order,
-                question=q_str.strip(),
-                answer=a_str.strip(),
-                tags=t_str,
-                deck=deck,
-            )
-            card_order += 1
-            q, a, t = [False, False, False]
+        if line.lower().strip('# ') in ('question', 'q'):
+            if all([q_str, a_str]):
+                create_flashcard(
+                    order=card_order,
+                    question=q_str.strip(),
+                    answer=a_str.strip(),
+                    tags=t_str,
+                    deck=deck,
+                )
+                card_order += 1
+            q, a, t = [True, False, False]
             q_str, a_str, t_str = ['', '', '']
-        elif br_line:
+        elif line.startswith('---'):
             continue
-        elif q_line:
-            q = True
         elif line.lower().strip('# ') in ('answer', 'a'):
             a = True
         elif line.lower().strip('# ') in ('tag', 'tags', 't'):
