@@ -31,20 +31,11 @@ A simple way to log and study python tidbits.
     DATABASE_URL="sqlite:///db.sqlite3"
     SECRET_KEY="you-will-never-guess"
     ```
-7. Initialize/reset the database:
-    ```
-    flask shell
-    
-    DB.drop_all()
-    DB.create_all()
-    create_or_update_decks()
-    quit()
-    ```
-8. Run the web app:
+7. Run the web app (the database will be initialized automatically):
     ```
     flask run
     ```
-9. Navigate to the locally served page, typically `http://localhost:5000/`
+8. Navigate to the locally served page, typically `http://localhost:5000/`
 
 To update cards in the app after editing the markdown decks, simply run:
 ```
@@ -75,7 +66,7 @@ create_or_update_decks()
     DATABASE_URL=
     SECRET_KEY=
     ```
-4. Initialize and/or reset the database from your local command line
+4. The database will initialize automatically. To reset the production database, run this from your local command line:
     ```
     heroku run flask shell -a pyflashcards
     

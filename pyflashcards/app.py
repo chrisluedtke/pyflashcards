@@ -21,6 +21,10 @@ def create_app():
     app.register_blueprint(auth.bp)
     DB.init_app(app)
 
+    with app.app_context():
+        DB.create_all()
+        create_or_update_decks()
+
     @app.shell_context_processor
     def make_shell_context():
         return {'DB': DB, 'FlashCard': FlashCard, 'Tag': Tag, 'Deck': Deck,
