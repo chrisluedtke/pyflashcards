@@ -106,6 +106,7 @@ def bubble_sort(arr):
 Quadtratic, `O(n ^ c)`, since we require more loops with more inputs.
 
 Other examples:
+
 * all permutations of the characters in a string
 * nested loops are a good "code sniff" for quadratic runtime performance
 

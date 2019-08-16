@@ -49,11 +49,15 @@ supervised learning, classification, validation
 What is **Precision** in classification models?
 
 ##### Answer
-`N true positives / (N true positives + N false positives)`
+```
+N true positives / (N true positives + N false positives)
+```
 
 *OR*
 
-`N true positives / N predicted positives`
+```
+N true positives / N predicted positives
+```
 
 *OR*
 
@@ -63,19 +67,6 @@ positive.
 ##### Tags
 supervised learning, classification, validation
 
----
-
-##### Question
-How do we import logistic regression functionality from `sklearn`?
-
-##### Answer
-```python
->>> from sklearn.linear_model import LogisticRegression
-```
-##### Tags
-supervised learning, classification, validation
-
----
 
 ##### Question
 What are **k-fold cross validation** and **n-fold cross validation**?
