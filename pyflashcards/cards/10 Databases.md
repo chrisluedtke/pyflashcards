@@ -24,14 +24,14 @@ What does **ACID** stand for, in the context of relational databases?
 What is **ETL**?
 
 ##### Answer
-* Extract
-* Tranform
-* Load
+* **E**xtract
+* **T**ranform
+* **L**oad
 
 ---
 
 ##### Question
-What is database normalization?
+What is **database normalization**?
 
 ##### Answer
 Branching out text-like data, such that entries are stored once and referred to in other tables by ID (foreign key). 
