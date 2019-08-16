@@ -1,45 +1,42 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-100">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!-- Favicon -->
+        <!-- favicon -->
         <link rel="icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/146/card-index-dividers_1f5c2.png">
-
         <!-- bootstrap -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+        <!-- syntax highlighting -->
+        <link href="{{ url_for('static', filename='pygments.css') }}" rel="stylesheet">
+        <!-- my styles -->
+        <link href="{{ url_for('static', filename='styles.css') }}" type="text/css" rel="stylesheet">
+        <!-- fontawesome -->
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
-
-        <!-- Syntax Highlighting -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='pygments.css') }}">
-        <style>
-            pre {
-                margin: 0px;
-            }
-            .codehilite  {
-                background: #f8f8f8; 
-                border: 1px solid #dfdfdf;
-                border-radius: .25rem;
-                padding: .3rem .5rem .5rem .5rem;
-                overflow-x: auto;
-            }
-        </style>
-
+        
         <title>pyFlashcards</title>
         {% block head %}{% endblock head %}
     </head>
-    {% include 'includes/nav.html' %}
-    <body>
-        <div class="container" style="padding-top: 75px;">
-            <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto" style="max-width: 500px;">
-                {% block content %}{% endblock %}
+    <body class="d-flex flex-column h-100">
+        <header>
+        {% include 'includes/nav.html' %}
+        </header>
+        <main role="main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto" style="max-width: 500px;">
+                    {% block content %}{% endblock %}
+                    </div>
                 </div>
             </div>
-        </div>
+        </main>
+        <footer class="footer mt-auto py-3">
+            <div class="container text-right">
+                <span class="text-muted">By <a href="https://chrisluedtke.com/">Chris Luedtke</a></span>
+            </div>
+        </footer>
     </body>
 </html>
