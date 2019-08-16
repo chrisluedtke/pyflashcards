@@ -2,11 +2,9 @@
 What are **vertical** and **horizontal** scaling?
 
 ##### Answer
-* Vertical - more powerful single machine
-* Horizontal - distributed systems
+* Vertical - upgrading to a more powerful single machine
+* Horizontal - acquiring more distributed systems
 
-##### Tags
-databases
 ---
 
 ##### Question
@@ -20,20 +18,15 @@ What does **ACID** stand for, in the context of relational databases?
 * **I**solation - transactions may occur concurrently. Transactions are isolated from one another, checked for conflict, and performed in an order that may be executed successfully. 
 * **D**urability - once a transaction has been committed, it will remain committed even in the event of system failure
 
-##### Tags
-databases
 ---
 
 ##### Question
-What is ETL?
+What is **ETL**?
 
 ##### Answer
 * Extract
 * Tranform
 * Load
-
-##### Tags
-databases
 
 ---
 
@@ -43,23 +36,18 @@ What is database normalization?
 ##### Answer
 Branching out text-like data, such that entries are stored once and referred to in other tables by ID (foreign key). 
 
-##### Tags
-databases
-
 ---
 
 ##### Question
-What is MapReduce?
+What is **MapReduce**?
 
 ##### Answer
 
-##### Tags
-databases
 
 ---
 
 ##### Question
-What is CAP, in the context of non-relational databases?
+What is **CAP**, in the context of non-relational databases?
 
 ##### Answer
 Any 2 of the following 3 are guaranteed by a non-relational database:
@@ -67,6 +55,3 @@ Any 2 of the following 3 are guaranteed by a non-relational database:
 * Consistency - every read receives the most recent write or an error
 * Availability - every request receives a (non-error) response - without the guarantee that is contains the most recent write
 * Partition Tolerance - the system continues to operate despite an arbitrary number of messages being dropped (or delayed) by the network between nodes
-
-##### Tags
-databases
