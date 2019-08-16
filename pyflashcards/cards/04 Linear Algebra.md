@@ -157,7 +157,7 @@ linear algebra, unit 2
 What is **covariance**?
 
 ##### Answer
-Covariance is a measure of the directional relationship between the returns on two risky assets. A positive covariance means that asset returns move together while a negative covariance means returns more inversely.
+In probability theory and statistics, covariance is a measure of the joint variability of two random variables. If the greater values of one variable mainly correspond with the greater values of the other variable, and the same holds for the lesser values, (i.e., the variables tend to show similar behavior), the covariance is positive.
 
 ##### Tags
 linear algebra, general, unit 2

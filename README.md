@@ -3,7 +3,7 @@
 A simple way to log and study python tidbits.
 
 ### Database Diagram
-[View on dbdiagram.io](https://dbdiagram.io/d/5d28ee1aced98361d6dc9c7c)
+[View on dbdiagram.io](https://dbdiagram.io/d/5d5709fbced98361d6ddaa09)
 
 ### Set up - Local Python
 1. Clone this repository (fork it first if you want to deploy to Heroku):
