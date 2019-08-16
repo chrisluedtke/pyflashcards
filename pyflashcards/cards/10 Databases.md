@@ -34,7 +34,7 @@ What is **ETL**?
 What is **database normalization**?
 
 ##### Answer
-Branching out text-like data, such that entries are stored once and referred to in other tables by ID (foreign key). 
+Branching out text-like data, such that entries are stored once and referred to in other tables by ID (foreign key). This saves space but requires more JOINs in queries, and more complicated queries in general. Normalization can also make frequent large batch updates to the database run slowly, as the normalization requires more primary keys, which must be indexed.
 
 ---
 
@@ -52,6 +52,6 @@ What is **CAP**, in the context of non-relational databases?
 ##### Answer
 Any 2 of the following 3 are guaranteed by a non-relational database:
 
-* Consistency - every read receives the most recent write or an error
-* Availability - every request receives a (non-error) response - without the guarantee that is contains the most recent write
-* Partition Tolerance - the system continues to operate despite an arbitrary number of messages being dropped (or delayed) by the network between nodes
+* **C**onsistency - every read receives the most recent write or an error
+* **A**vailability - every request receives a (non-error) response - without the guarantee that is contains the most recent write
+* **P**artition Tolerance - the system continues to operate despite an arbitrary number of messages being dropped (or delayed) by the network between nodes
