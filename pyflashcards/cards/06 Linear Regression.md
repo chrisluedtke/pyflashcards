@@ -6,7 +6,7 @@ What is **Ordinary Least Squares** regression?
 
 OLS requires that multiplying our observation data matrix by its transpose will result in an intervible matrix.
 
-<img src="/static/img/OLS_linear_algebra.PNG">
+<img src="/static/img/OLS_linear_algebra.PNG" class="mx-auto d-block">
 
 ## Q
 What is the interpretation of the **R^2** metric? When is it useful?
@@ -38,7 +38,7 @@ Some predictive models (like trees) can explore feature interactions automatical
 What is **Multi-Collinearity**? Why is it a problem for OLS regression?
 
 ## A
-**Multi-Collinearity**? means that two columns are linearly dependant on or related to each other. This is problematic for OLS because the determinant of the X matrix will be zero, causing it to not be invertible. This will greatly harm models that are calculated using the linear algebra approach to Ordinary Least Squares regression.
+**Multi-Collinearity** means that two columns are linearly dependant on or related to each other. This is problematic for OLS because the determinant of the X matrix will be zero, causing it to not be invertible. This will greatly harm models that are calculated using the linear algebra approach to Ordinary Least Squares regression.
 
 A common "trap" is using one-hot-encoding on a binary variable, which produces two columns that are perfect opposites of each other.
 
@@ -66,13 +66,13 @@ The 2 main types are **L1 Regularization** and **L2 Regularization**.
 What is **L1 Regularization**?
 
 ## a
-**L1 Regularization**, also known as **Lasso Regression** reduces unimportant coefficients to zero.
+**L1 Regularization**, or **Lasso Regression**, reduces unimportant coefficients to zero.
 
 ## q
 What is **L2 Regularization**?
 
 ## a
-**L2 Regularization**, also known as **Ridge Regression** is ordinary least squares regression with a loss function that minimizes the **sum of square error of residuals** and **the squared slope of the fit model `* alpha`**.
+**L2 Regularization**, or **Ridge Regression**,is ordinary least squares regression with a loss function that minimizes the **sum of square error of residuals** and **the squared slope of the fit model `* alpha`**.
 
 The `alpha` parameter corresponds to the weight being given to the extra penalty being calculated by [Tikhonov regularization](https://en.wikipedia.org/wiki/Tikhonov_regularization) (this parameter is also referred to as &lambda;	in the context of ridge regression).
 
