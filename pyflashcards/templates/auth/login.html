@@ -18,12 +18,14 @@
     </div>
     <button type="submit" class="btn btn-primary" style="width:100%">Submit</button>
 </form>
-
+<p style="text-align: center;">
+    Need an account? <a href="{{ url_for('auth.register') }}">Register Here</a>
+</p>
 {% with messages = get_flashed_messages() %}
 {% if messages %}
 {% for message in messages %}
 <p style="text-align: center;">
-        <strong>Error:</strong> {{ message }}
+    <strong>Error:</strong> {{ message }}
 </p>
 {% endfor %}
 {% endif %}
