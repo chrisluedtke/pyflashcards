@@ -38,7 +38,7 @@ def process_md_file(filepath) -> None:
 
     for line in lines:
         if line.lower().strip('# ') in ('question', 'q'):
-            if all([q_str, a_str]):
+            if all([q_str.strip(), a_str.strip()]):
                 create_flashcard(
                     order=card_order,
                     question=q_str.strip(),
