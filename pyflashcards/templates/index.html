@@ -45,7 +45,7 @@ $(document).ready(function() {
                         </thead>
                         <tbody>
                             {% for deck_name, bin_counts in deck_counts.items() %}
-                            <tr>
+                            <tr style="cursor: pointer;">
                                 <td>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" name="deck" id="{{ deck_name }}" value="{{ deck_name }}">
