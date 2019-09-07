@@ -41,6 +41,34 @@ def vector_norm(vector: List):
 
 ---
 
+## Q
+What is the **Dot Product** of two vetors? What does it produce?
+
+## A
+The dot product of two vectors `a` and `b` produces a scalar quantity that is equal to the sum of pair-wise products of the vectors' components. The dot product is commutative and distributive.
+
+<img src="/static/img/vect_dot.svg" class="mx-auto d-block">
+
+```python
+def vector_dot_product(vector1, vector2):
+    assert len(vector1) == len(vector2), 'Expected Vectors of Equal Length'
+
+    return sum([vector1[i]*vector2[i] for i in range(len(vector1))])
+```
+
+## Q
+How do we find the **Cross Product** of two vectors? What does it produce?
+
+## A
+The **Cross Product** of two vectors produces a third vector that is perpendicular to the first two vectors. 
+It is written with a regular looking multiplication sign like `a X b` but is read as "a cross b".
+
+The cross product can be found by creating a 3X3 matrix from the two vectors and the unit vector and then finding the determinant of the 3x3 matrix.
+
+<img src="/static/img/vect_cross.PNG" class="mx-auto d-block">
+
+----
+
 ## q
 What is a **matrix**? What are its **dimensions**?
 
@@ -59,6 +87,14 @@ vect = np.array([[2, 4.6, -1, 9],
 ```
 
 ---
+
+## Q
+What is **Matrix Equality**?
+
+## A
+Two matrices that have the same dimensions, and their corresponding elements are equal.
+
+----
 
 ## q
 How do we conduct **matrix multiplication**? What does it accomplish?
@@ -80,15 +116,15 @@ Matrix multiplication is best understood in terms of vector dot products. To mul
 def matrix_multiply(matrix1, matrix2):
     matrix1_n_cols = len(matrix1[0])
     matrix2_n_rows = len(matrix2)
-    assert matrix1_n_cols==matrix2_n_rows, 'Matrix1 Columns != Matrix2 Rows'
+    assert matrix1_n_cols == matrix2_n_rows, 'Matrix1 Columns != Matrix2 Rows'
 
-    matrix2 = transpose_matrix(matrix2)
-    product = [[] for _ in range(len(matrix1))]
+    matrix2 = transpose_matrix(matrix2)  # makes it easier to find cols by index
+    product = []
   
-    for i in range(len(matrix1)):
-        for j in range(len(matrix2)):
-            assert (len(matrix1[i]) == len(matrix2[j])), 'Matrices Must Be Rectangular'
-            product[i].append(vector_dot_product(matrix1[i],matrix2[j]))
+    for i, matrix1_row in enumerate(matrix1):
+        product.append([])
+        for j, matrix2_col in enumerate(matrix2):
+            product[i].append(vector_dot_product(matrix1_row, matrix2_col))
     return product
 
 def vector_dot_product(vector1, vector2):
@@ -96,29 +132,37 @@ def vector_dot_product(vector1, vector2):
 
     return sum([vector1[i]*vector2[i] for i in range(len(vector1))])
 
-def rectangular_matrix(matrix):
-    for i in range(len(matrix)):
-        if len(matrix[i]) != len(matrix[0]):
-            return False
-    return True
-
 def transpose_matrix(matrix):
     return list(map(list, zip(*matrix)))
 ```
 
 ---
 
-##### Question
-How do you find the **determinant** of a Matrix?
+## Q
+What is the **Transpose** of a matrix?
 
-##### Answer
-The determinant is a property that all *square* matrices possess, denoted with pipes (i.e. |A|).
+## A
+A transposed matrix is rotated such that its rows are the columns of the original and its columns are the rows of the original.
+
+---
+
+## Q
+What is a **Square Matrix**? What are some examples?
+
+----
+
+## Q
+How do we find the **Determinant** of a Matrix?
+
+## A
+The **determinant** is a property that all *square* matrices possess, denoted with pipes (i.e. |A|).
 
 Given matrix A:
 ```
 A  = [[a, b]
       [c, d]]
 ```
+
 The determinant is:
 ```
 |A| = ad - bc
@@ -126,20 +170,57 @@ The determinant is:
 
 ---
 
-##### Question
+## Q
+What is the **Inverse** of a matrix? What happens if we multiply a matrix by its inverse? What is this important in data science?
+
+---
+
+## Q
+What is **Variance**?
+
+## A
+The average of the squared differences from the Mean.
+
+----
+
+## Q
+What is **Standard Deviation**?
+
+## A
+A measure of how spread out numbers are.
+
+---
+
+## Q
+What is **Covariance**?
+
+## A
+In probability theory and statistics, covariance is a measure of the joint variability of two random variables. If the greater values of one variable mainly correspond with the greater values of the other variable, and the same holds for the lesser values, (i.e., the variables tend to show similar behavior), the covariance is positive.
+
+----
+
+## Q
+What is **Singular Value Decomposition**?
+
+## A
+Factorization of a real or complex matrix. It is the generalization of the eigendecomposition of a given matrix using its constituent elements. These constituent parts help make certain subsequent matrix calculations simpler.
+
+----
+
+## Q
 What is **Orthogonality**?
 
-##### Answer
+## A
 Orthogonality is the property that means 'changing A does not change B'. An example of an orthogonal system would be where we skip to the next song on our playlist, and changing the song does not change the volume.
 
 In programming, orthogonality means that when we execute an instruction, nothing but that instruction happens.
 
 ----
 
-##### Question
+## Q
 What is a **Linear Combination**?
 
-##### Answer
+## A
 In linear algebra, we define the concept of linear combinations in terms of vectors. But, it is actually possible to talk about linear combinations of anything...
 
 (scalar)(something 1 ) + (scalar)(something 2) + (scalar)(something 3)
@@ -148,97 +229,30 @@ These 'somethings' could be everyday variables like x, y, z etc. or something mo
 
 ----
 
-##### Question
+## Q
 What is **Collinearity**? Why can it be a problem?
 
-##### Answer
+## A
 Collineartiy is a condition in which some of the independent variables are highly correlated.
 
-Collinearity tends to inflate the variance of at lesat one estimated regression coefficient.
+Collinearity tends to inflate the variance of at least one estimated regression coefficient.
 
 ----
 
-##### Question
-What is **Variance**?
-
-##### Answer
-The average of the squared differences from the Mean.
-
-----
-
-##### Question
-What is standard deviation?
-
-##### Answer
-A measure of how spread out numbers are.
-
-----
-
-##### Question
-What is **Dimensionality**? Why is it important?
-
-##### Answer
-The number of rows and columns a matrix has.
-
-Dataframes can be represented as matrix of size = dataframe.shape, and this is important to note if we are adding new features, concantenating more data, or merging two datasets together.
-
-----
-
-##### Question
-What is **Matrix Equality**?
-
-##### Answer
-Matrices that have the same dimensions, and their corresponding elements are equal.
-
-----
-
-##### Question
-What is **Matrix Multiplication**?
-
-##### Answer
-Multiplying any two matrices where the number of columns of the first matrix is equal to the number of rows of the second matrix.
-
-----
-
-##### Question
+## Q
 What are some basic applications of linear algebra in Data Science?
 
-##### Answer
-Vectors: Rows, Columns Lists, Arrays
-Matrices: Tables, Spreadsheets, DataFrames
-
-Linear Modeling: Linear Regression, Logistic Regression, Gradient Descent, etc.
-
-----
-
-##### Question
-What is a **Dot Product**?
-
-##### Answer
-Dot products represent the scalar quantity equal to the sum of pair-wise products of components in vectorA and vectorB
+## A
+* Vectors: Rows, Columns, Lists, Arrays
+* Matrices: Tables, Spreadsheets, DataFrames
+* Linear Modeling: Linear Regression, Logistic Regression, Gradient Descent, etc.
 
 ----
 
-##### Question
-What is **Singular Value Decomposition**?
-
-##### Answer
-Factorization of a real or complex matrix. It is the generalization of the eigendecomposition of a given matrix using its constituent elements. These constituent parts help make certain subsequent matrix calculations simpler.
-
-----
-
-##### Question
-What is **covariance**?
-
-##### Answer
-In probability theory and statistics, covariance is a measure of the joint variability of two random variables. If the greater values of one variable mainly correspond with the greater values of the other variable, and the same holds for the lesser values, (i.e., the variables tend to show similar behavior), the covariance is positive.
-
-----
-
-##### Question
+## Q
 What is **Principal Component Analysis**?
 
-##### Answer
+## A
 Principal Component Analysis(or PCA for short), is a statistical procedure that uses an orthogonal transformation to convert a set of observations of possibly correlated variables into a set of linearly uncorrelated variables called principal components.
 
 ----
