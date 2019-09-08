@@ -41,8 +41,8 @@ def process_md_file(filepath) -> None:
             if all([q_str.strip(), a_str.strip()]):
                 create_flashcard(
                     order=card_order,
-                    question=q_str.strip(),
-                    answer=a_str.strip(),
+                    question=q_str.replace('../', '/').strip(),
+                    answer=a_str.replace('../', '/').strip(),
                     tags=t_str,
                     deck=deck,
                 )
