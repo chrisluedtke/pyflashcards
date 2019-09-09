@@ -271,7 +271,7 @@ mtx = [[1, 4, 2, 2],
        [1, 5, 7, 0],
        [0, 2, 4, 1]]
 
-detrmt = np.linalg.det(np.array(mtx)))
+det = np.linalg.det(np.array(mtx)))
 ```
 
 ```python
@@ -283,7 +283,7 @@ def matrix_determinant(matrix):
     return (((matrix[0][0]) * (matrix[1][1])) - 
             ((matrix[1][0]) * (matrix[0][1])))
 
-  total = 0
+  det = 0
 
   # iterate over every column
   for col_i in range(len(matrix)):
@@ -294,16 +294,16 @@ def matrix_determinant(matrix):
     for i in range(len(sub_mtx)):
       sub_mtx[i] = sub_mtx[i][0:col_i] + sub_mtx[i][col_i+1:]
 
-    # calculate the sub_determinant by recursion
-    sub_determinant = matrix_determinant(sub_mtx)
+    # calculate the sub determinant by recursion
+    sub_det = matrix_determinant(sub_mtx)
 
     # 1 or -1 for even/0 or odd column index, respectively
     sign = (-1) ** col_i
 
-    # add the sub_determinant to the total
-    total += sign * matrix[0][col_i] * sub_determinant
+    # add the sub determinant to the total
+    det += sign * matrix[0][col_i] * sub_det
 
-  return total
+  return det
 
 def is_square_matrix(matrix):
   for row in matrix:
