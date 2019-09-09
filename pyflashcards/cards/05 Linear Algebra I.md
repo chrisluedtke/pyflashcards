@@ -66,10 +66,9 @@ The dot product of two vectors `a` and `b` produces a scalar quantity that is eq
 " class="flashcard-img"/>
 
 ```python
-def vector_dot_product(vector1, vector2):
-  assert len(vector1) == len(vector2), 'Expected Vectors of Equal Length'
-
-  return sum([vector1[i]*vector2[i] for i in range(len(vector1))])
+def vector_dot_product(vect1, vect2):
+  assert len(vect1) == len(vect2), 'Expected Vectors of Equal Length'
+  return sum([vect1[i] * vect2[i] for i in range(len(vect1))])
 ```
 
 ---
@@ -161,24 +160,24 @@ Matrix multiplication is best understood in terms of vector dot products. To mul
 <img src="../static/img/mtx_multiply.svg" class="mx-auto d-block" class="flashcard-img"/>
 
 ```python
-def matrix_multiply(matrix1, matrix2):
-  matrix1_n_cols = len(matrix1[0])
-  matrix2_n_rows = len(matrix2)
-  assert matrix1_n_cols == matrix2_n_rows, 'Matrix1 Columns != Matrix2 Rows'
+def matrix_multiply(mtx1, mtx2):
+  mtx1_n_cols = len(mtx1[0])
+  mtx2_n_rows = len(mtx2)
+  assert mtx1_n_cols == mtx2_n_rows, 'mtx1 Columns != mtx2 Rows'
 
-  matrix2 = transpose_matrix(matrix2)  # makes it easier to find cols by index
+  mtx2 = transpose_matrix(mtx2)  # makes it easier to find cols by index
   product = []
-  
-  for i, matrix1_row in enumerate(matrix1):
+
+  for i, mtx1_row in enumerate(mtx1):
     product.append([])
-    for j, matrix2_col in enumerate(matrix2):
-      product[i].append(vector_dot_product(matrix1_row, matrix2_col))
+    for j, mtx2_col in enumerate(mtx2):
+      product[i].append(vector_dot_product(mtx1_row, mtx2_col))
+
   return product
 
-def vector_dot_product(vector1, vector2):
-  assert len(vector1) == len(vector2), 'Expected Vectors of Equal Length'
-
-  return sum([vector1[i]*vector2[i] for i in range(len(vector1))])
+def vector_dot_product(vect1, vect2):
+  assert len(vect1) == len(vect2), 'Expected Vectors of Equal Length'
+  return sum([vect1[i] * vect2[i] for i in range(len(vect1))])
 
 def transpose_matrix(matrix):
   return list(map(list, zip(*matrix)))
@@ -277,7 +276,9 @@ det = np.linalg.det(np.array(mtx)))
 ```python
 def matrix_determinant(matrix):
   assert is_square_matrix(matrix), 'Expected Square Matrix'
+  return matrix_determinant_helper(matrix)
 
+def matrix_determinant_helper(matrix):
   # if a 2x2 matrix, solve
   if len(matrix) == len(matrix[0]) == 2:
     return (((matrix[0][0]) * (matrix[1][1])) - 
@@ -295,7 +296,7 @@ def matrix_determinant(matrix):
       sub_mtx[i] = sub_mtx[i][0:col_i] + sub_mtx[i][col_i+1:]
 
     # calculate the sub determinant by recursion
-    sub_det = matrix_determinant(sub_mtx)
+    sub_det = matrix_determinant_helper(sub_mtx)
 
     # 1 or -1 for even/0 or odd column index, respectively
     sign = (-1) ** col_i
@@ -313,7 +314,7 @@ def is_square_matrix(matrix):
 ```
 
 ```python
-mtx = np.random.rand(3, 3)
+mtx = np.random.rand(5, 5)  # 5X5 matrix
 assert np.isclose(matrix_determinant(mtx.tolist()),
                   np.linalg.det(np.array(mtx)))
 ```
