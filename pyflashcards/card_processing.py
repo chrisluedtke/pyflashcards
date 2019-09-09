@@ -203,9 +203,10 @@ def get_bin_card_counts(user_id, percentage=False):
     return count_dict
 
 
-def order_cards_to_study(cards_to_study, user_id):
+def order_cards_to_study(cards_to_study, user_id, randomize):
     # assign order to cards in user_cards
-    random.shuffle(cards_to_study)
+    if randomize:
+        random.shuffle(cards_to_study)
 
     for q_idx, card in enumerate(cards_to_study):
         user_card = User_Card.query.get(card.id)

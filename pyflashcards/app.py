@@ -61,7 +61,8 @@ def create_app():
 
             if not error:
                 clear_queued_cards(user_id)
-                order_cards_to_study(cards_to_study, user_id)
+                order_cards_to_study(cards_to_study, user_id,
+                                     randomize=bool(request.form.get('rand')))
 
                 return redirect(url_for('flashcard', q_idx=0))
             else:
@@ -117,11 +118,11 @@ def create_app():
         card = FlashCard.query.get(user_card.flashcard_id)
         question_html = markdown.markdown(
             card.question,
-            extensions=['markdown.extensions.fenced_code', 'codehilite']
+            extensions=['fenced_code', 'codehilite']
         )
         answer_html = markdown.markdown(
             card.answer,
-            extensions=['markdown.extensions.fenced_code', 'codehilite']
+            extensions=['fenced_code', 'codehilite']
         )
 
         deck_name = Deck.query.get(card.deck_id).name
