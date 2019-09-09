@@ -14,7 +14,7 @@ X^{T}y =  X^{T}X \beta \\
 (X^{T}X)^{-1}X^{T}y =  (X^{T}X)^{-1}X^{T}X \beta \\
 (X^{T}X)^{-1}X^{T}y = \hat{\beta}
 \end{align}
-" class="mx-auto d-block" style="background-color:white;"/>
+" class="flashcard-img"/>
 
 ## Q
 What is the interpretation of the **R^2** metric? When is it useful?

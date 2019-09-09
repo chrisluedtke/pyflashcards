@@ -11,10 +11,19 @@ main {
     color: inherit;
 }
 
+.flashcard-img {
+    max-width: 100%;
+    height: auto;
+    margin-left: auto!important;
+    margin-right: auto!important;
+    display: block!important;
+}
+
 /* codehilite overwrites */
 pre {
     margin: 0px;
 }
+
 .codehilite  {
     background: #f8f8f8; 
     border: 1px solid #dfdfdf;

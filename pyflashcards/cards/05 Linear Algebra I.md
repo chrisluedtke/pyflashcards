@@ -44,8 +44,7 @@ The **norm** or **magnitude** of a vector is nothing more than its **length**. S
 
 <img src="https://latex.codecogs.com/svg.latex?
 ||v|| = \sqrt{v_{1}^2 + v_{2}^2 + \ldots + v_{n}^2}
-" 
-class="mx-auto d-block" style="background-color:white;"/>
+" class="flashcard-img"/>
 
 
 
@@ -64,7 +63,7 @@ The dot product of two vectors `a` and `b` produces a scalar quantity that is eq
 
 <img src="https://latex.codecogs.com/svg.latex?\Large&space;
 \vec{a} \cdot \vec{b} = (a_{1} \times b_{1}) + (a_{2} \times b_{2}) + \ldots + ( a_{n} \times b_{n})
-" class="mx-auto d-block" style="background-color:white;"/>
+" class="flashcard-img"/>
 
 ```python
 def vector_dot_product(vector1, vector2):
@@ -90,7 +89,7 @@ The cross product can be found by creating a 3X3 matrix from the two vectors and
 &={\begin{vmatrix}a_{2}&a_{3}\\b_{2}&b_{3}\end{vmatrix}} \mathbf {i} -{\begin{vmatrix}a_{1}&a_{3}\\b_{1}&b_{3}\end{vmatrix}}\mathbf {j} +{\begin{vmatrix}a_{1}&a_{2}\\b_{1}&b_{2}\end{vmatrix}}\mathbf {k} \\
 &=(a_{2}b_{3}-a_{3}b_{2})\mathbf {i} -(a_{1}b_{3}-a_{3}b_{1})\mathbf {j} +(a_{1}b_{2}-a_{2}b_{1})\mathbf {k}
 \end{aligned}
-" class="mx-auto d-block" style="background-color:white;"/>
+" class="flashcard-img"/>
 
 ```python
 import numpy as np
@@ -159,7 +158,7 @@ There is no commutative property of matrix multiplication (we can't switch the o
 
 Matrix multiplication is best understood in terms of vector dot products. To multiply two matrices together, we can take the dot product of each row of the first matrix and each column of the second matrix. The position of the resulting entries will correspond to the row number and column number of the row and column vector that were used to find that scalar.
 
-<img src="../static/img/mtx_multiply.svg" class="mx-auto d-block" style="background-color:white;"/>
+<img src="../static/img/mtx_multiply.svg" class="mx-auto d-block" class="flashcard-img"/>
 
 ```python
 def matrix_multiply(matrix1, matrix2):
@@ -221,18 +220,11 @@ F =
 0 & 1 & 0 \\
 0 & 0 & 1 
 \end{bmatrix}
-" class="mx-auto d-block" style="background-color:white;"/>
+" class="flashcard-img"/>
 
 * **Symmetric**: The numbers above the main diagonal are mirrored below/across the main diagonal.
 
-<img src="https://latex.codecogs.com/svg.latex?\Large&space;
-G =
-\begin{bmatrix}
-1 & 4 & 5 \\
-4 & 2 & 6 \\
-5 & 6 & 3 
-\end{bmatrix}
-" class="mx-auto d-block" style="background-color:white;"/>
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;G=\begin{bmatrix}1&4&5\\4&2&6\\5&6&3\end{bmatrix}" class="flashcard-img"/>
 
 * **Diagonal**: Values on the main diagonal, zeroes everywhere else.
 * **Upper Triangular**: Values on and above the main diagonal, zeroes everywhere else.
@@ -268,7 +260,7 @@ The **determinant** is a scalar value computed from any *square matrix*, denoted
 &=a\,{\begin{vmatrix}\Box &\Box &\Box \\\Box &e&f\\\Box &h&i\end{vmatrix}}-b\,{\begin{vmatrix}\Box &\Box &\Box \\d&\Box &f\\g&\Box &i\end{vmatrix}}+c\,{\begin{vmatrix}\Box &\Box &\Box \\d&e&\Box \\g&h&\Box \end{vmatrix}}\\[3pt]&=a\,{\begin{vmatrix}e&f\\h&i\end{vmatrix}}-b\,{\begin{vmatrix}d&f\\g&i\end{vmatrix}}+c\,{\begin{vmatrix}d&e\\g&h\end{vmatrix}}\\[3pt]
 &=aei+bfg+cdh-ceg-bdi-afh
 \end{aligned}
-" class="mx-auto d-block" style="background-color:white;"/>
+" class="flashcard-img"/>
 
 
 ```python
