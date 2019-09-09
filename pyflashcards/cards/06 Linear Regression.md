@@ -6,7 +6,15 @@ What is **Ordinary Least Squares** regression?
 
 OLS requires that multiplying our observation data matrix by its transpose will result in an intervible matrix.
 
-<img src="/static/img/OLS_linear_algebra.PNG" class="mx-auto d-block">
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;
+\begin{align}
+y = X \beta + \epsilon \\
+y = X \beta \\
+X^{T}y =  X^{T}X \beta \\
+(X^{T}X)^{-1}X^{T}y =  (X^{T}X)^{-1}X^{T}X \beta \\
+(X^{T}X)^{-1}X^{T}y = \hat{\beta}
+\end{align}
+" class="mx-auto d-block" style="background-color:white;"/>
 
 ## Q
 What is the interpretation of the **R^2** metric? When is it useful?

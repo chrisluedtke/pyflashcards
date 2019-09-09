@@ -42,11 +42,16 @@ What is the **Norm** of a vector?
 ## A
 The **norm** or **magnitude** of a vector is nothing more than its **length**. Since a vector is just a line (essentially), we can think of it as the hypotenuse of a triangle and use the pythagorean theorem to find the norm of the vector. We're essentially generalizing the equation for the hypotenuse of a triangle to n dimensional space:
 
-<img src="../static/img/vect_norm.PNG" class="mx-auto d-block" style="background-color:white;"/>
+<img src="https://latex.codecogs.com/svg.latex?
+||v|| = \sqrt{v_{1}^2 + v_{2}^2 + \ldots + v_{n}^2}
+" 
+class="mx-auto d-block" style="background-color:white;"/>
+
+
 
 ```python
 def vector_norm(vector: List):
-    return (sum([vector[i]**2 for i in range(len(vector))])**.5)
+  return (sum([vector[i]**2 for i in range(len(vector))])**.5)
 ```
 
 ---
@@ -57,13 +62,15 @@ What is the **Dot Product** of two vetors? What does it produce?
 ## A
 The dot product of two vectors `a` and `b` produces a scalar quantity that is equal to the sum of pair-wise products of the vectors' components. The dot product is commutative and distributive.
 
-<img src="../static/img/vect_dot.svg" class="mx-auto d-block" style="background-color:white;"/>
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;
+\vec{a} \cdot \vec{b} = (a_{1} \times b_{1}) + (a_{2} \times b_{2}) + \ldots + ( a_{n} \times b_{n})
+" class="mx-auto d-block" style="background-color:white;"/>
 
 ```python
 def vector_dot_product(vector1, vector2):
-    assert len(vector1) == len(vector2), 'Expected Vectors of Equal Length'
+  assert len(vector1) == len(vector2), 'Expected Vectors of Equal Length'
 
-    return sum([vector1[i]*vector2[i] for i in range(len(vector1))])
+  return sum([vector1[i]*vector2[i] for i in range(len(vector1))])
 ```
 
 ---
@@ -72,12 +79,39 @@ def vector_dot_product(vector1, vector2):
 How do we find the **Cross Product** of two vectors? What does it produce?
 
 ## A
-The **Cross Product** of two vectors produces a third vector that is perpendicular to the first two vectors. 
-It is written with a regular looking multiplication sign like `a X b` but is read as "a cross b".
+The **Cross Product** of two vectors produces a third vector that is perpendicular/orthogonal to the first two vectors. It is written with a regular looking multiplication sign like `a X b` but is read as "a cross b".
 
-The cross product can be found by creating a 3X3 matrix from the two vectors and the unit vector and then finding the determinant of the 3x3 matrix.
+The cross product can be found by creating a 3X3 matrix from the two vectors and the unit vector and then finding the determinant of the 3x3 matrix. The components of the **Cross Product** vector will be the 
 
-<img src="../static/img/vect_cross.PNG" class="mx-auto d-block" style="background-color:white;"/>
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;
+\begin{aligned}
+\mathbf {a\times b} 
+&={\begin{vmatrix}\mathbf {i} &\mathbf {j} &\mathbf {k} \\a_{1}&a_{2}&a_{3}\\b_{1}&b_{2}&b_{3}\\\end{vmatrix}} \\
+&={\begin{vmatrix}a_{2}&a_{3}\\b_{2}&b_{3}\end{vmatrix}} \mathbf {i} -{\begin{vmatrix}a_{1}&a_{3}\\b_{1}&b_{3}\end{vmatrix}}\mathbf {j} +{\begin{vmatrix}a_{1}&a_{2}\\b_{1}&b_{2}\end{vmatrix}}\mathbf {k} \\
+&=(a_{2}b_{3}-a_{3}b_{2})\mathbf {i} -(a_{1}b_{3}-a_{3}b_{1})\mathbf {j} +(a_{1}b_{2}-a_{2}b_{1})\mathbf {k}
+\end{aligned}
+" class="mx-auto d-block" style="background-color:white;"/>
+
+```python
+import numpy as np
+
+v1 = np.array([0, 9, 1])
+v2 = np.array([7, 2, 3])
+cross = np.cross(v1, v2)
+cross
+```
+
+```
+>>> array([ 25,   7, -63])
+```
+
+```python
+mtx = np.array([[1, 1, 1], 
+                v1,
+                v2])
+
+assert np.isclose(cross.sum(), np.linalg.det(mtx))
+```
 
 ---
 
@@ -90,12 +124,15 @@ A **matrix** is a rectangular grid of numbers arranged in rows and columns. The 
 These matrices are 2X4:
 
 ```python
-vect = [[2, 4.6, -1, 9],
-        [5,   1,  0, 2]]
+mtx = [[2, 4.6, -1, 9],
+       [5,   1,  0, 2]]
 
 import numpy as np
-vect = np.array([[2, 4.6, -1, 9],
-                 [5,   1,  0, 2]])
+mtx = np.array(mtx)
+mtx.shape
+```
+```
+>>> (2, 4)
 ```
 
 ---
@@ -122,39 +159,41 @@ There is no commutative property of matrix multiplication (we can't switch the o
 
 Matrix multiplication is best understood in terms of vector dot products. To multiply two matrices together, we can take the dot product of each row of the first matrix and each column of the second matrix. The position of the resulting entries will correspond to the row number and column number of the row and column vector that were used to find that scalar.
 
-<img src="../static/img/matrix_mult.PNG" class="mx-auto d-block">
+<img src="../static/img/mtx_multiply.svg" class="mx-auto d-block" style="background-color:white;"/>
 
 ```python
 def matrix_multiply(matrix1, matrix2):
-    matrix1_n_cols = len(matrix1[0])
-    matrix2_n_rows = len(matrix2)
-    assert matrix1_n_cols == matrix2_n_rows, 'Matrix1 Columns != Matrix2 Rows'
+  matrix1_n_cols = len(matrix1[0])
+  matrix2_n_rows = len(matrix2)
+  assert matrix1_n_cols == matrix2_n_rows, 'Matrix1 Columns != Matrix2 Rows'
 
-    matrix2 = transpose_matrix(matrix2)  # makes it easier to find cols by index
-    product = []
+  matrix2 = transpose_matrix(matrix2)  # makes it easier to find cols by index
+  product = []
   
-    for i, matrix1_row in enumerate(matrix1):
-        product.append([])
-        for j, matrix2_col in enumerate(matrix2):
-            product[i].append(vector_dot_product(matrix1_row, matrix2_col))
-    return product
+  for i, matrix1_row in enumerate(matrix1):
+    product.append([])
+    for j, matrix2_col in enumerate(matrix2):
+      product[i].append(vector_dot_product(matrix1_row, matrix2_col))
+  return product
 
 def vector_dot_product(vector1, vector2):
-    assert len(vector1) == len(vector2), 'Expected Vectors of Equal Length'
+  assert len(vector1) == len(vector2), 'Expected Vectors of Equal Length'
 
-    return sum([vector1[i]*vector2[i] for i in range(len(vector1))])
+  return sum([vector1[i]*vector2[i] for i in range(len(vector1))])
 
 def transpose_matrix(matrix):
-    return list(map(list, zip(*matrix)))
+  return list(map(list, zip(*matrix)))
 ```
 
 ---
 
 ## Q
-What is the **Transpose** of a matrix?
+What is the **Transpose** of a matrix? What happens when we multiply a matrix by its transpose?
 
 ## A
 A transposed matrix is rotated such that its rows are the columns of the original and its columns are the rows of the original.
+
+Any matrix multiplied by its transpose will produce a square matrix. This is important because square matrices may be inverted.
 
 ---
 
@@ -166,11 +205,34 @@ A **square matrix** is any matrix that has the same number of rows as columns.
 
 * **Identity Matrix**: A diagonal matrix with ones on the main diagonal and zeroes everywhere else.
 
-<img src="../static/img/mtx_identity.svg" class="mx-auto d-block" style="background-color:white;"/>
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;
+D = 
+\begin{bmatrix}
+1 
+\end{bmatrix},
+E =
+\begin{bmatrix}
+1 & 0 \\
+0 & 1
+\end{bmatrix},
+F =
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 
+\end{bmatrix}
+" class="mx-auto d-block" style="background-color:white;"/>
 
 * **Symmetric**: The numbers above the main diagonal are mirrored below/across the main diagonal.
 
-<img src="../static/img/mtx_sym.svg" class="mx-auto d-block" style="background-color:white;"/>
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;
+G =
+\begin{bmatrix}
+1 & 4 & 5 \\
+4 & 2 & 6 \\
+5 & 6 & 3 
+\end{bmatrix}
+" class="mx-auto d-block" style="background-color:white;"/>
 
 * **Diagonal**: Values on the main diagonal, zeroes everywhere else.
 * **Upper Triangular**: Values on and above the main diagonal, zeroes everywhere else.
@@ -200,7 +262,14 @@ How do we find the **Determinant** of a Matrix? What kinds of matrices have this
 ## A
 The **determinant** is a scalar value computed from any *square matrix*, denoted as `det(A)` or with pipes, `|A|`. Calculating a determinant by hand is probably beyond the utility/scope of regular data science work, but it can be done with a recursive function.
 
-<img src="../static/img/mtx_determinant.svg" class="mx-auto d-block" style="background-color:white;"/>
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;
+\begin{aligned}
+|A|= {\begin{vmatrix}a&b&c\\d&e&f\\g&h&i\end{vmatrix}}
+&=a\,{\begin{vmatrix}\Box &\Box &\Box \\\Box &e&f\\\Box &h&i\end{vmatrix}}-b\,{\begin{vmatrix}\Box &\Box &\Box \\d&\Box &f\\g&\Box &i\end{vmatrix}}+c\,{\begin{vmatrix}\Box &\Box &\Box \\d&e&\Box \\g&h&\Box \end{vmatrix}}\\[3pt]&=a\,{\begin{vmatrix}e&f\\h&i\end{vmatrix}}-b\,{\begin{vmatrix}d&f\\g&i\end{vmatrix}}+c\,{\begin{vmatrix}d&e\\g&h\end{vmatrix}}\\[3pt]
+&=aei+bfg+cdh-ceg-bdi-afh
+\end{aligned}
+" class="mx-auto d-block" style="background-color:white;"/>
+
 
 ```python
 import numpy as np
@@ -277,11 +346,11 @@ import numpy as np
 matrix = np.array([[1, -7],
                    [0, 20]])
 invers = np.linalg.inv(matrix)
-print(invers)
+invers
 ```
 ```
->>> [[1.   0.35]
-     [0.   0.05]]
+>>> array([[1.  , 0.35],
+           [0.  , 0.05]])
 ```
 
 ---

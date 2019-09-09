@@ -35,7 +35,9 @@ What is **Standard Deviation**? How do we compute it for a sample with an assume
 ## a
 **Standard Deviation**, &sigma;, is a measure of how spread out our measurements are. Specifically, it is the average distance from the mean, in the same units as our unit of measure.
 
-<img src="../static/img/standard_deviation.svg" style="background-color:white;"/>
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;
+s={\sqrt {\frac {\sum _{i=1}^{N}(x_{i}-{\bar {x}})^{2}}{N-1}}}
+" class="mx-auto d-block" style="background-color:white;"/>
 
 ```python
 def mean(arr):
@@ -96,7 +98,9 @@ What is **Covariance**? What is a **Variance-Covariance Matrix**?
 
 A large positive or negative covariance indicates a strong relationship between two variables. However, we can't necessarily compare covariances between pairs of variables that have a different scale. Since covariance values are unbounded, they could take on arbitrarily high or low values. A variable that has a large scale will always have a higher covariance than a variable with an equally strong relationship, yet smaller scale. This means that we need to **regularlize** (i.e. use correlation coefficient), which removes the unit understanding from the measures.
 
-<img src="../static/img/stats_covariance.svg" class="mx-auto d-block" style="background-color:white;"/>
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;
+cov = \frac{\sum{(X_{i} - \overline{X})(Y_{i} - \overline{Y})} }{N-1}
+" class="mx-auto d-block" style="background-color:white;"/>
 
 A **Variance-Covariance Matrix** is a square matrix that compares each variable with every other variable in a dataset and returns the variance values along the main diagonal and covariance values everywhere else.
 
@@ -131,7 +135,9 @@ In most use cases the correlation coefficient is an improvement over measures of
 * Correlation does not have units. Covariance always has units
 * Correlation isn’t affected by changes in the center (i.e. mean) or scale of the variables
 
-<img src="../static/img/stats_corr.svg" class="mx-auto d-block" style="background-color:white;"/>
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;
+r = \frac{cov(X,Y)}{\sigma_{X}\sigma_{Y}}
+" class="mx-auto d-block" style="background-color:white;"/>
 
 ```python
 import pandas as pd
