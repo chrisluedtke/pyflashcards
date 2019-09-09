@@ -80,14 +80,14 @@ How do we find the **Cross Product** of two vectors? What does it produce?
 ## A
 The **Cross Product** of two vectors produces a third vector that is perpendicular/orthogonal to the first two vectors. It is written with a regular looking multiplication sign like `a X b` but is read as "a cross b".
 
-The cross product can be found by creating a 3X3 matrix from the two vectors and the unit vector and then finding the determinant of the 3x3 matrix. The components of the **Cross Product** vector will be the 
+The cross product can be found by creating a 3X3 matrix from the two vectors and the unit vector and then finding the determinant of the 3x3 matrix. The components of the **Cross Product** vector will be the same components that are added in the last step of calculating the determinant. 
 
 <img src="https://latex.codecogs.com/svg.latex?\Large&space;
 \begin{aligned}
 \mathbf {a\times b} 
-&={\begin{vmatrix}\mathbf {i} &\mathbf {j} &\mathbf {k} \\a_{1}&a_{2}&a_{3}\\b_{1}&b_{2}&b_{3}\\\end{vmatrix}} \\
-&={\begin{vmatrix}a_{2}&a_{3}\\b_{2}&b_{3}\end{vmatrix}} \mathbf {i} -{\begin{vmatrix}a_{1}&a_{3}\\b_{1}&b_{3}\end{vmatrix}}\mathbf {j} +{\begin{vmatrix}a_{1}&a_{2}\\b_{1}&b_{2}\end{vmatrix}}\mathbf {k} \\
-&=(a_{2}b_{3}-a_{3}b_{2})\mathbf {i} -(a_{1}b_{3}-a_{3}b_{1})\mathbf {j} +(a_{1}b_{2}-a_{2}b_{1})\mathbf {k}
+&={\begin{vmatrix} i & j & k \\a_{1}&a_{2}&a_{3}\\b_{1}&b_{2}&b_{3}\\\end{vmatrix}} \\
+&={\begin{vmatrix}a_{2}&a_{3}\\b_{2}&b_{3}\end{vmatrix}} {i} -{\begin{vmatrix}a_{1}&a_{3}\\b_{1}&b_{3}\end{vmatrix}} j +{\begin{vmatrix}a_{1}&a_{2}\\b_{1}&b_{2}\end{vmatrix}} k \\
+&=\mathbf{(a_{2}b_{3}-a_{3}b_{2})} i \mathbf{-(a_{1}b_{3}-a_{3}b_{1})} j + \mathbf{(a_{1}b_{2}-a_{2}b_{1})} k
 \end{aligned}
 " class="flashcard-img"/>
 
