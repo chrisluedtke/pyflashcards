@@ -8,9 +8,8 @@ from sqlalchemy import func
 
 from . import auth
 from .auth import login_required
-from .card_processing import (assign_cards_to_user, clear_queued_cards,
-                              get_bin_card_counts, get_cards_to_study,
-                              create_or_update_decks, order_cards_to_study)
+from .card_processing import (assign_cards_to_user, build_quiz,
+                              create_or_update_decks, get_bin_card_counts)
 from .config import Config
 from .models import DB, Deck, FlashCard, Tag, User, User_Card
 
@@ -50,20 +49,17 @@ def create_app():
             if 'bin' not in request.form or 'deck' not in request.form:
                 error = 'Must select at least one category and bin.'
             else:
-                cards_to_study = get_cards_to_study(
+                result = build_quiz(
                     user_id,
                     requested_decks=request.form.getlist('deck'),
                     requested_bins=request.form.getlist('bin'),
-                    requested_tags=request.form.getlist('tag')
+                    requested_tags=request.form.getlist('tag'),
+                    randomize=bool(request.form.get('rand'))
                 )
-                if not cards_to_study:
+                if result is not True:
                     error = 'No cards with selected categories and bins.'
 
             if not error:
-                clear_queued_cards(user_id)
-                order_cards_to_study(cards_to_study, user_id,
-                                     randomize=bool(request.form.get('rand')))
-
                 return redirect(url_for('flashcard', q_idx=0))
             else:
                 flash(error)

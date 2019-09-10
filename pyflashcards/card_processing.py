@@ -113,44 +113,6 @@ def create_flashcard(order: int, question: str, answer: str, tags: str,
     return None
 
 
-def clear_queued_cards(user_id):
-    cards_to_clear = User_Card.query.filter(
-        User_Card.user_id == user_id,
-        User_Card.queue_idx.isnot(None),
-    ).all()
-
-    for card in cards_to_clear:
-        card.queue_idx = None
-
-    DB.session.commit()
-
-    return True
-
-
-def get_cards_to_study(user_id, requested_decks, requested_bins,
-                       requested_tags):
-    requested_bins = [int(i) for i in requested_bins]
-
-    if 'All' in requested_decks:
-        deck_names = DB.session.query(Deck.name).all()
-        requested_decks = [i for i, in deck_names]
-
-    cards_to_study = (User_Card.query
-                               .filter(User_Card.user_id == user_id,
-                                       User_Card.bin_id.in_(requested_bins))
-                               .join(FlashCard,
-                                     User_Card.flashcard_id == FlashCard.id)
-                               .join(Deck,
-                                     FlashCard.deck_id == Deck.id)
-                               .filter(
-                                   FlashCard.tags.any(
-                                       Tag.name.in_(requested_tags)
-                                   ) | Deck.name.in_(requested_decks))
-                               .all())
-
-    return cards_to_study
-
-
 def assign_cards_to_user(user_id):
     """Create a User_Card record for all existing cards"""
     # TODO: this can probably be queried better
@@ -203,14 +165,60 @@ def get_bin_card_counts(user_id, percentage=False):
     return count_dict
 
 
-def order_cards_to_study(cards_to_study, user_id, randomize):
-    # assign order to cards in user_cards
-    if randomize:
-        random.shuffle(cards_to_study)
+def build_quiz(user_id, requested_decks, requested_bins,
+               requested_tags, randomize):
+    requested_bins = [int(i) for i in requested_bins]
 
+    if 'All' in requested_decks:
+        deck_names = DB.session.query(Deck.name).all()
+        requested_decks = [i for i, in deck_names]
+
+    if randomize:
+        sort_method = (func.random(),)
+    else:
+        sort_method = (Deck.order, FlashCard.order)
+
+    cards_to_study = (User_Card.query
+                               .filter(User_Card.user_id == user_id,
+                                       User_Card.bin_id.in_(requested_bins))
+                               .join(FlashCard,
+                                     User_Card.flashcard_id == FlashCard.id)
+                               .join(Deck,
+                                     FlashCard.deck_id == Deck.id)
+                               .filter(
+                                   FlashCard.tags.any(
+                                       Tag.name.in_(requested_tags)
+                                   ) | Deck.name.in_(requested_decks))
+                               .order_by(*sort_method)
+                               .all())
+    if not cards_to_study:
+        return False
+    else:
+        clear_queued_quiz_cards(user_id)
+        write_quiz_card_order(cards_to_study, user_id)
+        return True
+
+
+def clear_queued_quiz_cards(user_id):
+    cards_to_clear = User_Card.query.filter(
+        User_Card.user_id == user_id,
+        User_Card.queue_idx.isnot(None),
+    ).all()
+
+    for card in cards_to_clear:
+        card.queue_idx = None
+
+    DB.session.commit()
+
+    return True
+
+
+def write_quiz_card_order(cards_to_study, user_id):
+    """Assigns quiz card order to cards in user_cards"""
     for q_idx, card in enumerate(cards_to_study):
         user_card = User_Card.query.get(card.id)
         user_card.queue_idx = q_idx
-        DB.session.commit()
+
+    DB.session.commit()
 
     return True
