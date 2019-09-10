@@ -46,11 +46,9 @@ The **norm** or **magnitude** of a vector is nothing more than its **length**. S
 ||v|| = \sqrt{v_{1}^2 + v_{2}^2 + \ldots + v_{n}^2}
 " class="flashcard-img"/>
 
-
-
 ```python
-def vector_norm(vector: List):
-  return (sum([vector[i]**2 for i in range(len(vector))])**.5)
+def vector_norm(vect: List):
+  return sum([vect[i] ** 2 for i in range(len(vect))]) ** 0.5
 ```
 
 ---
@@ -328,6 +326,7 @@ What is the **Inverse** of a matrix? What kinds of matrices are invertible?
 The **Inverse** is a matrix that acts like a reciprocal of a given origin matrix, just like 1/8 is the reciprocal of 8.
 
 Conditions:
+
 1. The matrix must be square
 1. The matrix must have a non-zero determinant. In the process of computing the inverse, we divide by the determinant, and we cannot divide by zero.
 

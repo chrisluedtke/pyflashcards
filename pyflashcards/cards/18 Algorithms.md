@@ -14,12 +14,14 @@ What are common types of **runtime complexity**, or **Big O**, in order of perfo
 
 ## a
 
-1. `O(n)` constant time
+1. `O(c)` constant time
+1. `O(n)` linear time
 1. `O(log(n))` logarithmic time
 1. `O(n)` linear time
-1. `O(n * log(n))` log-linear time
-1. `O(n ^ c)` quadtratic time
-1. `O(c ^ n)` exponential time
+1. `O(nlog(n))` log-linear time
+1. `O(n^c)` quadtratic time
+1. `O(c^n)` exponential time
+1. `O(n!)` factorial time
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Comparison_computational_complexity.svg/1024px-Comparison_computational_complexity.svg.png" width="100%">
 
