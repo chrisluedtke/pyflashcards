@@ -130,10 +130,11 @@ The measure of spread of a variable is the Standard Deviation. If we divide our 
 Correlation coefficients have a fixed range from -1 to +1 with, 0 representing no linear relationship between the data.
 
 In most use cases the correlation coefficient is an improvement over measures of covariance because:
+
 * Covariance can take on practically any number while a correlation is limited: -1 to +1.
-* Because of it’s numerical limitations, correlation is more useful for determining how strong the relationship is between the two variables.
+* Because of its numerical limitations, correlation is more useful for determining how strong the relationship is between the two variables.
 * Correlation does not have units. Covariance always has units
-* Correlation isn’t affected by changes in the center (i.e. mean) or scale of the variables
+* Correlation isn't affected by changes in the center (i.e. mean) or scale of the variables
 
 <img src="https://latex.codecogs.com/svg.latex?\Large&space;
 r = \frac{cov(X,Y)}{\sigma_{X}\sigma_{Y}}

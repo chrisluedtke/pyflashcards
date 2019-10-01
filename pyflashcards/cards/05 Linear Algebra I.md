@@ -75,9 +75,9 @@ def vector_dot_product(vect1, vect2):
 How do we find the **Cross Product** of two vectors? What does it produce?
 
 ## A
-The **Cross Product** of two vectors produces a third vector that is perpendicular/orthogonal to the first two vectors. It is written with a regular looking multiplication sign like `a X b` but is read as "a cross b".
+The **Cross Product** of two vectors in 3-dimensional space produces a third vector that is perpendicular/orthogonal to the first two vectors. It is written with a regular looking multiplication sign like `a X b` but is read as "a cross b".
 
-The cross product can be found by creating a 3X3 matrix from the two vectors and the unit vector and then finding the determinant of the 3x3 matrix. The components of the **Cross Product** vector will be the same components that are added in the last step of calculating the determinant. 
+The cross product of two 3-dimensional vectors can be found by creating a 3X3 matrix from the two vectors and an additional arbitrary vector. When finding the determinant of the 3x3 matrix, the coefficient multiplied by each component of the arbitrary vector will themselves be the components of the cross product.
 
 <img src="https://latex.codecogs.com/svg.latex?\Large&space;
 \begin{aligned}
