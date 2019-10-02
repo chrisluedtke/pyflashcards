@@ -3,9 +3,9 @@
 What is **runtime complexity**, or **Big O**?
 
 ## a
-It describes the *numerber of operations* required of an algorithm in relation to the *number of elements* being processed, assuming the **worst case scenario**.
+It describes the *numerber of operations* required of an algorithm in relation to the *number of elements* being processed, when considering the worst case scenario or average case scenario.
 
-For example, an `O(n ^ 2)` algorithm carries out n_elements ^ 2 operations to complete the task in the worst case scenario.
+For example, an `O(n ^ 2)` algorithm carries out n_elements ^ 2 operations to complete the task.
 
 ---
 ## q
@@ -62,9 +62,13 @@ def binary_search(sorted_array, target, idx_min=0, idx_max=None):
 
 ---
 ## q
-What are some examples of log-linear runtime complexity, `O(n * log(n))`?
+What are examples of algorithms with log-linear runtime complexity, `O(n * log(n))`? What is significant about this runtime complexity?
 
 ## a
+`O(n * log(n))` is the best (average) performance a comparison-based sorting method can achieve.
+
+Some examples:
+
 * Quicksort
 * Mergesort
 * Heapsort
@@ -72,7 +76,7 @@ What are some examples of log-linear runtime complexity, `O(n * log(n))`?
 
 ---
 ## q
-What are some examples of exponential runtime complexity, `O(c ^ n)`?
+What are some examples of scenarios with exponential runtime complexity, `O(c ^ n)`?
 
 ## a
 * cracking as unknown password
@@ -82,14 +86,20 @@ What are some examples of exponential runtime complexity, `O(c ^ n)`?
 * the longest common subsequence of strings
 
 ---
+
 ## q
 How would the more common form of runtime complexity of `O(n ^ 2 + 4n + 90)` be written?
 
 ## a
 `O(n ^ 2)`. Algorithmic runtime complexity is commonly defined by the **dominating term**.
 
+---
+
 ## q
-What is the runtime complexity of the **bubble sort** algorithm?
+Explain a **bubble sort** algorithm. What is its runtime complexity?
+
+## a
+Quadtratic, `O(n ^ c)`, since we require more loops with more inputs.
 
 ```python
 def bubble_sort(arr):
@@ -104,12 +114,15 @@ def bubble_sort(arr):
     return arr
 ```
 
-## a
-Quadtratic, `O(n ^ c)`, since we require more loops with more inputs.
+---
 
-Other examples:
+## Q
+What are examples of algorithms with quadtratic, `O(n ^ c)`, time complexity?
 
-* all permutations of the characters in a string
+## A
+
+* bubble sort
+* listing all permutations of the characters in a string
 * nested loops are a good "code sniff" for quadratic runtime performance
 
 ```python
@@ -118,6 +131,8 @@ def print_all_pairs(array):
         for second_item in array:
             print(first_item, second_item)
 ```
+
+---
 
 ## q
 What is are **stack frame** and **call stack**?
