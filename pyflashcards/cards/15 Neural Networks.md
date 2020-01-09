@@ -29,7 +29,7 @@ A **perceptron** is a simple ANN. It is composed of a single layer of **threshol
 What is **gradient descent**, and how is it used in neural networks?
 
 ## a
-**Gradeint descent** is a method of optimizing the weights of neural networks. By computing the derivative of each neuron's functions (activation function and weight multiplication), we **back-progagate** our predition errors to determine how errors relate to the weights of each neuron. We use this information to tweak those weights in the right direction based on a **learning rate**.
+**Gradeint descent** is a method of optimizing the weights of neural networks. By computing the derivative of each neuron's functions (activation function and weight multiplication), we **back-progagate** our prediction errors to determine how errors relate to the weights of each neuron. We use this information to tweak those weights in the right direction based on a **learning rate**.
 
 ---
 

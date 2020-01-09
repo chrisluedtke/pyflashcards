@@ -70,17 +70,21 @@ What is **Regularization** intuitively? What are the 2 main types? (other flashc
 
 The 2 main types are **L1 Regularization** and **L2 Regularization**.
 
+---
+
 ## q
 What is **L1 Regularization**?
 
 ## a
 **L1 Regularization**, or **Lasso Regression**, reduces unimportant coefficients to zero.
 
+---
+
 ## q
 What is **L2 Regularization**?
 
 ## a
-**L2 Regularization**, or **Ridge Regression**,is ordinary least squares regression with a loss function that minimizes the **sum of square error of residuals** and **the squared slope of the fit model `* alpha`**.
+**L2 Regularization**, or **Ridge Regression**, is ordinary least squares regression with a loss function that minimizes the **sum of square error of residuals** and **the squared slope of the fit model * &alpha;**.
 
 The `alpha` parameter corresponds to the weight being given to the extra penalty being calculated by [Tikhonov regularization](https://en.wikipedia.org/wiki/Tikhonov_regularization) (this parameter is also referred to as &lambda;	in the context of ridge regression).
 

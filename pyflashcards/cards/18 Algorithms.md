@@ -19,7 +19,7 @@ What are common types of **runtime complexity**, or **Big O**, in order of perfo
 1. `O(log(n))` logarithmic time
 1. `O(n)` linear time
 1. `O(nlog(n))` log-linear time
-1. `O(n^c)` quadtratic time
+1. `O(n^c)` quadratic time
 1. `O(c^n)` exponential time
 1. `O(n!)` factorial time
 
@@ -53,7 +53,7 @@ def binary_search(sorted_array, target, idx_min=0, idx_max=None):
     if sorted_array[idx_mid] == target:
         return idx_mid
     elif target < sorted_array[idx_mid]:
-        idx_max = idx_mid -1 
+        idx_max = idx_mid - 1 
     elif sorted_array[idx_mid] < target:
         idx_min = idx_mid + 1
 
@@ -96,10 +96,10 @@ How would the more common form of runtime complexity of `O(n ^ 2 + 4n + 90)` be 
 ---
 
 ## q
-Explain a **bubble sort** algorithm. What is its runtime complexity?
+Explain a **bubble sort** algorithm. What is its runtime complexity? When is it useful?
 
 ## a
-Quadtratic, `O(n ^ c)`, since we require more loops with more inputs.
+Quadtratic, `O(n ^ c)`, since it will require more loops with more inputs. Bubble sort can be useful when we can assume our information is *mostly* sorted.
 
 ```python
 def bubble_sort(arr):
