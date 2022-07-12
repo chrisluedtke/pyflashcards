@@ -33,7 +33,7 @@ This is the best performance possible. The number of operations is constant rega
 
 ---
 ## q
-Explain a **binary search**. What is its **runtime complexity**?
+Explain **binary search**. What is its **runtime complexity**?
 
 *Note: search algorithms return the index location of a target value in a sorted list of numbers*
 
@@ -134,7 +134,7 @@ def print_all_pairs(array):
 ---
 
 ## q
-What is are **stack frame** and **call stack**?
+What are the **stack frame** and **call stack**?
 
 ## a
 The **call stack** is the collection of **stack frames**. A **stack frame** is the representation of state at each iteration of a recursive algorithm. It contains the local variables in that instance of the recursion.
