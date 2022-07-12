@@ -15,7 +15,6 @@ What are common types of **runtime complexity**, or **Big O**, in order of perfo
 ## a
 
 1. `O(c)` constant time
-1. `O(n)` linear time
 1. `O(log(n))` logarithmic time
 1. `O(n)` linear time
 1. `O(nlog(n))` log-linear time
